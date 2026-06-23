@@ -50,14 +50,14 @@
         }
 
         .header h1 {
-            font-family: var(--font-display);
+            font-family: var(--font-mono);
             text-transform: uppercase;
-            line-height: 0.9;
-            letter-spacing: 0.005em;
-            font-weight: 400;
-            font-size: clamp(2.6rem, 9vw, 4.5rem);
-            color: var(--text-primary);
-            margin-bottom: 0.9rem;
+            line-height: 1.1;
+            letter-spacing: 0.04em;
+            font-weight: 700;
+            font-size: clamp(1.8rem, 7vw, 3rem);
+            color: var(--bone);
+            margin-bottom: 1rem;
         }
 
         .header .kicker {
@@ -65,39 +65,48 @@
         }
 
         .header p {
-            color: var(--text-secondary);
-            font-size: 1rem;
+            color: var(--bone-dim);
+            font-size: 0.95rem;
             max-width: 500px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.55;
+            font-family: var(--font-mono);
         }
 
         .section {
             background: var(--ink-raised);
-            border: 2px solid var(--ink-line);
-            border-radius: 4px;
-            box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
-            padding: 2rem;
-            margin-bottom: 1.75rem;
+            border: 1px solid var(--ink-line);
+            border-radius: 0;
+            box-shadow: none;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section:hover {
+            border-color: var(--hazard);
+            box-shadow: 0 0 10px rgba(34,211,238,0.1);
         }
 
         .section-title {
-            font-family: var(--font-display);
+            font-family: var(--font-mono);
             text-transform: uppercase;
-            line-height: 0.9;
-            letter-spacing: 0.01em;
-            font-weight: 400;
-            font-size: 1.6rem;
-            margin: 0 0 0.4rem;
+            line-height: 1.1;
+            letter-spacing: 0.06em;
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin: 0 0 0.5rem;
             display: flex;
             align-items: center;
-            gap: 0.7rem;
+            gap: 0.6rem;
+            color: var(--bone);
         }
 
         .section-subtitle {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
+            color: var(--bone-dim);
+            font-size: 0.8rem;
+            margin-bottom: 1.25rem;
+            font-family: var(--font-mono);
+            letter-spacing: 0.02em;
         }
 
         .step-number {
@@ -127,20 +136,20 @@
         label {
             display: block;
             font-family: var(--font-mono);
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             margin-bottom: 0.5rem;
-            color: var(--text-primary);
+            color: var(--bone);
         }
 
         label .optional {
-            color: var(--text-muted);
+            color: var(--bone-dim);
             font-weight: 400;
             text-transform: none;
             letter-spacing: 0;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
         }
 
         input[type="text"],
@@ -150,20 +159,24 @@
         textarea,
         select {
             width: 100%;
-            padding: 0.75rem 1rem;
+            padding: 0.7rem 0.9rem;
             background: var(--ink);
-            border: 2px solid var(--ink-line);
-            border-radius: 2px;
-            color: var(--text-primary);
+            border: 1px solid var(--ink-line);
+            border-radius: 0;
+            color: var(--bone);
             font-family: var(--font-mono);
-            font-size: 0.9rem;
-            transition: border-color 0.15s, box-shadow 0.15s;
+            font-size: 0.85rem;
+            transition: border-color 0.15s ease;
             outline: none;
+        }
+
+        input:hover, textarea:hover, select:hover {
+            border-color: var(--hazard);
         }
 
         input:focus, textarea:focus, select:focus {
             border-color: var(--hazard);
-            box-shadow: 0 0 0 3px rgba(255, 77, 0, 0.25);
+            box-shadow: 0 0 8px rgba(34,211,238,0.15);
         }
 
         textarea {

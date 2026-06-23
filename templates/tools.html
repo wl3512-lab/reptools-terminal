@@ -114,34 +114,45 @@
             66% { transform: translate(-20px, 20px) rotate(-5deg); }
         }
         
-        /* Header */
+        /* Header — CLI command bar */
         header {
-            padding: 1.5rem 4rem;
+            padding: 0.85rem 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--ink-line);
+            border-bottom: 1px solid var(--ink-line);
             position: sticky;
             top: 0;
             z-index: 100;
             background: var(--ink);
+            height: 44px;
         }
-        
+
         nav {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: center;
         }
-        
+
         nav a {
-            color: var(--text-secondary);
+            color: var(--bone-dim);
             text-decoration: none;
-            font-weight: 700;
-            font-family: var(--font-body);
+            font-weight: 600;
+            font-family: var(--font-mono);
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-            font-size: 0.85rem;
-            transition: color 0.2s ease;
+            letter-spacing: 0.08em;
+            font-size: 0.75rem;
+            transition: color 0.15s ease;
+        }
+
+        nav a:before {
+            content: '[';
+            margin-right: 0.3em;
+        }
+
+        nav a:after {
+            content: ']';
+            margin-left: 0.3em;
         }
 
         nav a:hover, nav a.active {
@@ -149,83 +160,93 @@
         }
 
         .nav-cta {
-            padding: 0.7rem 1.4rem;
+            padding: 0.4rem 0.8rem;
             background: var(--hazard);
             color: var(--on-hazard) !important;
-            border: 2px solid var(--ink);
-            box-shadow: 3px 3px 0 var(--ink);
-            font-weight: 800;
+            border: 1px solid var(--hazard);
+            box-shadow: none;
+            font-weight: 700;
         }
-        .nav-cta:hover { color: var(--on-hazard) !important; }
+        .nav-cta:hover {
+            color: var(--on-hazard) !important;
+            box-shadow: 0 0 8px rgba(34,211,238,0.4);
+        }
         
-        /* Tool tabs */
+        /* Tool tabs — CLI tab menu */
         .tool-tabs {
             display: flex;
             gap: 0.5rem;
             justify-content: center;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
-        
+
         .tab-btn {
-            padding: 0.7rem 1.4rem;
+            padding: 0.6rem 1rem;
             background: var(--ink-raised);
-            border: 2px solid var(--ink-line);
-            color: var(--text-secondary);
-            font-family: var(--font-body);
-            font-weight: 800;
-            font-size: 0.82rem;
-            border-radius: 2px;
+            border: 1px solid var(--ink-line);
+            color: var(--bone-dim);
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.75rem;
+            border-radius: 0;
             cursor: pointer;
-            transition: transform 0.15s var(--ease), background 0.15s var(--ease), color 0.15s var(--ease);
+            transition: border-color 0.15s ease, color 0.15s ease;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.06em;
         }
 
         .tab-btn:hover {
             border-color: var(--hazard);
-            color: var(--hazard);
+            color: var(--bone);
         }
 
         .tab-btn.active {
-            background: var(--hazard);
-            color: var(--on-hazard);
-            border: 2px solid var(--ink);
-            box-shadow: 3px 3px 0 var(--ink);
+            background: transparent;
+            color: var(--hazard);
+            border: 1px solid var(--hazard);
+            box-shadow: none;
         }
         
         /* Main content */
         main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
+            max-width: 100%;
+            margin: 0;
+            padding: 2rem;
+            border-left: 1px solid var(--ink-line);
         }
-        
+
         /* Hero section */
         .hero {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--ink-line);
+            padding-bottom: 2rem;
         }
-        
+
         .hero h1 {
-            font-family: var(--font-display);
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 400;
-            line-height: 0.9;
+            font-family: var(--font-mono);
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
             text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.005em;
+            margin-bottom: 1rem;
+            letter-spacing: 0.04em;
+            color: var(--bone);
         }
 
         .hero h1 .gradient {
             color: var(--hazard);
+            text-shadow: 0 0 10px rgba(34,211,238,0.3);
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 600px;
+            font-size: 0.95rem;
+            color: var(--bone-dim);
+            max-width: 620px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.55;
+            font-family: var(--font-mono);
         }
         
         /* Tool sections */
@@ -243,51 +264,59 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Cards */
+        /* Cards — CLI panels */
         .card {
             background: var(--ink-raised);
-            border: 2px solid var(--ink-line);
-            border-radius: 4px;
-            box-shadow: 6px 6px 0 rgba(0,0,0,.55);
-            padding: 2rem;
-            margin-bottom: 2rem;
+            border: 1px solid var(--ink-line);
+            border-radius: 0;
+            box-shadow: none;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
         }
-        
+
+        .card:hover {
+            border-color: var(--hazard);
+            box-shadow: 0 0 12px rgba(34,211,238,0.15);
+        }
+
         .card-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
         }
-        
+
         .card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            border: 1px solid var(--hazard);
+            color: var(--hazard);
         }
-        
-        .card-icon { border: 2px solid var(--ink-line); border-radius: 2px; }
-        .card-icon.cyan { background: rgba(255, 77, 0, 0.14); }
-        .card-icon.purple { background: rgba(214, 255, 63, 0.12); }
-        .card-icon.orange { background: rgba(255, 77, 0, 0.14); }
+
+        .card-icon.cyan { background: transparent; }
+        .card-icon.purple { background: transparent; }
+        .card-icon.orange { background: transparent; }
 
         .card-title {
-            font-family: var(--font-display);
-            font-size: 1.7rem;
-            font-weight: 400;
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 700;
             text-transform: uppercase;
-            line-height: 0.95;
-            letter-spacing: 0.01em;
+            line-height: 1.1;
+            letter-spacing: 0.06em;
+            color: var(--bone);
         }
 
         .card-subtitle {
-            color: var(--text-muted);
-            font-size: 0.9rem;
+            color: var(--bone-dim);
+            font-size: 0.8rem;
             font-family: var(--font-mono);
+            letter-spacing: 0.02em;
         }
         
         /* Input groups */

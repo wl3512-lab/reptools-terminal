@@ -46,36 +46,48 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 1rem 2rem;
+            padding: 0.85rem 1rem;
             background: var(--ink);
-            border-bottom: 2px solid var(--ink-line);
+            border-bottom: 1px solid var(--ink-line);
+            height: 44px;
         }
-        
+
         .nav-container {
-            max-width: 1400px;
+            max-width: 100%;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
         }
-        
+
         .nav-links a {
-            color: var(--text-secondary);
+            color: var(--bone-dim);
             text-decoration: none;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
+            letter-spacing: 0.08em;
+            font-size: 0.75rem;
+            transition: color 0.15s ease;
+            font-family: var(--font-mono);
         }
-        
+
+        .nav-links a:before {
+            content: '[';
+            margin-right: 0.3em;
+        }
+
+        .nav-links a:after {
+            content: ']';
+            margin-left: 0.3em;
+        }
+
         .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-primary);
+            color: var(--hazard);
         }
 
         .cc-wordmark:focus-visible,
@@ -100,52 +112,62 @@
         
         /* Main Content */
         main {
-            padding-top: 100px;
+            padding-top: 44px;
             min-height: 100vh;
+            border-left: 1px solid var(--ink-line);
+            background: var(--bg-primary);
         }
-        
+
         .contact-section {
-            max-width: 800px;
+            max-width: 720px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 2.5rem 2rem;
             text-align: left;
         }
 
         .contact-section h1 {
-            font-family: var(--font-display);
-            font-size: clamp(3rem, 9vw, 6rem);
-            font-weight: 400;
-            line-height: 0.9;
+            font-family: var(--font-mono);
+            font-size: clamp(1.8rem, 7vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
             text-transform: uppercase;
-            letter-spacing: 0.005em;
+            letter-spacing: 0.04em;
             margin-bottom: 1rem;
             color: var(--hazard);
+            border-bottom: 1px solid var(--ink-line);
+            padding-bottom: 1rem;
         }
 
         .contact-section .subtitle {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
+            font-size: 0.95rem;
+            color: var(--bone-dim);
+            margin-bottom: 2rem;
+            font-family: var(--font-mono);
         }
-        
+
         .contact-card {
             background: var(--ink-raised);
-            border: 2px solid var(--ink-line);
-            border-radius: 4px;
-            box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.55);
-            padding: 3rem;
-            margin-bottom: 2rem;
+            border: 1px solid var(--ink-line);
+            border-radius: 0;
+            box-shadow: none;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-card:hover {
+            border-color: var(--hazard);
+            box-shadow: 0 0 10px rgba(34,211,238,0.1);
         }
 
         .contact-card h2 {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            font-weight: 400;
-            line-height: 0.9;
+            font-family: var(--font-mono);
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1.1;
             text-transform: uppercase;
-            letter-spacing: 0.01em;
+            letter-spacing: 0.06em;
             margin-bottom: 1rem;
-            color: var(--text-primary);
+            color: var(--bone);
         }
 
         .contact-card p {

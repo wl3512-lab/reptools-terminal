@@ -52,108 +52,134 @@
         }
         
         header {
-            padding: 1.5rem 4rem;
+            padding: 0.85rem 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--ink-line);
+            border-bottom: 1px solid var(--ink-line);
             position: fixed;
             top: 0; left: 0; right: 0;
             z-index: 100;
             background: var(--ink);
+            height: 44px;
         }
 
         nav {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: center;
         }
-        
+
         nav a {
-            color: var(--text-secondary);
+            color: var(--bone-dim);
             text-decoration: none;
-            font-family: var(--font-body);
+            font-family: var(--font-mono);
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-            transition: color 0.2s ease;
+            letter-spacing: 0.08em;
+            transition: color 0.15s ease;
+            font-size: 0.75rem;
+        }
+
+        nav a:before {
+            content: '[';
+            margin-right: 0.3em;
+        }
+
+        nav a:after {
+            content: ']';
+            margin-left: 0.3em;
         }
 
         nav a:hover, nav a.active {
-            color: var(--accent-primary);
+            color: var(--hazard);
         }
         
         .tutorial-container {
-            max-width: 800px;
+            max-width: 720px;
             margin: 0 auto;
-            padding: 120px 2rem 4rem;
+            padding: 50px 2rem 3rem;
+            border-left: 1px solid var(--ink-line);
+            background: var(--bg-primary);
         }
-        
+
         .tutorial-header {
             text-align: left;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--ink-line);
+            padding-bottom: 1.5rem;
         }
 
         .tutorial-header .cc-tag {
-            margin-bottom: 1rem;
-        }
-
-        .tutorial-header h1 {
-            font-family: var(--font-display);
-            text-transform: uppercase;
-            line-height: 0.9;
-            letter-spacing: 0.005em;
-            font-weight: 400;
-            font-size: clamp(2.75rem, 8vw, 5rem);
             margin-bottom: 0.75rem;
         }
 
+        .tutorial-header h1 {
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            line-height: 1.1;
+            letter-spacing: 0.04em;
+            font-weight: 700;
+            font-size: clamp(1.8rem, 6vw, 2.6rem);
+            margin-bottom: 0.75rem;
+            color: var(--bone);
+        }
+
         .tutorial-header h1 span {
-            color: var(--accent-primary);
+            color: var(--hazard);
+            text-shadow: 0 0 8px rgba(34,211,238,0.2);
         }
 
         .tutorial-header p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
+            color: var(--bone-dim);
+            font-size: 0.95rem;
+            font-family: var(--font-mono);
         }
-        
+
         .tutorial-content {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
         }
-        
+
         .tutorial-step {
             background: var(--ink-raised);
-            border: 2px solid var(--ink-line);
-            border-radius: 4px;
-            padding: 2rem;
-            box-shadow: 6px 6px 0 var(--ink);
+            border: 1px solid var(--ink-line);
+            border-radius: 0;
+            padding: 1.75rem;
+            box-shadow: none;
+        }
+
+        .tutorial-step:hover {
+            border-color: var(--hazard);
+            box-shadow: 0 0 10px rgba(34,211,238,0.1);
         }
 
         .step-number {
             font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--accent-primary);
+            font-size: 0.7rem;
+            color: var(--hazard);
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.08em;
             margin-bottom: 0.5rem;
         }
 
         .step-title {
-            font-family: var(--font-display);
+            font-family: var(--font-mono);
             text-transform: uppercase;
-            line-height: 0.95;
-            letter-spacing: 0.005em;
-            font-weight: 400;
-            font-size: 1.7rem;
+            line-height: 1.1;
+            letter-spacing: 0.06em;
+            font-weight: 700;
+            font-size: 1.1rem;
             margin-bottom: 0.75rem;
+            color: var(--bone);
         }
-        
+
         .step-body {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 1.7;
+            color: var(--bone-dim);
+            font-size: 0.95rem;
+            line-height: 1.55;
+            font-family: var(--font-mono);
         }
         
         .step-body a {
@@ -171,8 +197,8 @@
             width: 100%;
             padding-bottom: 56.25%;
             margin-top: 1rem;
-            border: 2px solid var(--ink-line);
-            border-radius: 4px;
+            border: 1px solid var(--ink-line);
+            border-radius: 0;
             overflow: hidden;
             background: #000;
         }
