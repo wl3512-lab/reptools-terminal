@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login — RepTools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Syne', sans-serif;
+            background: #0a0a0b;
+            color: #fafafa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-box {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+        .logo span {
+            background: linear-gradient(135deg, #22d3ee, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .sub { color: #71717a; font-size: 0.9rem; margin-bottom: 2rem; }
+        .error {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #ef4444;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: #1f1f23;
+            border: 1px solid #27272a;
+            border-radius: 10px;
+            color: #fafafa;
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: 0.15em;
+        }
+        input[type="password"]:focus {
+            border-color: #22d3ee;
+        }
+        input[type="password"]::placeholder {
+            color: #71717a;
+            letter-spacing: 0;
+        }
+        button {
+            width: 100%;
+            padding: 0.85rem;
+            background: linear-gradient(135deg, #22d3ee, #06b6d4);
+            color: #0a0a0b;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 20px rgba(34, 211, 238, 0.2);
+        }
+    </style>
+    {{ ga_snippet|safe }}
+</head>
+<body>
+    <div class="login-box">
+        <div class="logo">⚡ <span>RepTools</span></div>
+        <p class="sub">Admin Access</p>
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+        <form method="POST" action="/admin/login">
+            <input type="password" name="password" placeholder="Enter password" autofocus />
+            <button type="submit">Unlock</button>
+        </form>
+    </div>
+</body>
+</html>

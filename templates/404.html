@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found — RepTools</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/static/css/brand.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--ink); color: var(--bone); min-height: 100vh;
+            font-family: var(--font-body);
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            padding: 24px;
+        }
+        .wrap { max-width: 560px; display: flex; flex-direction: column; align-items: center; }
+        .lost-tag { margin-bottom: 18px; }
+        .code {
+            font-family: var(--font-display); text-transform: uppercase;
+            font-size: clamp(5rem, 22vw, 11rem); letter-spacing: .01em; line-height: .82;
+            color: var(--hazard);
+        }
+        h1 {
+            font-family: var(--font-display); text-transform: uppercase;
+            line-height: .9; font-size: clamp(1.4rem, 5vw, 2.2rem);
+            margin: 14px 0 10px; color: var(--bone);
+        }
+        p { color: var(--bone-dim); line-height: 1.6; margin-bottom: 28px; max-width: 44ch; }
+        .links { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .links a {
+            display: inline-flex; align-items: center;
+            font-family: var(--font-body); font-weight: 800; text-transform: uppercase;
+            letter-spacing: .04em; font-size: 14px; padding: 11px 18px;
+            text-decoration: none; color: var(--bone);
+            background: var(--ink-raised); border: 2px solid var(--ink-line);
+            box-shadow: 4px 4px 0 rgba(0,0,0,.55);
+            transition: border-color .15s, color .15s;
+        }
+        .links a:hover { border-color: var(--hazard); color: var(--hazard); }
+        .brand { margin-bottom: 26px; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <a href="/" class="cc-wordmark cc-wordmark--lg brand"><span class="cc-rep">REP</span><span class="cc-tools">TOOLS</span></a>
+        <span class="cc-tag lost-tag">// LOST CARGO</span>
+        <div class="code">404</div>
+        <h1>This page took a wrong turn</h1>
+        <p>The link may be broken or expired (QC photo links from agents time out). Let's get you back to the good stuff.</p>
+        <div class="links">
+            <a class="cc-btn" href="/">Home</a>
+            <a href="/tools">Tracking &amp; Tools</a>
+            <a href="/products">Browse Reps</a>
+            <a href="/tutorial">Beginner Guide</a>
+        </div>
+    </div>
+</body>
+</html>

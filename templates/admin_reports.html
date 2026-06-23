@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepTools Admin — Tracking Reports</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-card: #18181b;
+            --bg-elevated: #1f1f23;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-primary: #22d3ee;
+            --accent-secondary: #a855f7;
+            --accent-success: #22c55e;
+            --accent-warning: #eab308;
+            --accent-error: #ef4444;
+            --border-color: #27272a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        .topbar {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .topbar h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .topbar-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-left: 1.5rem;
+            transition: color 0.2s;
+        }
+        .topbar-links a:hover { color: var(--accent-primary); }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+        }
+        .stat-value.warn { color: var(--accent-warning); }
+        .stat-value.success { color: var(--accent-success); }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        .filter-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn.active {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.15), rgba(168, 85, 247, 0.15));
+            border-color: var(--accent-primary);
+            color: var(--text-primary);
+        }
+        .report-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .report-card.resolved {
+            opacity: 0.55;
+        }
+        .report-card.resolved .report-status-dot {
+            background: var(--accent-success) !important;
+        }
+        .report-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+        }
+        .report-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 0;
+            flex: 1;
+        }
+        .report-status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-warning);
+            flex-shrink: 0;
+            box-shadow: 0 0 8px currentColor;
+        }
+        .report-title-block {
+            min-width: 0;
+            flex: 1;
+        }
+        .report-issue-type {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+        .report-meta {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+            font-family: 'Space Mono', monospace;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .report-toggle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            transition: transform 0.3s;
+        }
+        .report-card.expanded .report-toggle { transform: rotate(180deg); }
+        .report-body {
+            display: none;
+            padding: 0 1.5rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .report-card.expanded .report-body { display: block; }
+        .detail-group {
+            margin: 1rem 0;
+        }
+        .detail-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.3rem;
+        }
+        .detail-value {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        .description-box {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+        .notes-area {
+            width: 100%;
+            min-height: 60px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.75rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.85rem;
+            resize: vertical;
+        }
+        .actions-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.55rem 1.1rem;
+            border-radius: 8px;
+            border: none;
+            font-family: inherit;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #000;
+        }
+        .btn-success {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-success);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--accent-error);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+        }
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--accent-primary);
+            cursor: pointer;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.4rem;
+            margin-left: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: 1fr 1fr; }
+            .topbar { padding: 1rem; }
+            .container { padding: 1.5rem 1rem; }
+        }
+    </style>
+    {{ ga_snippet|safe }}
+</head>
+<body>
+{% include "_admin_chrome.html" %}
+<div class="rtadm-shift">
+
+    <div class="topbar">
+        <h1>Tracking Reports</h1>
+        <div class="topbar-links">
+            <a href="/admin/orders">Orders</a>
+            <a href="/admin/analytics">Analytics</a>
+            <a href="/admin">Dashboard</a>
+            <a href="/">Back to Site</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-row" id="stats-row"></div>
+        <div class="filter-row">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="open">Open</button>
+            <button class="filter-btn" data-filter="resolved">Resolved</button>
+        </div>
+        <div id="reports-container">
+            <div class="empty-state">Loading...</div>
+        </div>
+    </div>
+
+    <script>
+    var ISSUE_LABELS = {
+        wrong_carrier: '🚚 Wrong Carrier',
+        no_updates: '⏸️ No Updates',
+        wrong_status: '⚠️ Wrong Status',
+        missing_events: '📭 Missing Events',
+        wrong_location: '📍 Wrong Location',
+        other: '❓ Other'
+    };
+
+    var allReports = [];
+    var currentFilter = 'all';
+
+    function timeAgo(dateStr) {
+        if (!dateStr) return '';
+        var date = new Date(dateStr + 'Z');
+        var diff = Math.floor((Date.now() - date) / 1000);
+        if (diff < 60) return 'just now';
+        if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+        if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+        return Math.floor(diff / 86400) + 'd ago';
+    }
+
+    function toggleCard(el) { el.closest('.report-card').classList.toggle('expanded'); }
+
+    function copyToClip(text) {
+        navigator.clipboard.writeText(text);
+    }
+
+    async function action(id, type, extra) {
+        var body = { id: id, action: type };
+        if (extra) Object.assign(body, extra);
+        var r = await fetch('/admin/reports', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body)
+        });
+        if (r.ok) load();
+    }
+
+    function render() {
+        var container = document.getElementById('reports-container');
+        var filtered = allReports.filter(function(r) {
+            if (currentFilter === 'open') return !r.resolved;
+            if (currentFilter === 'resolved') return r.resolved;
+            return true;
+        });
+
+        if (!filtered.length) {
+            container.innerHTML = '<div class="empty-state">No reports' + (currentFilter !== 'all' ? ' in this view' : ' yet') + '</div>';
+            return;
+        }
+
+        var html = '';
+        filtered.forEach(function(r) {
+            var issueLabel = ISSUE_LABELS[r.issue_type] || r.issue_type;
+            html += '<div class="report-card' + (r.resolved ? ' resolved' : '') + '">';
+            html += '<div class="report-header" onclick="toggleCard(this)">';
+            html += '<div class="report-header-left">';
+            html += '<div class="report-status-dot"></div>';
+            html += '<div class="report-title-block">';
+            html += '<div class="report-issue-type">' + issueLabel + '</div>';
+            html += '<div class="report-meta">' + (r.tracking_number || '') + ' · ' + (r.carrier || 'Unknown') + ' · ' + timeAgo(r.submitted_at) + '</div>';
+            html += '</div></div>';
+            html += '<span class="report-toggle">▼</span>';
+            html += '</div>';
+            html += '<div class="report-body">';
+            html += '<div class="detail-group"><div class="detail-label">Tracking Number</div>';
+            html += '<div class="detail-value" style="font-family:Space Mono,monospace;">' + (r.tracking_number || '—');
+            html += '<button class="copy-btn" data-copy="' + (r.tracking_number || '') + '" onclick="copyToClip(this.dataset.copy)">copy</button>';
+            html += '</div></div>';
+            html += '<div class="detail-group"><div class="detail-label">Detected Carrier / Status</div>';
+            html += '<div class="detail-value">' + (r.carrier || '—') + ' · ' + (r.status || '—') + '</div></div>';
+            html += '<div class="detail-group"><div class="detail-label">Description</div>';
+            html += '<div class="description-box">' + (r.description || '').replace(/</g, '&lt;') + '</div></div>';
+            if (r.email) {
+                html += '<div class="detail-group"><div class="detail-label">Reporter Email</div>';
+                html += '<div class="detail-value"><a href="mailto:' + r.email + '" style="color:var(--accent-primary);text-decoration:none;">' + r.email + '</a></div></div>';
+            }
+            html += '<div class="detail-group"><div class="detail-label">Admin Notes</div>';
+            html += '<textarea class="notes-area" id="notes-' + r.id + '" placeholder="Add notes about how you fixed this...">' + (r.admin_notes || '').replace(/"/g, '&quot;') + '</textarea>';
+            html += '<button class="btn btn-secondary" style="margin-top:0.5rem;" onclick="action(' + r.id + ',\'update_notes\',{notes:document.getElementById(\'notes-' + r.id + '\').value})">Save Notes</button>';
+            html += '</div>';
+            html += '<div class="actions-row">';
+            html += '<a href="https://reptoolssssss.onrender.com/api/track" class="btn btn-secondary" style="text-decoration:none;display:inline-flex;align-items:center;" onclick="event.preventDefault();window.open(\'/tools#track\',\'_blank\')">🔍 Test Again</a>';
+            html += '<button class="btn btn-success" onclick="action(' + r.id + ',\'toggle_resolved\')">' + (r.resolved ? '↩️ Mark Open' : '✅ Mark Resolved') + '</button>';
+            html += '<button class="btn btn-danger" onclick="if(confirm(\'Delete this report?\'))action(' + r.id + ',\'delete\')">🗑️ Delete</button>';
+            html += '</div>';
+            html += '</div></div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function load() {
+        fetch('/admin/reports?json=1')
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                allReports = data.reports || [];
+
+                var open = allReports.filter(function(r) { return !r.resolved; }).length;
+                var resolved = allReports.filter(function(r) { return r.resolved; }).length;
+                var withEmail = allReports.filter(function(r) { return r.email; }).length;
+
+                document.getElementById('stats-row').innerHTML =
+                    '<div class="stat-card"><div class="stat-value">' + allReports.length + '</div><div class="stat-label">Total Reports</div></div>' +
+                    '<div class="stat-card"><div class="stat-value warn">' + open + '</div><div class="stat-label">Open</div></div>' +
+                    '<div class="stat-card"><div class="stat-value success">' + resolved + '</div><div class="stat-label">Resolved</div></div>' +
+                    '<div class="stat-card"><div class="stat-value">' + withEmail + '</div><div class="stat-label">With Contact Email</div></div>';
+
+                render();
+            })
+            .catch(function(e) {
+                document.getElementById('reports-container').innerHTML = '<div class="empty-state">Error: ' + e.message + '</div>';
+            });
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            currentFilter = btn.dataset.filter;
+            render();
+        });
+    });
+
+    load();
+    </script>
+</div>
+</body>
+</html>

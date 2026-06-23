@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepTools — Order a Custom Rep Site</title>
+    <meta name="description" content="Want your own rep website? RepTools builds custom rep sites with product listings, package tracking, and affiliate setup. Get a quote.">
+    <link rel="canonical" href="https://rep.tools/order">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Order a Custom Rep Site — RepTools">
+    <meta property="og:description" content="Get your own rep website built — listings, tracking, affiliate setup.">
+    <meta property="og:url" content="https://rep.tools/order">
+    <meta property="og:image" content="https://rep.tools/static/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="RepTools">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Order a Custom Rep Site — RepTools">
+    <meta name="twitter:image" content="https://rep.tools/static/og-image.png">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/static/css/brand.css">
+    <style>
+        :root {
+            --accent-warning: #eab308;
+            --accent-error: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            line-height: 0.9;
+            letter-spacing: 0.005em;
+            font-weight: 400;
+            font-size: clamp(2.6rem, 9vw, 4.5rem);
+            color: var(--text-primary);
+            margin-bottom: 0.9rem;
+        }
+
+        .header .kicker {
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .section {
+            background: var(--ink-raised);
+            border: 2px solid var(--ink-line);
+            border-radius: 4px;
+            box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            line-height: 0.9;
+            letter-spacing: 0.01em;
+            font-weight: 400;
+            font-size: 1.6rem;
+            margin: 0 0 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: var(--hazard);
+            border: 2px solid var(--ink);
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            line-height: 0.9;
+            color: var(--on-hazard);
+            flex-shrink: 0;
+        }
+
+        .field {
+            margin-bottom: 1.25rem;
+        }
+
+        .field:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        label .optional {
+            color: var(--text-muted);
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            font-size: 0.72rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--ink);
+            border: 2px solid var(--ink-line);
+            border-radius: 2px;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            outline: none;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--hazard);
+            box-shadow: 0 0 0 3px rgba(255, 77, 0, 0.25);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2371717a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        select option {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            min-height: 44px;
+            padding: 0.6rem 0.75rem;
+            background: var(--ink);
+            border: 2px solid var(--ink-line);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s;
+            user-select: none;
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--hazard);
+        }
+
+        .checkbox-item:has(input[type="checkbox"]:checked) {
+            border-color: var(--hazard);
+            background: var(--hazard);
+        }
+
+        .checkbox-item:focus-within {
+            border-color: var(--hazard);
+            box-shadow: 0 0 0 3px rgba(255, 77, 0, 0.25);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            margin: 0;
+        }
+
+        .check-box {
+            width: 18px;
+            height: 18px;
+            background: var(--ink);
+            border: 2px solid var(--ink-line);
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        .checkbox-item:has(input[type="checkbox"]:checked) .check-box {
+            background: var(--on-hazard);
+            border-color: var(--on-hazard);
+        }
+
+        .check-box::after {
+            content: '';
+            width: 5px;
+            height: 9px;
+            border: solid var(--hazard);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg) translate(-1px, -1px);
+            display: none;
+        }
+
+        .checkbox-item:has(input[type="checkbox"]:checked) .check-box::after {
+            display: block;
+        }
+
+        .checkbox-label {
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .checkbox-item:has(input[type="checkbox"]:checked) .checkbox-label {
+            color: var(--on-hazard);
+        }
+
+        .color-picker-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .color-option {
+            position: relative;
+            display: inline-flex;
+        }
+
+        .color-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            margin: 0;
+        }
+
+        .color-swatch {
+            width: 44px;
+            height: 44px;
+            border-radius: 2px;
+            cursor: pointer;
+            border: 2px solid var(--ink-line);
+            transition: border-color 0.15s;
+            position: relative;
+            display: block;
+        }
+
+        .color-option:hover .color-swatch {
+            border-color: var(--text-primary);
+        }
+
+        .color-option input[type="radio"]:checked + .color-swatch {
+            border-color: var(--hazard);
+            box-shadow: 0 0 0 2px var(--hazard);
+        }
+
+        .color-option input[type="radio"]:focus-visible + .color-swatch {
+            border-color: var(--hazard);
+            box-shadow: 0 0 0 3px rgba(255, 77, 0, 0.4);
+        }
+
+        .color-option input[type="radio"]:checked + .color-swatch::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .custom-color-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .custom-color-input input[type="color"] {
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--ink-line);
+            border-radius: 2px;
+            cursor: pointer;
+            background: none;
+            padding: 0;
+        }
+
+        .submit-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 1.1em 1.4em;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn:disabled,
+        .submit-btn:disabled:hover {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 4px 4px 0 var(--ink);
+        }
+
+        .success-msg {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+            outline: none;
+        }
+
+        .success-msg h2 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            line-height: 0.9;
+            font-weight: 400;
+            font-size: 2.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .success-msg p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        .required-mark {
+            color: var(--hazard);
+            margin-left: 0.15rem;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        fieldset.checkbox-fieldset {
+            border: none;
+            margin: 0;
+            padding: 0;
+            min-width: 0;
+        }
+
+        fieldset.checkbox-fieldset legend {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            padding: 0;
+        }
+
+        fieldset.checkbox-fieldset legend .optional {
+            color: var(--text-muted);
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            font-size: 0.72rem;
+        }
+
+        .form-error {
+            display: none;
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background: var(--ink-raised);
+            border: 2px solid var(--rl);
+            border-radius: 2px;
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            letter-spacing: 0.03em;
+        }
+
+        .form-error.visible {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 1.5rem 1rem 3rem; }
+            .section { padding: 1.5rem; box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5); }
+            .row { grid-template-columns: 1fr; }
+            .checkbox-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    {{ ga_snippet|safe }}
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="/" class="cc-wordmark cc-wordmark--lg" style="margin-bottom:1.25rem;"><span class="cc-rep">REP</span><span class="cc-tools">TOOLS</span></a>
+            <div class="kicker"><span class="cc-tag">// ORDER FORM</span></div>
+            <h1>Get Your Own Rep Site</h1>
+            <p>Fill out this form and I'll build you a fully custom rep tools website, your brand, your agent, your audience.</p>
+        </div>
+
+        <form id="order-form">
+            <!-- Section 1: About You -->
+            <div class="section">
+                <h2 class="section-title"><span class="step-number">1</span> About You</h2>
+                <div class="section-subtitle">Who are you and how do people find you?</div>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="brand_name">Your Name / Brand Name <span class="required-mark" aria-hidden="true">*</span></label>
+                        <input type="text" id="brand_name" name="brand_name" required aria-required="true" placeholder="e.g. RepKing, BudgetFinds">
+                    </div>
+                    <div class="field">
+                        <label for="email">Contact Email <span class="required-mark" aria-hidden="true">*</span></label>
+                        <input type="email" id="email" name="email" required aria-required="true" placeholder="you@email.com">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="discord">Discord Username <span class="optional">(optional)</span></label>
+                    <input type="text" id="discord" name="discord" placeholder="e.g. repking#0001">
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="tiktok">TikTok <span class="optional">(optional)</span></label>
+                        <input type="text" id="tiktok" name="tiktok" placeholder="@yourtiktok">
+                    </div>
+                    <div class="field">
+                        <label for="youtube">YouTube <span class="optional">(optional)</span></label>
+                        <input type="text" id="youtube" name="youtube" placeholder="@yourchannel">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="instagram">Instagram <span class="optional">(optional)</span></label>
+                        <input type="text" id="instagram" name="instagram" placeholder="@yourinstagram">
+                    </div>
+                    <div class="field">
+                        <label for="reddit">Reddit <span class="optional">(optional)</span></label>
+                        <input type="text" id="reddit" name="reddit" placeholder="u/yourusername">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="audience_size">Audience Size <span class="optional">(rough estimate)</span></label>
+                    <select id="audience_size" name="audience_size">
+                        <option value="">Select...</option>
+                        <option value="starting">Just starting out</option>
+                        <option value="small">Under 1K followers</option>
+                        <option value="medium">1K - 10K followers</option>
+                        <option value="large">10K - 50K followers</option>
+                        <option value="huge">50K+ followers</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Section 2: Your Agent -->
+            <div class="section">
+                <h2 class="section-title"><span class="step-number">2</span> Agent & Affiliate</h2>
+                <div class="section-subtitle">Which agent do you promote? This drives your revenue.</div>
+
+                <div class="field">
+                    <label for="primary_agent">Primary Agent <span class="required-mark" aria-hidden="true">*</span></label>
+                    <select id="primary_agent" name="primary_agent" required aria-required="true">
+                        <option value="">Select your agent...</option>
+                        <option value="kakobuy">KakoBuy</option>
+                        <option value="cnfans">CNFans</option>
+                        <option value="sugargoo">Sugargoo</option>
+                        <option value="cssbuy">CSSBuy</option>
+                        <option value="superbuy">Superbuy</option>
+                        <option value="oopbuy">OopBuy</option>
+                        <option value="acbuy">ACBuy</option>
+                        <option value="litbuy">LitBuy</option>
+                        <option value="mulebuy">MuleBuy</option>
+                        <option value="allchinabuy">AllChinaBuy</option>
+                        <option value="other">Other</option>
+                        <option value="none">Don't have one yet</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="affiliate_code">Your Affiliate Code <span class="optional">(if you have one)</span></label>
+                    <input type="text" id="affiliate_code" name="affiliate_code" placeholder="e.g. repking2024">
+                    <div class="hint">This gets embedded into all product links on your site</div>
+                </div>
+
+                <div class="field">
+                    <label for="secondary_agent">Secondary Agent <span class="optional">(optional)</span></label>
+                    <select id="secondary_agent" name="secondary_agent">
+                        <option value="">None</option>
+                        <option value="kakobuy">KakoBuy</option>
+                        <option value="cnfans">CNFans</option>
+                        <option value="sugargoo">Sugargoo</option>
+                        <option value="cssbuy">CSSBuy</option>
+                        <option value="superbuy">Superbuy</option>
+                        <option value="oopbuy">OopBuy</option>
+                        <option value="acbuy">ACBuy</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Section 3: Features -->
+            <div class="section">
+                <h2 class="section-title"><span class="step-number">3</span> Features</h2>
+                <div class="section-subtitle">Pick everything you want on your site. More features = more value for your audience.</div>
+
+                <div class="field">
+                    <fieldset class="checkbox-fieldset">
+                        <legend>Features</legend>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="features" value="product_listings" checked>
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Product Listings</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="features" value="package_tracking">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Package Tracking</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="features" value="qc_photos">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">QC Photo Gallery</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="features" value="link_converter">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Link Converter</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="features" value="size_calculator">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Size Calculator</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="features" value="shipping_calculator">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Shipping Calculator</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="features" value="beginner_guide">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Beginner Guide</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="features" value="bg_remover">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Background Remover</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="features" value="discord_integration">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Discord Integration</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="features" value="analytics">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Analytics Dashboard</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="features" value="signup_popup">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Signup Popup</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <!-- Section 4: Branding -->
+            <div class="section">
+                <h2 class="section-title"><span class="step-number">4</span> Branding & Style</h2>
+                <div class="section-subtitle">How should your site look and feel?</div>
+
+                <div class="field">
+                    <label for="vibe">Describe your website's vibe</label>
+                    <textarea id="vibe" name="vibe" rows="3" placeholder="e.g. Clean and minimal, dark mode, techy feel with neon accents. Think futuristic streetwear catalog."></textarea>
+                    <div class="hint">One or two sentences is fine, just give a baseline of what you're going for. More detail is always helpful.</div>
+                </div>
+
+                <div class="field">
+                    <fieldset class="checkbox-fieldset">
+                        <legend>Color Theme</legend>
+                        <div class="color-picker-row">
+                            <span class="color-option">
+                                <input type="radio" name="color_theme" id="theme-cyan-purple" value="cyan-purple">
+                                <label class="color-swatch" for="theme-cyan-purple" style="background: linear-gradient(135deg, #22d3ee, #a855f7);" title="Cyan & Purple"><span class="visually-hidden">Cyan and Purple</span></label>
+                            </span>
+                            <span class="color-option">
+                                <input type="radio" name="color_theme" id="theme-red-orange" value="red-orange">
+                                <label class="color-swatch" for="theme-red-orange" style="background: linear-gradient(135deg, #ef4444, #f97316);" title="Red & Orange"><span class="visually-hidden">Red and Orange</span></label>
+                            </span>
+                            <span class="color-option">
+                                <input type="radio" name="color_theme" id="theme-green-teal" value="green-teal">
+                                <label class="color-swatch" for="theme-green-teal" style="background: linear-gradient(135deg, #22c55e, #14b8a6);" title="Green & Teal"><span class="visually-hidden">Green and Teal</span></label>
+                            </span>
+                            <span class="color-option">
+                                <input type="radio" name="color_theme" id="theme-blue-violet" value="blue-violet">
+                                <label class="color-swatch" for="theme-blue-violet" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);" title="Blue & Violet"><span class="visually-hidden">Blue and Violet</span></label>
+                            </span>
+                            <span class="color-option">
+                                <input type="radio" name="color_theme" id="theme-rose-pink" value="rose-pink">
+                                <label class="color-swatch" for="theme-rose-pink" style="background: linear-gradient(135deg, #f43f5e, #ec4899);" title="Rose & Pink"><span class="visually-hidden">Rose and Pink</span></label>
+                            </span>
+                            <span class="color-option">
+                                <input type="radio" name="color_theme" id="theme-gold-orange" value="gold-orange">
+                                <label class="color-swatch" for="theme-gold-orange" style="background: linear-gradient(135deg, #eab308, #f97316);" title="Gold & Orange"><span class="visually-hidden">Gold and Orange</span></label>
+                            </span>
+                            <span class="custom-color-input">
+                                <label for="custom_color" class="visually-hidden">Pick a custom color</label>
+                                <input type="color" id="custom_color" name="custom_color" value="#22d3ee" title="Pick custom color">
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">Custom</span>
+                            </span>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="field">
+                    <label for="domain">Domain Name <span class="optional">(if you have one)</span></label>
+                    <input type="text" id="domain" name="domain" placeholder="e.g. repking.com or repking.tools">
+                    <div class="hint">Don't have one? No worries, I can help you pick and set one up</div>
+                </div>
+
+                <div class="field">
+                    <label for="logo_url">Logo <span class="optional">(optional)</span></label>
+                    <input type="url" id="logo_url" name="logo_url" placeholder="Paste a link to your logo image">
+                    <div class="hint">Discord avatar, YouTube profile pic, or any image link works</div>
+                </div>
+
+                <div class="field">
+                    <label for="tagline">Tagline <span class="optional">(optional)</span></label>
+                    <input type="text" id="tagline" name="tagline" placeholder="e.g. Your #1 source for rep finds">
+                </div>
+            </div>
+
+            <!-- Section 5: Content -->
+            <div class="section">
+                <h2 class="section-title"><span class="step-number">5</span> Your Content</h2>
+                <div class="section-subtitle">What do you already have that we can put on your site?</div>
+
+                <div class="field">
+                    <label for="content_focus">What do you mainly post about?</label>
+                    <select id="content_focus" name="content_focus">
+                        <option value="">Select...</option>
+                        <option value="finds">Finds / Links (shoes, clothes, accessories)</option>
+                        <option value="reviews">Reviews / QC Photos</option>
+                        <option value="tutorials">Tutorials / How-to Guides</option>
+                        <option value="hauls">Hauls / Unboxing</option>
+                        <option value="mix">A mix of everything</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="spreadsheet_url">Do you have a spreadsheet of finds/links? <span class="optional">(optional)</span></label>
+                    <input type="url" id="spreadsheet_url" name="spreadsheet_url" placeholder="Google Sheets / Notion link">
+                    <div class="hint">If you have existing product links, I can import them directly</div>
+                </div>
+
+                <div class="field">
+                    <label for="target_audience">Target audience</label>
+                    <select id="target_audience" name="target_audience">
+                        <option value="">Select...</option>
+                        <option value="beginners">Beginners (first-time buyers)</option>
+                        <option value="experienced">Experienced rep buyers</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <fieldset class="checkbox-fieldset">
+                        <legend>Main categories <span class="optional">(what kind of reps?)</span></legend>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="categories" value="shoes">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Shoes / Sneakers</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="categories" value="clothing">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Clothing</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="categories" value="bags">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Bags / Accessories</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="categories" value="watches">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Watches / Jewelry</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="categories" value="tech">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Tech / Electronics</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="categories" value="other">
+                                <span class="check-box"></span>
+                                <span class="checkbox-label">Other</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <!-- Section 6: Anything Else -->
+            <div class="section">
+                <h2 class="section-title"><span class="step-number">6</span> Anything Else</h2>
+                <div class="section-subtitle">Any special requests, ideas, or sites you want yours to look like?</div>
+
+                <div class="field">
+                    <label for="notes">Additional Notes <span class="optional">(optional)</span></label>
+                    <textarea id="notes" name="notes" placeholder="Tell me anything else: inspiration sites, specific features, timeline, budget, etc."></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="referral">How did you hear about this?</label>
+                    <select id="referral" name="referral">
+                        <option value="">Select...</option>
+                        <option value="friend">A friend told me</option>
+                        <option value="discord">Discord</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="reddit">Reddit</option>
+                        <option value="reptools">RepTools site</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="cc-btn submit-btn" aria-describedby="form-error">Submit Order</button>
+            <div class="form-error" id="form-error" role="alert" aria-live="polite"></div>
+        </form>
+
+        <div class="success-msg" id="success-msg" role="status" tabindex="-1">
+            <div class="kicker" style="margin-bottom:1rem;"><span class="cc-tag cc-tag--gl">// ORDER RECEIVED</span></div>
+            <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--gl);">&#10003;</div>
+            <h2>Order Received!</h2>
+            <p>I'll review your details and get back to you within 24-48 hours. Keep an eye on your email/Discord for updates.</p>
+            <p style="margin-top: 1.5rem; color: var(--text-muted); font-size: 0.85rem;">- Lude</p>
+        </div>
+    </div>
+
+    <script>
+    var errorBox = document.getElementById('form-error');
+
+    function showError(msg) {
+        errorBox.textContent = msg;
+        errorBox.classList.add('visible');
+    }
+
+    function clearError() {
+        errorBox.textContent = '';
+        errorBox.classList.remove('visible');
+    }
+
+    document.getElementById('order-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        clearError();
+        var btn = this.querySelector('.submit-btn');
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+
+        var formData = new FormData(this);
+        var data = {};
+        formData.forEach(function(value, key) {
+            if (key === 'features' || key === 'categories') {
+                if (!data[key]) data[key] = [];
+                data[key].push(value);
+            } else {
+                data[key] = value;
+            }
+        });
+
+        fetch('/api/site-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(resp) {
+            if (resp.success) {
+                document.getElementById('order-form').style.display = 'none';
+                var success = document.getElementById('success-msg');
+                success.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                success.focus();
+            } else {
+                btn.disabled = false;
+                btn.textContent = 'Submit Order';
+                showError(resp.error || 'Something went wrong. Try again.');
+            }
+        })
+        .catch(function() {
+            btn.disabled = false;
+            btn.textContent = 'Submit Order';
+            showError('Network error. Check your connection and try again.');
+        });
+    });
+    </script>
+</body>
+</html>

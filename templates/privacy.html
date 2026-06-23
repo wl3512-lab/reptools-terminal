@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — RepTools</title>
+    <meta name="description" content="How RepTools collects, uses, and protects your data: package-tracking emails, optional marketing opt-in, click analytics, and cookies. Your rights under GDPR, UK GDPR, and CCPA.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://rep.tools/privacy">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Privacy Policy — RepTools">
+    <meta property="og:description" content="How RepTools collects, uses, and protects your data.">
+    <meta property="og:url" content="https://rep.tools/privacy">
+    <meta property="og:site_name" content="RepTools">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="apple-touch-icon" href="/static/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/static/css/brand.css">
+
+    <style>
+        :root {
+            --glow-cyan: rgba(255, 77, 0, 0.15);
+            --glow-purple: rgba(214, 255, 63, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .orb-1 { width: 480px; height: 480px; background: var(--accent-primary); top: -160px; right: -120px; }
+        .orb-2 { width: 420px; height: 420px; background: var(--accent-secondary); bottom: -180px; left: -140px; }
+
+        a { color: var(--accent-primary); text-decoration: none; transition: color .15s ease; }
+        a:hover { color: var(--accent-secondary); text-decoration: underline; }
+
+        /* ---------- Top bar ---------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: rgba(10, 10, 11, 0.78);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .brand {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            line-height: .9;
+            font-size: 1.25rem;
+            letter-spacing: 0.01em;
+            color: var(--text-primary);
+        }
+        .brand span { color: var(--hazard); }
+        .brand:hover { text-decoration: none; }
+        .back-link {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+            padding: 0.45rem 0.85rem;
+            transition: border-color .15s ease, color .15s ease;
+        }
+        .back-link:hover { border-color: var(--accent-primary); color: var(--accent-primary); text-decoration: none; }
+
+        /* ---------- Layout ---------- */
+        .wrap {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 1rem;
+        }
+
+        .page-head {
+            text-align: center;
+            margin-bottom: 2.75rem;
+        }
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            margin-bottom: 0.75rem;
+        }
+        h1 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            font-size: clamp(2.4rem, 6vw, 3.6rem);
+            letter-spacing: 0.005em;
+            color: var(--hazard);
+            line-height: .9;
+        }
+        .effective {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+        }
+
+        .lede {
+            background: var(--bg-card);
+            border: 2px solid var(--hazard);
+            box-shadow: 6px 6px 0 var(--hazard);
+            padding: 1.5rem 1.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+        .lede strong { color: var(--text-primary); }
+
+        /* ---------- TOC ---------- */
+        .toc {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            box-shadow: 6px 6px 0 rgba(0,0,0,.55);
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 2.5rem;
+        }
+        .toc h2 {
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .toc ol {
+            list-style: none;
+            counter-reset: toc;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.4rem 1.5rem;
+        }
+        .toc li { counter-increment: toc; }
+        .toc li a { color: var(--text-secondary); font-size: 0.95rem; }
+        .toc li a::before {
+            content: counter(toc, decimal-leading-zero);
+            font-family: var(--font-mono);
+            color: var(--accent-primary);
+            margin-right: 0.6rem;
+            font-size: 0.8rem;
+        }
+        .toc li a:hover { color: var(--accent-primary); text-decoration: none; }
+
+        /* ---------- Sections ---------- */
+        section {
+            margin-bottom: 2.75rem;
+            scroll-margin-top: 5rem;
+        }
+        section > h2 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            font-size: 1.7rem;
+            letter-spacing: 0.005em;
+            line-height: .95;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+        }
+        section > h2 .num {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+        section h3 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            font-size: 1.25rem;
+            letter-spacing: 0.01em;
+            color: var(--text-primary);
+            margin: 1.5rem 0 0.5rem;
+        }
+        section p { color: var(--text-secondary); margin-bottom: 1rem; }
+        section ul { list-style: none; margin: 0 0 1rem; }
+        section ul li {
+            color: var(--text-secondary);
+            padding-left: 1.4rem;
+            position: relative;
+            margin-bottom: 0.55rem;
+        }
+        section ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+        }
+        section strong { color: var(--text-primary); }
+        code {
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 0.1rem 0.4rem;
+            color: var(--accent-primary);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            box-shadow: 6px 6px 0 rgba(0,0,0,.55);
+            padding: 1.4rem 1.6rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .callout {
+            background: var(--bg-card);
+            border: 2px solid var(--hazard);
+            box-shadow: 6px 6px 0 var(--hazard);
+            padding: 1.4rem 1.6rem;
+            margin: 1.25rem 0;
+        }
+        .callout p { color: var(--text-primary); margin-bottom: 0; }
+
+        /* ---------- Tables ---------- */
+        .table-scroll { overflow-x: auto; margin: 1rem 0 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 560px;
+            font-size: 0.92rem;
+        }
+        thead th {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        tbody td {
+            padding: 0.85rem 1rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:nth-child(even) td { background: rgba(255,255,255,0.012); }
+        tbody td strong { color: var(--text-primary); }
+
+        /* ---------- Contact box ---------- */
+        .contact-box {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            box-shadow: 6px 6px 0 rgba(0,0,0,.55);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .contact-box .pill {
+            display: inline-block;
+            font-family: var(--font-mono);
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1.1rem;
+            margin: 0.4rem 0.3rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        .contact-box .pill b { color: var(--accent-primary); }
+
+        /* ---------- Footer ---------- */
+        footer {
+            border-top: 1px solid var(--border-color);
+            margin-top: 3rem;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+        }
+        footer .brand { font-size: 1.05rem; margin-bottom: 0.75rem; display: inline-block; }
+        footer nav { margin: 0.75rem 0 1rem; display: flex; flex-wrap: wrap; gap: 1.25rem; justify-content: center; }
+        footer nav a { color: var(--text-secondary); font-size: 0.9rem; }
+        footer .fineprint { color: var(--text-muted); font-size: 0.8rem; font-family: var(--font-mono); max-width: 640px; margin: 0.5rem auto 0; }
+
+        .site-header { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1.3rem 2rem; border-bottom:1px solid var(--border-color); background:rgba(10,10,11,0.82); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); position:sticky; top:0; z-index:100; }
+        .site-header .logo { display:inline-flex; align-items:center; gap:0.55rem; font-size:1.4rem; font-weight:800; letter-spacing:-0.02em; color:var(--text-primary); text-decoration:none; }
+        .site-header .logo:hover { text-decoration:none; }
+        .site-header .logo-icon { width:40px; height:40px; border-radius:10px; overflow:hidden; flex-shrink:0; }
+        .site-header .logo-icon img { width:100%; height:100%; object-fit:contain; display:block; }
+        .site-header .accent { color:var(--hazard); }
+        .site-header .site-nav { display:flex; align-items:center; gap:1.6rem; }
+        .site-header .site-nav a { color:var(--text-secondary); text-decoration:none; font-weight:500; font-size:0.95rem; transition:color .2s ease; }
+        .site-header .site-nav a:hover { color:var(--accent-primary); }
+        .site-header .site-nav .nav-cta { padding:0.55rem 1.15rem; background:var(--hazard); color:var(--on-hazard); border:2px solid var(--ink); box-shadow:4px 4px 0 var(--ink); font-family:var(--font-body); font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
+        .site-header .site-nav .nav-cta:hover { color:var(--on-hazard); }
+        @media (max-width: 640px) {
+            .toc ol { grid-template-columns: 1fr; }
+            .wrap { padding-top: 2.5rem; }
+            .site-header { padding:0.9rem 1.1rem; }
+            .site-header .logo { font-size:1.2rem; }
+            .site-header .logo-icon { width:34px; height:34px; }
+            .site-header .site-nav { gap:0.9rem; }
+            .site-header .site-nav a:not(.nav-cta) { display:none; }
+            .site-header .site-nav .nav-cta { padding:0.5rem 1rem; font-size:0.88rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <header class="site-header">
+        <a href="/" class="cc-wordmark cc-wordmark--lg"><span class="cc-rep">REP</span><span class="cc-tools">TOOLS</span></a>
+        <div class="site-nav">
+            <a href="/">Home</a>
+            <a href="/products">Products</a>
+            <a href="/tools">Tools</a>
+            <a href="/tutorial" class="nav-cta">Tutorial</a>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <div class="page-head">
+            <div class="eyebrow">Legal</div>
+            <h1>Privacy Policy</h1>
+            <p class="effective">Effective date: 15 June 2026 &nbsp;&middot;&nbsp; Last updated: 15 June 2026</p>
+        </div>
+
+        <div class="lede">
+            <p>This policy explains, in plain English, exactly what RepTools (<strong>rep.tools</strong>, and our mirror domains <strong>reptools.org</strong> and <strong>reptools.net</strong>) collects, why we collect it, who we share it with, and the choices and rights you have. We try to keep data collection to the minimum needed to run the site. <strong>We do not sell your personal data.</strong></p>
+        </div>
+
+        <nav class="toc" aria-label="Table of contents">
+            <h2>On this page</h2>
+            <ol>
+                <li><a href="#who-we-are">Who we are</a></li>
+                <li><a href="#what-we-collect">What we collect &amp; why</a></li>
+                <li><a href="#legal-bases">Legal bases</a></li>
+                <li><a href="#cookies">Cookies &amp; analytics</a></li>
+                <li><a href="#third-parties">Who we share data with</a></li>
+                <li><a href="#international">International transfers</a></li>
+                <li><a href="#retention">How long we keep data</a></li>
+                <li><a href="#your-rights">Your rights &amp; choices</a></li>
+                <li><a href="#security">Security</a></li>
+                <li><a href="#children">Children</a></li>
+                <li><a href="#changes">Changes to this policy</a></li>
+                <li><a href="#contact">Contact us</a></li>
+            </ol>
+        </nav>
+
+        <section id="who-we-are">
+            <h2><span class="num">01</span> Who we are</h2>
+            <p>RepTools is an independent, hobby-run website that provides online-shopping tools and information: it lists products, tracks shipping packages, shows quality-control (QC) photos, and points users to third-party shopping agents through affiliate links. For the purposes of data protection law (including the EU GDPR and UK GDPR), RepTools is the "data controller" for the limited personal data described below.</p>
+            <p>The site is operated by an individual. The quickest way to reach a real person is on Discord at <strong>@lude5</strong> &mdash; see the <a href="#contact">Contact</a> section for all options.</p>
+        </section>
+
+        <section id="what-we-collect">
+            <h2><span class="num">02</span> What we collect &amp; why</h2>
+            <p>We only collect what we actually need. Here is the complete list of personal data the site processes.</p>
+
+            <h3>a) Your email address (for package-update notifications)</h3>
+            <p>When you ask us to email you about a package, you give us your email address and a tracking number. We store these together so we can email you when that package's status changes (for example, "in transit", "out for delivery", "delivered"). We also store the carrier/courier code we detect for that tracking number, and a record of the last status we notified you about, so we don't send duplicate emails.</p>
+            <ul>
+                <li><strong>What:</strong> email address, tracking number, detected courier code, last-notified status and timestamp.</li>
+                <li><strong>Why:</strong> to send you the package-update emails you specifically requested.</li>
+            </ul>
+
+            <h3>b) Marketing emails (deals &amp; new finds)</h3>
+            <p>When you subscribe for package updates, the form tells you that you'll also receive occasional related emails from RepTools &mdash; deals, drops, and new finds. This is the only marketing we send, it is closely related to the service you signed up for, and you can <strong>opt out at any time</strong> using the one-click unsubscribe link in every email (or by emailing us). We note on your subscription that you were shown this notice.</p>
+            <ul>
+                <li><strong>What:</strong> a marketing flag tied to your email subscription.</li>
+                <li><strong>Why:</strong> to send occasional closely-related offers to people who signed up, on a soft opt-in basis, always with an easy way out. Subscriptions we import from elsewhere are never added to marketing.</li>
+            </ul>
+
+            <h3>c) Email deliverability data (bounces &amp; complaints)</h3>
+            <p>If an email we send you bounces, or you mark it as spam, our email provider tells us, and we add your address to an internal <strong>suppression list</strong> so we stop emailing you. This protects your inbox and our sending reputation.</p>
+
+            <h3>d) Affiliate click analytics</h3>
+            <p>When you click a product/affiliate link (for example a "Buy" or "QC" link, or a redirect through our <code>/go/</code> links), we log the click so we can see which products are popular and how the site is being used. Importantly, we <strong>do not store your raw IP address</strong> for this. Your IP is run through a one-way SHA-256 hash and truncated to a short fragment before it is saved &mdash; we keep it only as a rough way to estimate distinct visitors, and it cannot be reversed back into your IP address.</p>
+            <ul>
+                <li><strong>What:</strong> a one-way <strong>hashed</strong> fragment of your IP address (not your real IP), your browser's user-agent string (truncated), the referring page, the product/category clicked, the agent (e.g. KakoBuy), and a timestamp.</li>
+                <li><strong>Why:</strong> internal analytics &mdash; to understand which products and pages people use, and to count affiliate clicks.</li>
+            </ul>
+            <div class="callout">
+                <p><strong>Note on "country":</strong> our analytics database has a column that could hold a country value, but the click-logging code does not currently populate it from visitors. Any country information you may see on the site relates to a <em>package's</em> origin/destination (from the tracking carrier), not to your personal location.</p>
+            </div>
+
+            <h3>e) Admin session cookies</h3>
+            <p>The site uses a session cookie only for the private admin login (the site operator). It is set with the secure flags <code>Secure</code>, <code>HttpOnly</code>, and <code>SameSite=Lax</code>. Ordinary visitors browsing the public site are not asked to log in and are not assigned a login cookie.</p>
+
+            <h3>f) Analytics cookies (only if enabled)</h3>
+            <p>If Google Analytics is switched on (it loads only when a Google Analytics measurement ID is configured for the site), Google may set cookies and process data about your visit. See the <a href="#cookies">Cookies &amp; analytics</a> section for details and how to opt out.</p>
+
+            <h3>What we do NOT collect</h3>
+            <ul>
+                <li>We do not ask for or store your name, postal address, phone number, or payment details. RepTools does not process payments &mdash; purchases happen on third-party shopping-agent sites under their own policies.</li>
+                <li>We do not store your raw IP address for click analytics (it is hashed, as described above).</li>
+                <li>We do not sell, rent, or trade your personal data to anyone.</li>
+            </ul>
+        </section>
+
+        <section id="legal-bases">
+            <h2><span class="num">03</span> Legal bases (GDPR / UK GDPR)</h2>
+            <p>If you are in the UK, EU, or EEA, we rely on the following lawful bases to process your data:</p>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr><th>Data / activity</th><th>Lawful basis</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Package-update emails</strong> (email + tracking number)</td><td>Performance of a service you requested, and our legitimate interest in providing it. You can unsubscribe at any time.</td></tr>
+                        <tr><td><strong>Marketing emails</strong> (deals &amp; new finds)</td><td>Our <strong>legitimate interest</strong> in telling existing subscribers about closely-related offers (a "soft opt-in"), with clear notice at signup and one-click unsubscribe in every email. You can opt out at any time.</td></tr>
+                        <tr><td><strong>Suppression list</strong> (bounces/complaints)</td><td>Legal obligation / legitimate interest in honouring your opt-out and not sending unwanted email.</td></tr>
+                        <tr><td><strong>Click analytics</strong> (hashed IP, user-agent, referrer)</td><td>Legitimate interest in understanding and improving how the site is used, using minimised, non-identifying data.</td></tr>
+                        <tr><td><strong>Essential admin session cookie</strong></td><td>Legitimate interest / necessity in securing the admin area.</td></tr>
+                        <tr><td><strong>Google Analytics cookies</strong> (if enabled)</td><td>Your <strong>consent</strong>, where required by ePrivacy / PECR rules for non-essential cookies.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="cookies">
+            <h2><span class="num">04</span> Cookies &amp; analytics</h2>
+            <p>A cookie is a small file a website stores in your browser. RepTools keeps its cookie use very light.</p>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr><th>Cookie</th><th>Type</th><th>Purpose</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Flask session</strong></td><td>Essential</td><td>Keeps the site operator logged in to the private admin area. Set with <code>Secure</code>, <code>HttpOnly</code>, <code>SameSite=Lax</code>. Not used for tracking ordinary visitors.</td></tr>
+                        <tr><td><strong>Google Analytics</strong> (e.g. <code>_ga</code>, <code>_ga_*</code>)</td><td>Optional / analytics</td><td>Only loaded if Google Analytics is configured for the site. Helps us understand aggregate traffic. Set and read by Google.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>About Google Analytics</h3>
+            <p>Google Analytics is <strong>only active if a measurement ID has been configured</strong> for the site; otherwise no Google Analytics script loads at all and no Google cookies are set. When it is active, Google processes data such as your hashed/IP-derived approximate location, device and browser information, and pages viewed, as an independent processor/controller under Google's own terms.</p>
+            <p>You can opt out of Google Analytics in any of these ways:</p>
+            <ul>
+                <li>Install Google's official <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener nofollow" target="_blank">browser opt-out add-on</a>.</li>
+                <li>Use your browser's "Do Not Track", cookie controls, or a privacy/ad-blocking extension.</li>
+                <li>Block third-party and analytics cookies in your browser settings.</li>
+            </ul>
+            <p>Learn more about how Google uses data at <a href="https://policies.google.com/privacy" rel="noopener nofollow" target="_blank">policies.google.com/privacy</a> and <a href="https://policies.google.com/technologies/partner-sites" rel="noopener nofollow" target="_blank">how Google uses data from sites that use its services</a>.</p>
+        </section>
+
+        <section id="third-parties">
+            <h2><span class="num">05</span> Who we share data with</h2>
+            <p>We share data only with the service providers we need to run the site. Each has its own privacy policy governing what it does with data.</p>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr><th>Service</th><th>What it does for us</th><th>What it may receive</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Package-tracking data provider</strong></td>
+                            <td>A third-party tracking-data service that returns package status and sends us status-change updates.</td>
+                            <td>The tracking numbers you submit. (We store subscriptions locally; the provider does not hold your email.)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email delivery provider</strong></td>
+                            <td>A third-party email service that delivers our notification and marketing emails and reports bounces/complaints.</td>
+                            <td>Your email address and the email content we send you.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>KakoBuy</strong></td>
+                            <td>Shopping agent we link to via affiliate code "thelude"; we also fetch QC photos from it.</td>
+                            <td>When you click through to KakoBuy, your visit happens on their site under their policy. We do not pass them your email. Standard affiliate referral parameters may be included in the link.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Google Analytics</strong> (if enabled)</td>
+                            <td>Aggregate website analytics.</td>
+                            <td>Usage and device data, plus Google cookies, as described above.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cloud hosting provider</strong></td>
+                            <td>A third-party cloud platform that runs our servers and stores our database.</td>
+                            <td>Anything processed by the site, including standard server logs, is hosted on the provider's infrastructure.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>We may also disclose data if required to comply with a valid legal request, to enforce our terms, or to protect the rights, safety, and security of our users or the site.</p>
+            <p><strong>We do not sell your personal data, and we do not "share" it for cross-context behavioural advertising</strong> as those terms are defined under California law (CCPA/CPRA).</p>
+        </section>
+
+        <section id="international">
+            <h2><span class="num">06</span> International data transfers</h2>
+            <p>RepTools has a global audience, including many users in the UK and EU. The service providers listed above may process data on servers located outside your country, including in the United States. Where personal data of UK/EU/EEA users is transferred internationally, those providers rely on recognised safeguards such as the EU Standard Contractual Clauses and/or the EU-U.S. Data Privacy Framework. By using the site you understand your data may be processed in these locations.</p>
+        </section>
+
+        <section id="retention">
+            <h2><span class="num">07</span> How long we keep data</h2>
+            <ul>
+                <li><strong>Tracking subscriptions (email + tracking number):</strong> kept while your subscription is active so we can notify you. When you unsubscribe or ask us to delete your data, we remove or deactivate it.</li>
+                <li><strong>Marketing consent flag:</strong> kept for as long as your subscription exists; cleared when you unsubscribe or are deleted.</li>
+                <li><strong>Suppression list (bounces/complaints):</strong> retained for as long as needed to keep honouring your opt-out and avoid emailing addresses that have bounced or complained.</li>
+                <li><strong>Click analytics (hashed IP, user-agent, referrer):</strong> kept for analytics purposes. Because the IP is irreversibly hashed, these records are not directly identifying. We periodically prune or aggregate older analytics data.</li>
+                <li><strong>Server logs:</strong> standard hosting logs are retained by our hosting provider per their policies and are used for security and troubleshooting.</li>
+            </ul>
+        </section>
+
+        <section id="your-rights">
+            <h2><span class="num">08</span> Your rights &amp; choices</h2>
+            <p>Depending on where you live (e.g. under the UK GDPR, EU GDPR, or California's CCPA/CPRA), you have some or all of the following rights:</p>
+            <ul>
+                <li><strong>Access</strong> &mdash; ask what personal data we hold about you.</li>
+                <li><strong>Rectification</strong> &mdash; ask us to correct inaccurate data.</li>
+                <li><strong>Erasure / deletion</strong> &mdash; ask us to delete your data.</li>
+                <li><strong>Restriction &amp; objection</strong> &mdash; ask us to limit, or object to, certain processing (including direct marketing).</li>
+                <li><strong>Withdraw consent</strong> &mdash; for anything based on consent (marketing email, analytics cookies), at any time, without affecting prior lawful processing.</li>
+                <li><strong>Portability</strong> &mdash; receive your data in a portable format, where applicable.</li>
+                <li><strong>Non-discrimination</strong> (California) &mdash; we will not treat you differently for exercising your rights.</li>
+            </ul>
+
+            <h3>How to exercise them &mdash; the easy ways</h3>
+            <div class="card">
+                <p><strong>One-click unsubscribe.</strong> Every package-update and marketing email we send includes a one-click unsubscribe link (and a standards-based <code>List-Unsubscribe</code> header that Gmail, Apple Mail, Yahoo and similar clients can act on). Clicking it stops the emails for that subscription immediately &mdash; no account or login needed.</p>
+            </div>
+            <div class="card">
+                <p><strong>Email us to delete your data.</strong> If you contact us at the address below and ask us to delete your data, we will remove your email subscription(s) and associated personal data from our system. This is the simplest way to have everything we hold about you erased.</p>
+            </div>
+            <div class="callout">
+                <p>We aim to respond to rights requests promptly, and within the time limits set by applicable law (generally within 30 days under the GDPR/UK GDPR). We may need to verify your identity &mdash; usually just by confirming you control the email address in question.</p>
+            </div>
+            <p>If you are in the UK or EU and are unhappy with how we have handled your data, you have the right to lodge a complaint with your local data protection authority (in the UK, the Information Commissioner's Office, <a href="https://ico.org.uk" rel="noopener nofollow" target="_blank">ico.org.uk</a>). We'd appreciate the chance to resolve it directly first.</p>
+        </section>
+
+        <section id="security">
+            <h2><span class="num">09</span> Security</h2>
+            <p>We take reasonable, proportionate steps to protect your data: the site is served over HTTPS; the admin area is protected by a session cookie with <code>Secure</code>, <code>HttpOnly</code>, and <code>SameSite=Lax</code> flags; IP addresses used for analytics are irreversibly hashed; email inputs are validated; and rate limiting is applied to deter abuse. No method of transmission or storage is ever 100% secure, but we work to keep the limited data we hold safe.</p>
+        </section>
+
+        <section id="children">
+            <h2><span class="num">10</span> Children</h2>
+            <p>RepTools is not directed at children. It is intended for adults (and at minimum users aged 16, or the age of digital consent in your country, e.g. 13 in the US). We do not knowingly collect personal data from children. If you believe a child has provided us personal data, please contact us and we will delete it.</p>
+        </section>
+
+        <section id="changes">
+            <h2><span class="num">11</span> Changes to this policy</h2>
+            <p>We may update this policy from time to time &mdash; for example if we add a feature or change a provider. When we do, we'll update the "Last updated" date at the top of this page. Material changes will be highlighted on the site. Your continued use of RepTools after an update means you accept the revised policy.</p>
+        </section>
+
+        <section id="contact">
+            <h2><span class="num">12</span> Contact us</h2>
+            <p>Questions, requests, or want your data deleted? Reach out:</p>
+            <div class="contact-box">
+                <div class="pill">Email: <b><a href="mailto:lude@rep.tools" style="color:inherit;text-decoration:none;">lude@rep.tools</a></b></div>
+                <div class="pill">Discord: <b>@lude5</b> (fastest)</div>
+                <p style="margin-top:1.25rem;color:var(--text-secondary);font-size:0.92rem;">Email <b>lude@rep.tools</b> and ask us to delete your data and we will remove your subscriptions and the personal data we hold about you. For a quick reply, Discord <b>@lude5</b> is usually fastest.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <a href="/" class="brand">Rep<span style="color:var(--accent-primary);">Tools</span></a>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/products">Products</a>
+            <a href="/tools">Tools</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="/contact">Contact</a>
+        </nav>
+        <p class="fineprint">RepTools is an independent, community-run project. We do not sell personal data. &copy; <span id="yr">2026</span> RepTools. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('yr').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

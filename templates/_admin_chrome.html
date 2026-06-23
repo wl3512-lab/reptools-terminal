@@ -1,0 +1,81 @@
+{# Shared admin chrome — kai-style sidebar + topbar + floating language toggle.
+   Include this once at the start of every admin_*.html template's <body>.
+   Scoped under .rtadm- prefix so it doesn't collide with existing page CSS. #}
+<style>
+.rtadm-shell { position: fixed; top: 0; left: 0; bottom: 0; width: 220px; background: #141416; border-right: 1px solid rgba(255,255,255,0.07); padding: 22px 0; display: flex; flex-direction: column; overflow-y: auto; z-index: 100; font-family: 'Inter', 'Syne', sans-serif; }
+.rtadm-brand { padding: 0 22px 22px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.rtadm-brand .name { font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #fff; line-height: 1; }
+.rtadm-brand .name .accent { color: #22d3ee; }
+.rtadm-brand .badge { display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #22d3ee; padding: 3px 8px; border: 1px solid rgba(34,211,238,0.3); border-radius: 6px; margin-top: 8px; }
+.rtadm-nav { padding: 14px 12px; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.rtadm-nav .grp { font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; padding: 14px 10px 6px; }
+.rtadm-nav a { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; color: rgba(255,255,255,0.65); font-size: 13px; font-weight: 500; transition: all .15s; text-decoration: none; }
+.rtadm-nav a:hover { background: #1c1c20; color: #fff; }
+.rtadm-nav a.active { background: rgba(34,211,238,0.12); color: #22d3ee; }
+.rtadm-nav a .ic { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.9; }
+.rtadm-foot { padding: 16px 22px; border-top: 1px solid rgba(255,255,255,0.07); font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1.2px; }
+
+.rtadm-shift { padding-left: 220px; }
+@media (max-width: 900px) {
+    .rtadm-shell { transform: translateX(-100%); transition: transform .25s; }
+    .rtadm-shell.open { transform: translateX(0); box-shadow: 30px 0 60px rgba(0,0,0,0.5); }
+    .rtadm-shift { padding-left: 0; }
+    .rtadm-burger { display: inline-flex !important; }
+}
+.rtadm-burger { display: none; position: fixed; top: 16px; left: 16px; z-index: 110; width: 36px; height: 36px; background: #1c1c20; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; cursor: pointer; align-items: center; justify-content: center; }
+
+/* Floating language toggle */
+.rtadm-lang { position: fixed; top: 16px; right: 18px; z-index: 105; display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px; background: rgba(20,20,22,0.95); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; color: rgba(255,255,255,0.9); font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.4); backdrop-filter: blur(8px); user-select: none; transition: all .15s; }
+.rtadm-lang:hover { background: rgba(34,211,238,0.15); border-color: rgba(34,211,238,0.5); color: #22d3ee; }
+.rtadm-lang .ar { opacity: 0.5; font-size: 11px; }
+</style>
+
+{% set _cur = request.path %}
+<button type="button" class="rtadm-burger" onclick="document.querySelector('.rtadm-shell').classList.toggle('open')" aria-label="Menu">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+
+<aside class="rtadm-shell">
+    <div class="rtadm-brand">
+        <div class="name">Rep<span class="accent">Tools</span></div>
+        <span class="badge" data-i18n="sb_admin_badge">Admin</span>
+    </div>
+    <nav class="rtadm-nav">
+        <div class="grp" data-i18n="sb_manage">Manage</div>
+        <a href="/admin/analytics" class="{% if '/admin/analytics' in _cur %}active{% endif %}">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <span data-i18n="sb_analytics">Analytics</span>
+        </a>
+        <a href="/admin/add" class="{% if '/admin/add' in _cur %}active{% endif %}">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Add Products
+        </a>
+        <a href="/admin/orders" class="{% if '/admin/orders' in _cur %}active{% endif %}">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+            Orders
+        </a>
+        <a href="/admin/reports" class="{% if '/admin/reports' in _cur %}active{% endif %}">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Reports
+        </a>
+        <div class="grp">Site</div>
+        <a href="/" target="_blank" rel="noopener">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <span data-i18n="sb_view">View Site</span>
+        </a>
+        <div style="flex:1;"></div>
+        <a href="/admin/logout">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span data-i18n="sb_logout">Logout</span>
+        </a>
+    </nav>
+    <div class="rtadm-foot">v1.0 · RepTools</div>
+</aside>
+
+<button type="button" class="rtadm-lang" onclick="if(typeof toggleAdminLang==='function'){toggleAdminLang();}" title="Switch language">
+    <span data-lang-label>EN</span>
+    <span class="ar">&#8646;</span>
+    <span data-lang-other>中文</span>
+</button>
+
+<script src="/static/js/admin_i18n.js"></script>

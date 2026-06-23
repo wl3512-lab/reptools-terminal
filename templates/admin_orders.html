@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepTools Admin — Site Orders</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-card: #18181b;
+            --bg-elevated: #1f1f23;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-primary: #22d3ee;
+            --accent-secondary: #a855f7;
+            --accent-success: #22c55e;
+            --border-color: #27272a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        .topbar {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .topbar h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .topbar-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-left: 1.5rem;
+            transition: color 0.2s;
+        }
+        .topbar-links a:hover { color: var(--accent-primary); }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        .order-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .order-card:hover {
+            border-color: rgba(34, 211, 238, 0.3);
+        }
+        .order-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+        }
+        .order-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .order-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #000;
+            flex-shrink: 0;
+        }
+        .order-name {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .order-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.15rem;
+        }
+        .order-agent-badge {
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--accent-primary);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+        }
+        .order-toggle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        .order-card.expanded .order-toggle {
+            transform: rotate(180deg);
+        }
+        .order-body {
+            display: none;
+            padding: 0 1.5rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .order-card.expanded .order-body {
+            display: block;
+        }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            padding-top: 1.25rem;
+        }
+        .detail-group {
+            margin-bottom: 0.75rem;
+        }
+        .detail-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.2rem;
+        }
+        .detail-value {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+        }
+        .detail-value.empty {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        .features-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .feature-tag {
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--accent-secondary);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        .category-tag {
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--accent-success);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+        .vibe-box {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            font-style: italic;
+        }
+        .notes-box {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .socials-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.3rem;
+        }
+        .social-link {
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .color-swatch {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.4rem;
+        }
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: 1fr; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .topbar { padding: 1rem; }
+            .container { padding: 1.5rem 1rem; }
+        }
+    </style>
+    {{ ga_snippet|safe }}
+</head>
+<body>
+{% include "_admin_chrome.html" %}
+<div class="rtadm-shift">
+
+    <div class="topbar">
+        <h1>Site Orders</h1>
+        <div class="topbar-links">
+            <a href="/admin/reports">Reports</a>
+            <a href="/admin/analytics">Analytics</a>
+            <a href="/admin">Dashboard</a>
+            <a href="/">Back to Site</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-row" id="stats-row"></div>
+        <div id="orders-container">
+            <div class="empty-state">
+                <div class="empty-state-icon">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    var THEME_MAP = {
+        'cyan-purple': ['#22d3ee', '#a855f7'],
+        'red-orange': ['#ef4444', '#f97316'],
+        'green-teal': ['#22c55e', '#14b8a6'],
+        'blue-violet': ['#3b82f6', '#8b5cf6'],
+        'rose-pink': ['#f43f5e', '#ec4899'],
+        'gold-orange': ['#eab308', '#f97316']
+    };
+
+    var AGENT_NAMES = {
+        'kakobuy': 'KakoBuy',
+        'cnfans': 'CNFans',
+        'sugargoo': 'Sugargoo',
+        'cssbuy': 'CSSBuy',
+        'superbuy': 'Superbuy',
+        'oopbuy': 'OopBuy',
+        'acbuy': 'ACBuy',
+        'litbuy': 'LitBuy',
+        'mulebuy': 'MuleBuy',
+        'allchinabuy': 'AllChinaBuy',
+        'other': 'Other',
+        'none': 'None yet'
+    };
+
+    function formatFeature(f) {
+        return f.replace(/_/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+    }
+
+    function timeAgo(dateStr) {
+        if (!dateStr) return '';
+        var now = new Date();
+        var date = new Date(dateStr + 'Z');
+        var diff = Math.floor((now - date) / 1000);
+        if (diff < 60) return 'just now';
+        if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+        if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+        return Math.floor(diff / 86400) + 'd ago';
+    }
+
+    function toggleOrder(el) {
+        el.closest('.order-card').classList.toggle('expanded');
+    }
+
+    fetch('/admin/orders?json=1')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            var orders = data.orders || [];
+            var container = document.getElementById('orders-container');
+            var statsRow = document.getElementById('stats-row');
+
+            // Stats
+            var agents = {};
+            orders.forEach(function(o) {
+                var a = o.primary_agent || 'unknown';
+                agents[a] = (agents[a] || 0) + 1;
+            });
+            var topAgent = Object.keys(agents).sort(function(a, b) { return agents[b] - agents[a]; })[0] || '-';
+
+            statsRow.innerHTML =
+                '<div class="stat-card"><div class="stat-value">' + orders.length + '</div><div class="stat-label">Total Orders</div></div>' +
+                '<div class="stat-card"><div class="stat-value">' + (AGENT_NAMES[topAgent] || topAgent) + '</div><div class="stat-label">Most Requested Agent</div></div>' +
+                '<div class="stat-card"><div class="stat-value">' + (orders.length > 0 ? timeAgo(orders[0].submitted_at) : '-') + '</div><div class="stat-label">Latest Order</div></div>';
+
+            if (!orders.length) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">No orders yet</div><p>Share your /order page to start getting submissions</p></div>';
+                return;
+            }
+
+            var html = '';
+            orders.forEach(function(order, i) {
+                var name = order.brand_name || 'Unknown';
+                var initial = name.charAt(0).toUpperCase();
+                var agent = AGENT_NAMES[order.primary_agent] || order.primary_agent || '?';
+                var email = order.email || '';
+                var time = timeAgo(order.submitted_at);
+                var features = order.features || [];
+                var categories = order.categories || [];
+
+                html += '<div class="order-card">';
+                html += '<div class="order-header" onclick="toggleOrder(this)">';
+                html += '<div class="order-header-left">';
+                html += '<div class="order-avatar">' + initial + '</div>';
+                html += '<div><div class="order-name">' + name + '</div>';
+                html += '<div class="order-meta">' + email + ' &middot; ' + time + '</div></div>';
+                html += '</div>';
+                html += '<div style="display:flex;align-items:center;gap:0.75rem;">';
+                html += '<span class="order-agent-badge">' + agent + '</span>';
+                html += '<span class="order-toggle">&#9660;</span>';
+                html += '</div>';
+                html += '</div>';
+
+                html += '<div class="order-body">';
+                html += '<div class="detail-grid">';
+
+                // Left column
+                html += '<div>';
+
+                // Contact
+                html += '<div class="detail-group"><div class="detail-label">Email</div><div class="detail-value">' + (email || '<span class="empty">—</span>') + '</div></div>';
+                html += '<div class="detail-group"><div class="detail-label">Discord</div><div class="detail-value">' + (order.discord || '<span class="empty">—</span>') + '</div></div>';
+
+                // Socials
+                var socials = [];
+                if (order.tiktok) socials.push(order.tiktok);
+                if (order.youtube) socials.push(order.youtube);
+                if (order.instagram) socials.push(order.instagram);
+                if (order.reddit) socials.push(order.reddit);
+                if (socials.length) {
+                    html += '<div class="detail-group"><div class="detail-label">Socials</div><div class="socials-row">';
+                    socials.forEach(function(s) { html += '<span class="social-link">' + s + '</span>'; });
+                    html += '</div></div>';
+                }
+
+                html += '<div class="detail-group"><div class="detail-label">Audience</div><div class="detail-value">' + (order.audience_size || '<span class="empty">—</span>') + '</div></div>';
+                html += '<div class="detail-group"><div class="detail-label">Affiliate Code</div><div class="detail-value">' + (order.affiliate_code || '<span class="empty">—</span>') + '</div></div>';
+
+                if (order.secondary_agent) {
+                    html += '<div class="detail-group"><div class="detail-label">Secondary Agent</div><div class="detail-value">' + (AGENT_NAMES[order.secondary_agent] || order.secondary_agent) + '</div></div>';
+                }
+
+                html += '</div>';
+
+                // Right column
+                html += '<div>';
+
+                html += '<div class="detail-group"><div class="detail-label">Content Focus</div><div class="detail-value">' + (order.content_focus || '<span class="empty">—</span>') + '</div></div>';
+                html += '<div class="detail-group"><div class="detail-label">Target Audience</div><div class="detail-value">' + (order.target_audience || '<span class="empty">—</span>') + '</div></div>';
+                html += '<div class="detail-group"><div class="detail-label">Domain</div><div class="detail-value">' + (order.domain || '<span class="empty">—</span>') + '</div></div>';
+                html += '<div class="detail-group"><div class="detail-label">Tagline</div><div class="detail-value">' + (order.tagline || '<span class="empty">—</span>') + '</div></div>';
+
+                // Color theme
+                if (order.color_theme && THEME_MAP[order.color_theme]) {
+                    var colors = THEME_MAP[order.color_theme];
+                    html += '<div class="detail-group"><div class="detail-label">Color Theme</div><div class="detail-value">';
+                    html += '<span class="color-swatch" style="background:linear-gradient(135deg,' + colors[0] + ',' + colors[1] + ')"></span>';
+                    html += order.color_theme.replace('-', ' / ');
+                    html += '</div></div>';
+                } else if (order.custom_color) {
+                    // Only let a real color token into the style attribute (prevents CSS injection);
+                    // the raw value is still shown as (HTML-escaped) text.
+                    var ccSafe = /^#?[0-9a-fA-F]{3,8}$|^[a-zA-Z]{3,20}$|^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)$/.test(order.custom_color) ? order.custom_color : 'transparent';
+                    html += '<div class="detail-group"><div class="detail-label">Custom Color</div><div class="detail-value">';
+                    html += '<span class="color-swatch" style="background:' + ccSafe + '"></span>';
+                    html += order.custom_color;
+                    html += '</div></div>';
+                }
+
+                html += '<div class="detail-group"><div class="detail-label">Referral</div><div class="detail-value">' + (order.referral || '<span class="empty">—</span>') + '</div></div>';
+
+                html += '</div>';
+                html += '</div>'; // end detail-grid
+
+                // Features
+                if (features.length) {
+                    html += '<div class="detail-group" style="margin-top:0.5rem;"><div class="detail-label">Features Requested</div><div class="features-list">';
+                    features.forEach(function(f) { html += '<span class="feature-tag">' + formatFeature(f) + '</span>'; });
+                    html += '</div></div>';
+                }
+
+                // Categories
+                if (categories.length) {
+                    html += '<div class="detail-group" style="margin-top:0.5rem;"><div class="detail-label">Categories</div><div class="features-list">';
+                    categories.forEach(function(c) { html += '<span class="category-tag">' + formatFeature(c) + '</span>'; });
+                    html += '</div></div>';
+                }
+
+                // Vibe
+                if (order.vibe) {
+                    html += '<div class="detail-group" style="margin-top:0.5rem;"><div class="detail-label">Vibe / Architecture</div>';
+                    html += '<div class="vibe-box">"' + order.vibe + '"</div></div>';
+                }
+
+                // Spreadsheet
+                if (order.spreadsheet_url) {
+                    html += '<div class="detail-group" style="margin-top:0.5rem;"><div class="detail-label">Spreadsheet</div>';
+                    html += '<div class="detail-value"><a href="' + order.spreadsheet_url + '" target="_blank" style="color:var(--accent-primary);">' + order.spreadsheet_url + '</a></div></div>';
+                }
+
+                // Notes
+                if (order.notes) {
+                    html += '<div class="detail-group" style="margin-top:0.5rem;"><div class="detail-label">Additional Notes</div>';
+                    html += '<div class="notes-box">' + order.notes + '</div></div>';
+                }
+
+                html += '</div>'; // end order-body
+                html += '</div>'; // end order-card
+            });
+
+            container.innerHTML = html;
+        })
+        .catch(function(err) {
+            document.getElementById('orders-container').innerHTML =
+                '<div class="empty-state"><div class="empty-state-icon">Error</div><p>' + err.message + '</p></div>';
+        });
+    </script>
+</div>
+</body>
+</html>

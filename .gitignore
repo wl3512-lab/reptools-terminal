@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+*.db
+venv/
+.venv/
+node_modules/
+.DS_Store
+*.onnx
+img_cache/
+.mcp.json
+reptools_pg_backup*.json

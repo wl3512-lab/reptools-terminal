@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Adder — RepTools Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0b; --bg-card: #18181b; --bg-input: #1f1f23;
+            --text: #fafafa; --text-dim: #a1a1aa; --text-muted: #71717a;
+            --accent: #22d3ee; --accent-glow: rgba(34,211,238,0.15);
+            --border: #27272a; --success: #22c55e; --error: #ef4444; --purple: #a855f7;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Syne',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; padding:2rem; }
+        .container { max-width:960px; margin:0 auto; }
+        h1 { font-size:2rem; font-weight:800; margin-bottom:0.5rem; }
+        h1 span { background:linear-gradient(135deg,var(--accent),var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .subtitle { color:var(--text-muted); margin-bottom:2rem; }
+        .section { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; }
+        .section-title { font-size:1.1rem; font-weight:700; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; }
+        .section-sub { color:var(--text-muted); font-size:0.85rem; margin-bottom:1rem; }
+        .url-row { display:flex; gap:0.5rem; }
+        .url-row input { flex:1; padding:0.75rem 1rem; background:var(--bg-input); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'Space Mono',monospace; font-size:0.85rem; outline:none; }
+        .url-row input:focus { border-color:var(--accent); }
+        .url-row input::placeholder { color:var(--text-muted); }
+        .btn { padding:0.7rem 1.25rem; border:none; border-radius:10px; font-family:inherit; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:0.4rem; }
+        .btn:disabled { opacity:0.5; cursor:not-allowed; }
+        .btn-primary { background:linear-gradient(135deg,var(--accent),#06b6d4); color:#0a0a0b; }
+        .btn-primary:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 5px 20px var(--accent-glow); }
+        .btn-ai { background:linear-gradient(135deg,var(--purple),#7c3aed); color:#fff; }
+        .btn-ai:hover:not(:disabled) { box-shadow:0 5px 20px rgba(168,85,247,0.25); }
+        .btn-secondary { background:var(--bg-input); color:var(--text); border:1px solid var(--border); }
+        .btn-secondary:hover { border-color:var(--accent); }
+        .btn-danger { background:rgba(239,68,68,0.12); color:var(--error); border:1px solid rgba(239,68,68,0.25); }
+        .btn-sm { padding:0.45rem 0.85rem; font-size:0.8rem; }
+        .status-bar { background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.2); border-radius:10px; padding:0.75rem 1rem; margin-top:1rem; font-size:0.85rem; display:none; }
+        .status-bar.show { display:block; }
+        .status-bar.error { background:rgba(239,68,68,0.08); border-color:rgba(239,68,68,0.2); }
+        .status-label { font-weight:600; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--success); }
+        .status-bar.error .status-label { color:var(--error); }
+        .loading { display:none; text-align:center; padding:1.5rem; color:var(--text-muted); }
+        .loading.show { display:block; }
+        .spinner { display:inline-block; width:18px; height:18px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; margin-right:0.5rem; vertical-align:middle; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        .variant-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:0.75rem; margin-bottom:1rem; }
+        .variant-card { background:var(--bg-input); border:2px solid var(--border); border-radius:12px; cursor:pointer; overflow:hidden; transition:all 0.2s; position:relative; }
+        .variant-card:hover { border-color:var(--text-muted); transform:translateY(-2px); }
+        .variant-card.selected { border-color:var(--accent); box-shadow:0 0 15px var(--accent-glow); }
+        .variant-card img { width:100%; aspect-ratio:1; object-fit:cover; display:block; }
+        .variant-card .v-name { padding:0.4rem 0.5rem; font-size:0.7rem; color:var(--text-dim); line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .variant-card .v-name-en { font-size:0.65rem; color:var(--accent); padding:0 0.5rem 0.4rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .variant-card .v-check { position:absolute; top:6px; right:6px; width:22px; height:22px; background:var(--accent); border-radius:50%; display:none; align-items:center; justify-content:center; font-size:0.7rem; color:#0a0a0b; font-weight:700; }
+        .variant-card.selected .v-check { display:flex; }
+        .variant-noimg { width:100%; aspect-ratio:1; background:var(--bg-card); display:flex; align-items:center; justify-content:center; font-size:2rem; color:var(--text-muted); }
+        .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+        .form-group { display:flex; flex-direction:column; gap:0.3rem; }
+        .form-group.full { grid-column:1/-1; }
+        .form-group label { font-size:0.8rem; font-weight:600; color:var(--text-muted); }
+        .form-group input,.form-group select { padding:0.65rem 0.85rem; background:var(--bg-input); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:inherit; font-size:0.9rem; outline:none; }
+        .form-group input:focus,.form-group select:focus { border-color:var(--accent); }
+        .name-chips { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.5rem; }
+        .name-chip { padding:0.35rem 0.75rem; background:var(--bg-input); border:1px solid var(--border); border-radius:20px; font-size:0.8rem; color:var(--text-dim); cursor:pointer; transition:all 0.15s; }
+        .name-chip:hover { border-color:var(--accent); color:var(--accent); }
+        .name-chip.ai { border-color:rgba(168,85,247,0.3); color:var(--purple); }
+        .name-chip.ai:hover { border-color:var(--purple); background:rgba(168,85,247,0.1); }
+        .queue-item { display:flex; align-items:center; gap:0.75rem; background:var(--bg-input); border:1px solid var(--border); border-radius:10px; padding:0.6rem 0.85rem; margin-bottom:0.5rem; }
+        .queue-item img { width:44px; height:44px; object-fit:cover; border-radius:8px; }
+        .q-info { flex:1; min-width:0; }
+        .q-name { font-weight:600; font-size:0.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .q-meta { font-size:0.75rem; color:var(--text-muted); display:flex; gap:0.75rem; }
+        .q-meta .price { color:var(--success); }
+        .q-remove { background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; padding:0.25rem; }
+        .q-remove:hover { color:var(--error); }
+        .count-badge { background:var(--accent); color:#0a0a0b; padding:0.1rem 0.5rem; border-radius:10px; font-size:0.75rem; font-weight:700; margin-left:0.5rem; }
+        .actions { display:flex; gap:0.6rem; margin-top:1rem; flex-wrap:wrap; }
+        .output-box { background:var(--bg-input); border:1px solid var(--border); border-radius:10px; padding:1rem; font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--text-muted); max-height:300px; overflow-y:auto; white-space:pre-wrap; word-break:break-all; display:none; margin-top:1rem; }
+        .output-box.show { display:block; }
+        .hidden { display:none !important; }
+        .selected-preview { display:flex; gap:1rem; align-items:flex-start; margin-bottom:1rem; padding:1rem; background:var(--bg-input); border-radius:12px; border:1px solid var(--border); }
+        .selected-preview img { width:100px; height:100px; object-fit:cover; border-radius:10px; }
+        .selected-preview-info { flex:1; }
+        .selected-preview-info h3 { font-size:1rem; margin-bottom:0.25rem; }
+        .selected-preview-info p { color:var(--text-muted); font-size:0.85rem; }
+        @media (max-width:600px) {
+            body { padding:1rem; }
+            .form-grid { grid-template-columns:1fr; }
+            .url-row { flex-direction:column; }
+            .variant-grid { grid-template-columns:repeat(3,1fr); gap:0.5rem; }
+        }
+    </style>
+    {{ ga_snippet|safe }}
+</head>
+<body>
+{% include "_admin_chrome.html" %}
+<div class="rtadm-shift">
+
+<div class="container">
+    <h1>⚡ Product <span>Adder</span></h1>
+    <p class="subtitle">Paste a link → pick a variant → add to your catalog</p>
+
+    <!-- STEP 1 -->
+    <div class="section">
+        <div class="section-title">🔗 Step 1: Paste Link</div>
+        <div class="url-row">
+            <input type="text" id="product-url" placeholder="Paste Weidian, Taobao, 1688, or KakoBuy URL..." />
+            <button class="btn btn-primary" id="fetch-btn" onclick="fetchProduct()">🔍 Fetch</button>
+        </div>
+        <div class="status-bar" id="fetch-status">
+            <div class="status-label" id="fetch-status-label"></div>
+            <div id="fetch-status-text"></div>
+        </div>
+        <div class="loading" id="fetch-loading"><span class="spinner"></span> Fetching product data...</div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="section hidden" id="step-variants">
+        <div class="section-title">
+            📷 Step 2: Pick Product
+            <button class="btn btn-ai btn-sm" id="ai-btn" onclick="aiIdentify()">🤖 AI Identify Names</button>
+        </div>
+        <p class="section-sub" id="listing-info"></p>
+        <div class="loading" id="ai-loading"><span class="spinner" style="border-top-color:var(--purple)"></span> AI analyzing images...</div>
+        <div class="variant-grid" id="variant-grid"></div>
+        <div id="other-images-section" class="hidden">
+            <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:0.5rem;">📸 Other listing images:</p>
+            <div class="variant-grid" id="other-images-grid" style="grid-template-columns:repeat(auto-fill,minmax(80px,1fr));"></div>
+        </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="section hidden" id="step-details">
+        <div class="section-title">📝 Step 3: Confirm Details</div>
+        <div class="selected-preview" id="selected-preview" style="display:none;">
+            <img id="preview-img" src="" />
+            <div class="selected-preview-info">
+                <h3 id="preview-name">Select a variant above</h3>
+                <p id="preview-meta"></p>
+            </div>
+        </div>
+        <div class="form-group full" style="margin-bottom:0.75rem;">
+            <label>Product Name (English)</label>
+            <input type="text" id="p-name" placeholder="Click a suggestion or type your own" />
+            <div class="name-chips" id="name-suggestions"></div>
+        </div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Price (¥ CNY)</label>
+                <input type="text" id="p-price-cny" placeholder="e.g. 380" />
+            </div>
+            <div class="form-group">
+                <label>Price ($ USD)</label>
+                <input type="text" id="p-price" placeholder="Auto" />
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="p-category">
+                    <option value="shoes">👟 Shoes</option>
+                    <option value="jackets">🧥 Jackets</option>
+                    <option value="hoodies">🧤 Hoodies</option>
+                    <option value="sweaters">🧶 Sweaters</option>
+                    <option value="shirts">👕 Shirts</option>
+                    <option value="pants">👖 Pants</option>
+                    <option value="shorts">🩳 Shorts</option>
+                    <option value="sets">👔 Sets</option>
+                    <option value="accessories">⌚ Accessories</option>
+                    <option value="electronics">📱 Electronics</option>
+                    <option value="home">🏠 Home</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Quality Tag</label>
+                <select id="p-tag">
+                    <option value="Premium Quality">Premium Quality</option>
+                    <option value="Top Quality">Top Quality</option>
+                    <option value="">None</option>
+                    <option value="PK BATCH">PK Batch</option>
+                    <option value="OG BATCH">OG Batch</option>
+                    <option value="M BATCH">M Batch</option>
+                    <option value="LJR Batch">LJR Batch</option>
+                    <option value="GX Batch">GX Batch</option>
+                </select>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="btn btn-primary" onclick="addToQueue()">➕ Add to Queue</button>
+            <button class="btn btn-secondary" onclick="resetForm()">⟲ New Link</button>
+        </div>
+    </div>
+
+    <!-- QUEUE -->
+    <div class="section">
+        <div class="section-title">📦 Queue <span class="count-badge" id="queue-count">0</span></div>
+        <div id="product-queue"><p style="color:var(--text-muted);font-size:0.85rem;">Add products above.</p></div>
+        <div class="actions">
+            <button class="btn btn-primary" onclick="saveToSite()">🚀 Save to Site</button>
+            <button class="btn btn-secondary" onclick="exportJson()">📥 Export JSON</button>
+            <button class="btn btn-secondary" onclick="copyJson()">📋 Copy</button>
+            <button class="btn btn-danger btn-sm" onclick="clearQueue()">Clear</button>
+        </div>
+    </div>
+    <div class="output-box" id="json-output"></div>
+</div>
+
+<input type="hidden" id="p-image-val" />
+
+<script>
+const AFFCODE='thelude', CNY_TO_USD=0.138;
+let queue=[], scrapeData=null, selectedImage='', aiNames={};
+
+document.getElementById('product-url').addEventListener('paste',()=>setTimeout(fetchProduct,100));
+document.getElementById('p-price-cny').addEventListener('input',e=>{
+    const v=parseFloat(e.target.value);
+    if(!isNaN(v)) document.getElementById('p-price').value=(v*CNY_TO_USD).toFixed(2);
+});
+
+async function fetchProduct(){
+    const url=document.getElementById('product-url').value.trim();
+    if(!url) return;
+    const status=document.getElementById('fetch-status'),
+          statusText=document.getElementById('fetch-status-text'),
+          statusLabel=document.getElementById('fetch-status-label'),
+          loading=document.getElementById('fetch-loading'),
+          btn=document.getElementById('fetch-btn');
+    status.classList.remove('show','error');
+    loading.classList.add('show');
+    btn.disabled=true;
+    aiNames={};
+    try{
+        const resp=await fetch('/api/scrape-product',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url})});
+        scrapeData=await resp.json();
+        loading.classList.remove('show');
+        if(scrapeData.error&&!scrapeData.platform){
+            status.classList.add('show','error'); statusLabel.textContent='Error'; statusText.textContent=scrapeData.error; return;
+        }
+        status.classList.add('show'); status.classList.remove('error');
+        statusLabel.textContent=scrapeData.platform.toUpperCase()+' Detected';
+        let info=`ID: ${scrapeData.item_id}`;
+        if(scrapeData.variants?.length) info+=` · ${scrapeData.variants.length} variants`;
+        if(scrapeData.images?.length) info+=` · ${scrapeData.images.length} images`;
+        statusText.textContent=info;
+        document.getElementById('step-variants').classList.remove('hidden');
+        document.getElementById('step-details').classList.remove('hidden');
+        let li='';
+        if(scrapeData.name) li+=scrapeData.name.substring(0,100);
+        if(scrapeData.price) li+=` · ¥${scrapeData.price}`;
+        if(scrapeData.price_high) li+=`–${scrapeData.price_high}`;
+        document.getElementById('listing-info').textContent=li;
+        if(scrapeData.price){
+            document.getElementById('p-price-cny').value=scrapeData.price;
+            document.getElementById('p-price').value=(parseFloat(scrapeData.price)*CNY_TO_USD).toFixed(2);
+        }
+        renderVariants();
+    }catch(e){
+        loading.classList.remove('show');
+        status.classList.add('show','error'); statusLabel.textContent='Error'; statusText.textContent=e.message;
+    }finally{ btn.disabled=false; }
+}
+
+function renderVariants(){
+    const grid=document.getElementById('variant-grid'),
+          otherGrid=document.getElementById('other-images-grid'),
+          variants=scrapeData.variants||[];
+    if(variants.length){
+        grid.innerHTML=variants.map((v,i)=>`
+            <div class="variant-card" onclick="selectVariant(${i})" id="vcard-${i}">
+                <div class="v-check">✓</div>
+                ${v.image?`<img src="${v.image}" onerror="this.nextElementSibling.style.display='flex';this.style.display='none'"/><div class="variant-noimg" style="display:none">📦</div>`:`<div class="variant-noimg">📦</div>`}
+                <div class="v-name" title="${esc(v.name)}">${esc(v.name)}</div>
+                ${aiNames[v.name]?`<div class="v-name-en">${esc(aiNames[v.name])}</div>`:''}
+            </div>
+        `).join('');
+    }else{
+        grid.innerHTML='<p style="color:var(--text-muted);font-size:0.85rem;">No variants found — pick from images below</p>';
+    }
+    const varImgs=new Set(variants.map(v=>v.image).filter(Boolean));
+    const others=(scrapeData.images||[]).filter(img=>!varImgs.has(img));
+    if(others.length){
+        document.getElementById('other-images-section').classList.remove('hidden');
+        otherGrid.innerHTML=others.map(img=>`
+            <div class="variant-card" onclick="selectOtherImage('${esc(img)}',this)">
+                <div class="v-check">✓</div>
+                <img src="${img}" onerror="this.parentElement.style.display='none'"/>
+            </div>
+        `).join('');
+    }else{
+        document.getElementById('other-images-section').classList.add('hidden');
+    }
+}
+
+function selectVariant(idx){
+    const v=scrapeData.variants[idx];
+    document.querySelectorAll('.variant-card').forEach(c=>c.classList.remove('selected'));
+    document.getElementById('vcard-'+idx).classList.add('selected');
+    selectedImage=v.image||scrapeData.image||'';
+    document.getElementById('p-image-val').value=selectedImage;
+    const preview=document.getElementById('selected-preview');
+    preview.style.display='flex';
+    document.getElementById('preview-img').src=selectedImage;
+    document.getElementById('preview-name').textContent=aiNames[v.name]||v.name;
+    document.getElementById('preview-meta').textContent=`${v.group||'Variant'}: ${v.name}`;
+    // Name suggestions
+    const chips=[];
+    if(aiNames[v.name]) chips.push({t:aiNames[v.name],ai:true});
+    chips.push({t:v.name,ai:false});
+    if(scrapeData.name) chips.push({t:scrapeData.name.substring(0,50),ai:false});
+    document.getElementById('name-suggestions').innerHTML=chips.map(c=>
+        `<span class="name-chip ${c.ai?'ai':''}" onclick="document.getElementById('p-name').value='${esc(c.t)}'">${c.ai?'🤖 ':''}${esc(c.t.substring(0,45))}</span>`
+    ).join('');
+    if(aiNames[v.name]) document.getElementById('p-name').value=aiNames[v.name];
+}
+
+function selectOtherImage(img,el){
+    document.querySelectorAll('.variant-card').forEach(c=>c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedImage=img;
+    document.getElementById('p-image-val').value=img;
+    document.getElementById('selected-preview').style.display='flex';
+    document.getElementById('preview-img').src=img;
+    document.getElementById('preview-name').textContent='Image selected';
+    document.getElementById('preview-meta').textContent='Fill in name below';
+}
+
+async function aiIdentify(){
+    if(!scrapeData) return;
+    const btn=document.getElementById('ai-btn'), loading=document.getElementById('ai-loading');
+    const varImgs=(scrapeData.variants||[]).map(v=>v.image).filter(Boolean);
+    const allImgs=[...new Set([...varImgs,...(scrapeData.images||[])])].slice(0,6);
+    if(!allImgs.length){ alert('No images to analyze'); return; }
+    btn.disabled=true; btn.innerHTML='<span class="spinner" style="border-top-color:#fff;width:14px;height:14px"></span> Analyzing...';
+    loading.classList.add('show');
+    try{
+        const resp=await fetch('/api/identify-product',{method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({images:allImgs,listing_name:scrapeData.name||''})});
+        const data=await resp.json();
+        loading.classList.remove('show');
+        if(data.error){ alert('AI Error: '+data.error); return; }
+        const products=data.products||[];
+        if(!products.length){ alert('AI could not identify products'); return; }
+        const variants=scrapeData.variants||[];
+        const imgVariants=variants.filter(v=>v.image);
+        if(products.length===1){
+            variants.forEach(v=>{ aiNames[v.name]=products[0].name+' – '+v.name; });
+            aiNames['__listing']=products[0].name;
+        }else{
+            products.forEach((p,i)=>{ if(i<imgVariants.length) aiNames[imgVariants[i].name]=p.name; });
+        }
+        // Show AI suggestions in name chips
+        document.getElementById('name-suggestions').innerHTML=products.map(p=>
+            `<span class="name-chip ai" onclick="document.getElementById('p-name').value='${esc(p.name)}'">🤖 ${esc(p.name)}</span>`
+        ).join('');
+        renderVariants();
+    }catch(e){ loading.classList.remove('show'); alert('Failed: '+e.message); }
+    finally{ btn.disabled=false; btn.textContent='🤖 AI Identify Names'; }
+}
+
+function addToQueue(){
+    if(!scrapeData){alert('Fetch a link first');return;}
+    const name=document.getElementById('p-name').value.trim();
+    const price=parseFloat(document.getElementById('p-price').value)||0;
+    const cat=document.getElementById('p-category').value;
+    const image=document.getElementById('p-image-val').value||selectedImage||scrapeData.image||'';
+    const tag=document.getElementById('p-tag').value;
+    if(!name){alert('Enter a product name');return;}
+    queue.push({
+        id:`${cat[0]}${scrapeData.item_id.slice(-4)}${Math.floor(Math.random()*10)}`,
+        name:tag?`${name} [${tag}]`:name,
+        price:`$${price.toFixed(2)}`,
+        priceNum:price,
+        image:image,
+        url:scrapeData.kakobuy_link,
+        category:cat
+    });
+    renderQueue();
+    // Clear selection but keep scrapeData for adding more variants
+    document.querySelectorAll('.variant-card').forEach(c=>c.classList.remove('selected'));
+    document.getElementById('p-name').value='';
+    document.getElementById('selected-preview').style.display='none';
+    selectedImage='';
+}
+
+function resetForm(){
+    scrapeData=null; aiNames={}; selectedImage='';
+    document.getElementById('product-url').value='';
+    document.getElementById('p-name').value='';
+    document.getElementById('p-price').value='';
+    document.getElementById('p-price-cny').value='';
+    document.getElementById('fetch-status').classList.remove('show');
+    document.getElementById('step-variants').classList.add('hidden');
+    document.getElementById('step-details').classList.add('hidden');
+    document.getElementById('selected-preview').style.display='none';
+    document.getElementById('name-suggestions').innerHTML='';
+}
+
+function renderQueue(){
+    const c=document.getElementById('product-queue');
+    document.getElementById('queue-count').textContent=queue.length;
+    if(!queue.length){c.innerHTML='<p style="color:var(--text-muted);font-size:0.85rem;">Add products above.</p>';return;}
+    c.innerHTML=queue.map((p,i)=>`
+        <div class="queue-item">
+            ${p.image?`<img src="${p.image}" onerror="this.style.display='none'"/>`:''}
+            <div class="q-info">
+                <div class="q-name">${esc(p.name)}</div>
+                <div class="q-meta"><span class="price">${p.price}</span><span>${p.category}</span></div>
+            </div>
+            <button class="q-remove" onclick="queue.splice(${i},1);renderQueue()">×</button>
+        </div>
+    `).join('');
+}
+
+function clearQueue(){if(confirm('Clear all?')){queue=[];renderQueue();document.getElementById('json-output').classList.remove('show');}}
+function exportJson(){
+    if(!queue.length)return;
+    const j=JSON.stringify(queue,null,2);
+    document.getElementById('json-output').textContent=j;
+    document.getElementById('json-output').classList.add('show');
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([j],{type:'application/json'}));a.download='new_products.json';a.click();
+}
+function copyJson(){if(!queue.length)return;navigator.clipboard.writeText(JSON.stringify(queue,null,2)).then(()=>alert('Copied!'));}
+async function saveToSite(){
+    if(!queue.length)return;
+    if(!confirm(`Save ${queue.length} products to the live site?`))return;
+    try{
+        const r=await fetch('/api/products/add',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(queue)});
+        const d=await r.json();
+        if(d.status==='success'){alert(`✅ ${d.added} products live!`);queue=[];renderQueue();}
+        else alert('Error: '+d.error);
+    }catch(e){alert('Failed: '+e.message);}
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+</script>
+</div>
+</body>
+</html>

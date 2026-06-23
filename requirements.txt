@@ -1,0 +1,29 @@
+# Web Framework
+Flask>=3.0.0
+Flask-CORS>=4.0.0
+Flask-Compress>=1.14
+Flask-Limiter>=3.5.0
+
+# Async HTTP
+aiohttp>=3.9.0
+
+# Production server
+gunicorn>=21.0.0
+
+# Scraping
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+requests>=2.31.0
+
+# Image processing / background removal
+Pillow>=10.0.0
+rembg[cpu]>=2.0.50
+
+# AI tools
+numpy>=1.24.0
+
+# Environment variables
+python-dotenv>=1.0.0
+
+# Postgres driver (used when DATABASE_URL is set; SQLite fallback otherwise)
+psycopg2-binary>=2.9.9

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RepTools — Hero Mockup Options</title>
+<link rel="stylesheet" href="/static/css/brand.css">
+<style>
+  body{background:var(--ink);color:var(--bone);font-family:var(--font-body);margin:0}
+  .opt{border-bottom:1px dashed var(--ink-line)}
+  .opt__label{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem 1rem;
+    padding:.7rem 1.5rem;background:var(--ink-raised);border-bottom:2px solid var(--ink-line);
+    position:sticky;top:0;z-index:5}
+  .opt__num{font-family:var(--font-display);text-transform:uppercase;color:var(--hazard);font-size:1.1rem;letter-spacing:.02em}
+  .opt__name{font-family:var(--font-display);text-transform:uppercase;font-size:1.1rem}
+  .opt__desc{font-family:var(--font-mono);font-size:.7rem;color:var(--bone-dim);letter-spacing:.08em;text-transform:uppercase}
+  .stage{padding:3.2rem 2rem}
+  .ic{font-style:normal}
+
+  /* ---------------- V1 Centered Classic+ ---------------- */
+  .v1{max-width:1080px;margin:0 auto;text-align:center}
+  .v1 h1{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(2.5rem,6.5vw,5rem);line-height:.9;margin:0}
+  .v1 h1 em{color:var(--hazard);font-style:normal}
+  .v1 .sub{font-family:var(--font-mono);color:var(--bone-dim);font-size:.85rem;margin:1rem 0 1.8rem}
+  .v1 .tabs{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+  .tab{border:2px solid var(--ink-line);background:var(--ink-raised);color:var(--bone);
+    padding:.7rem 1.1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:.78rem;cursor:pointer}
+  .tab.on{background:var(--hazard);color:var(--on-hazard);border-color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+  .v1 .card{margin:2rem auto 0;max-width:760px;border:2px solid var(--ink-line);background:var(--ink-raised);
+    box-shadow:6px 6px 0 rgba(0,0,0,.55);padding:1.4rem;display:flex;gap:.8rem}
+  .field{flex:1;border:2px solid var(--ink-line);background:var(--ink);color:var(--bone);
+    font-family:var(--font-mono);padding:.85rem 1rem;font-size:.85rem}
+  .go{border:2px solid var(--ink);background:var(--hazard);color:var(--on-hazard);font-weight:800;
+    text-transform:uppercase;letter-spacing:.04em;padding:.85rem 1.4rem;box-shadow:4px 4px 0 var(--ink);cursor:pointer}
+
+  /* ---------------- V2 Asymmetric Index ---------------- */
+  .v2{max-width:1220px;margin:0 auto;display:grid;grid-template-columns:1.35fr 1fr;gap:2.5rem;align-items:center}
+  .v2 h1{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(3rem,7.5vw,6.4rem);line-height:.84;margin:0;text-align:left}
+  .v2 h1 em{display:block;color:var(--hazard);font-style:normal}
+  .v2 .sub{font-family:var(--font-mono);color:var(--bone-dim);font-size:.82rem;margin-top:1.2rem;max-width:34ch}
+  .v2 .index{border:2px solid var(--ink-line);background:var(--ink-raised)}
+  .v2 .row{display:flex;align-items:center;gap:1rem;padding:1.05rem 1.2rem;border-bottom:1px solid var(--ink-line);
+    font-weight:800;text-transform:uppercase;letter-spacing:.03em;font-size:.95rem}
+  .v2 .row:last-child{border-bottom:0}
+  .v2 .row .num{font-family:var(--font-mono);color:var(--hazard);font-size:.8rem}
+  .v2 .row .ar{margin-left:auto;color:var(--bone-dim)}
+  .v2 .row.on{background:var(--hazard);color:var(--on-hazard)}
+  .v2 .row.on .num,.v2 .row.on .ar{color:var(--on-hazard)}
+
+  /* ---------------- V3 Poster ---------------- */
+  .v3{max-width:1320px;margin:0 auto}
+  .v3 h1{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(3.5rem,12vw,9.5rem);line-height:.82;margin:0}
+  .v3 .out{color:transparent;-webkit-text-stroke:2px var(--bone)}
+  .v3 .fill{color:var(--hazard)}
+  .v3 .tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:.6rem;margin-top:2.2rem}
+  .v3 .ptab{border:2px solid var(--ink-line);background:var(--ink-raised);color:var(--bone);
+    padding:1.5rem 1rem;text-align:center;font-family:var(--font-display);text-transform:uppercase;
+    font-size:1.15rem;letter-spacing:.02em;cursor:pointer}
+  .v3 .ptab .ic{display:block;font-family:var(--font-body);font-size:1.5rem;margin-bottom:.4rem}
+  .v3 .ptab.on{background:var(--hazard);color:var(--on-hazard);border-color:var(--ink);box-shadow:5px 5px 0 var(--ink)}
+
+  /* ---------------- V4 Manifest / shipping label ---------------- */
+  .v4{max-width:1160px;margin:0 auto;border:2px solid var(--ink-line);background:var(--ink-raised);box-shadow:8px 8px 0 rgba(0,0,0,.5)}
+  .v4 .top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;
+    font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--bone-dim);
+    padding:.7rem 1.2rem;border-bottom:1px dashed var(--ink-line)}
+  .v4 .top b{color:var(--hazard)}
+  .v4 .body{padding:2.2rem}
+  .v4 h1{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(2.6rem,6.5vw,5.2rem);line-height:.86;margin:0}
+  .v4 h1 em{color:var(--hazard);font-style:normal}
+  .v4 .sub{font-family:var(--font-mono);color:var(--bone-dim);font-size:.8rem;margin:.9rem 0 1.6rem}
+  .v4 .stubs{display:flex;border:2px solid var(--ink-line)}
+  .v4 .stub{flex:1;text-align:center;padding:1rem .6rem;border-right:1px dashed var(--ink-line);
+    font-weight:800;text-transform:uppercase;letter-spacing:.03em;font-size:.74rem;cursor:pointer}
+  .v4 .stub:last-child{border-right:0}
+  .v4 .stub .ic{display:block;font-size:1.1rem;margin-bottom:.35rem}
+  .v4 .stub.on{background:var(--hazard);color:var(--on-hazard)}
+  .v4 .barcode{height:30px;margin-top:1.4rem;
+    background:repeating-linear-gradient(90deg,var(--bone) 0 2px,transparent 2px 4px,var(--bone) 4px 7px,transparent 7px 8px,var(--bone) 8px 9px,transparent 9px 13px);opacity:.25}
+
+  /* ---------------- V5 Control Panel / terminal ---------------- */
+  .v5{max-width:1080px;margin:0 auto;border:2px solid var(--ink-line);background:#0c0c10}
+  .v5 .bar{display:flex;align-items:center;gap:.5rem;padding:.6rem .9rem;border-bottom:2px solid var(--ink-line);background:var(--ink-raised)}
+  .v5 .d{width:11px;height:11px;border-radius:50%;border:1px solid var(--ink)}
+  .v5 .d1{background:var(--hazard)}.v5 .d2{background:var(--acid)}.v5 .d3{background:var(--bone-dim)}
+  .v5 .ttl{font-family:var(--font-mono);font-size:.72rem;color:var(--bone-dim);margin-left:.6rem;text-transform:uppercase;letter-spacing:.1em}
+  .v5 .body{padding:2.2rem}
+  .v5 h1{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(2.4rem,6vw,4.6rem);line-height:.88;margin:0}
+  .v5 h1 em{color:var(--hazard);font-style:normal}
+  .v5 .seg{display:inline-flex;border:2px solid var(--ink-line);margin:1.4rem 0;flex-wrap:wrap}
+  .v5 .sb{display:flex;align-items:center;gap:.55ch;padding:.7rem 1rem;border-right:1px solid var(--ink-line);
+    font-family:var(--font-mono);text-transform:uppercase;font-size:.72rem;letter-spacing:.06em;cursor:pointer}
+  .v5 .sb:last-child{border-right:0}
+  .v5 .led{width:7px;height:7px;border-radius:50%;background:var(--bone-dim)}
+  .v5 .sb.on{background:var(--hazard);color:var(--on-hazard)}.v5 .sb.on .led{background:var(--on-hazard)}
+  .v5 .term{display:flex;align-items:center;gap:.7rem;border:2px solid var(--ink-line);padding:.9rem 1rem;font-family:var(--font-mono);font-size:.85rem}
+  .v5 .term .pr{color:var(--hazard)}
+  .v5 .term .cur{color:var(--bone-dim)}
+
+  /* ---------------- V6 Bento ---------------- */
+  .v6{max-width:1200px;margin:0 auto}
+  .v6 h1{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(2.2rem,5vw,3.6rem);line-height:.9;margin:0}
+  .v6 h1 em{color:var(--hazard);font-style:normal}
+  .v6 .grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:138px;gap:.8rem;margin-top:1.4rem}
+  .v6 .tile{border:2px solid var(--ink-line);background:var(--ink-raised);padding:1.1rem;
+    display:flex;flex-direction:column;justify-content:space-between;text-transform:uppercase;font-weight:800;letter-spacing:.03em;cursor:pointer}
+  .v6 .tile .ic{font-size:1.6rem;font-weight:400}
+  .v6 .tile .nm{font-family:var(--font-display);font-size:1.2rem}
+  .v6 .feat{grid-column:span 2;grid-row:span 2;border-color:var(--hazard);box-shadow:6px 6px 0 var(--hazard)}
+  .v6 .feat .nm{font-size:2rem}
+  .v6 .feat .field{margin-top:auto}
+  .v6 .tile.on{background:var(--hazard);color:var(--on-hazard);border-color:var(--ink)}
+
+  @media (max-width:820px){
+    .v2{grid-template-columns:1fr}
+    .v3 .tabs{grid-template-columns:repeat(2,1fr)}
+    .v6 .grid{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<section class="opt">
+  <div class="opt__label"><span class="opt__num">Option 1</span><span class="opt__name">Centered Classic+</span>
+    <span class="opt__desc">// your current layout, recolored. safe, familiar, symmetric.</span></div>
+  <div class="stage"><div class="v1">
+    <h1>Your <em>All-In-One</em> Rep Toolkit</h1>
+    <p class="sub">track packages worldwide · scrape qc from any agent · find the best batch</p>
+    <div class="tabs">
+      <button class="tab on"><span class="ic">📍</span> Track</button>
+      <button class="tab"><span class="ic">📸</span> QC Photos</button>
+      <button class="tab"><span class="ic">🔍</span> Find</button>
+      <button class="tab"><span class="ic">🔗</span> Convert</button>
+      <button class="tab"><span class="ic">🧮</span> Calculators</button>
+    </div>
+    <div class="card"><input class="field" placeholder="Enter tracking number"><button class="go">Track →</button></div>
+  </div></div>
+</section>
+
+<section class="opt">
+  <div class="opt__label"><span class="opt__num">Option 2</span><span class="opt__name">Asymmetric Index</span>
+    <span class="opt__desc">// editorial. giant left headline, numbered tool index on the right.</span></div>
+  <div class="stage"><div class="v2">
+    <div>
+      <h1>Your <em>All-In-One</em> Rep Toolkit</h1>
+      <p class="sub">five tools. one tab away. cop, track, qc, repeat.</p>
+    </div>
+    <div class="index">
+      <div class="row on"><span class="num">01</span> Track <span class="ar">→</span></div>
+      <div class="row"><span class="num">02</span> QC Photos <span class="ar">→</span></div>
+      <div class="row"><span class="num">03</span> Find <span class="ar">→</span></div>
+      <div class="row"><span class="num">04</span> Convert <span class="ar">→</span></div>
+      <div class="row"><span class="num">05</span> Calculators <span class="ar">→</span></div>
+    </div>
+  </div></div>
+</section>
+
+<section class="opt">
+  <div class="opt__label"><span class="opt__num">Option 3</span><span class="opt__name">Poster</span>
+    <span class="opt__desc">// max impact. oversized outline+fill headline, chunky stamp tabs.</span></div>
+  <div class="stage"><div class="v3">
+    <h1><span class="out">Your</span> <span class="fill">All-In-One</span><br><span class="out">Rep</span> <span class="out">Toolkit</span></h1>
+    <div class="tabs">
+      <button class="ptab on"><span class="ic">📍</span>Track</button>
+      <button class="ptab"><span class="ic">📸</span>QC</button>
+      <button class="ptab"><span class="ic">🔍</span>Find</button>
+      <button class="ptab"><span class="ic">🔗</span>Convert</button>
+      <button class="ptab"><span class="ic">🧮</span>Calc</button>
+    </div>
+  </div></div>
+</section>
+
+<section class="opt">
+  <div class="opt__label"><span class="opt__num">Option 4</span><span class="opt__name">Manifest</span>
+    <span class="opt__desc">// cargo concept. shipping-manifest frame, ticket-stub tabs, barcode.</span></div>
+  <div class="stage"><div class="v4">
+    <div class="top"><span>MANIFEST NO. <b>RT-0001</b></span><span>ORIGIN <b>CN</b> → DEST <b>WORLDWIDE</b></span><span>STATUS <b>CLEARED</b></span></div>
+    <div class="body">
+      <h1>Your <em>All-In-One</em> Rep Toolkit</h1>
+      <p class="sub">declared contents: every tool for the haul.</p>
+      <div class="stubs">
+        <div class="stub on"><span class="ic">📍</span>Track</div>
+        <div class="stub"><span class="ic">📸</span>QC Photos</div>
+        <div class="stub"><span class="ic">🔍</span>Find</div>
+        <div class="stub"><span class="ic">🔗</span>Convert</div>
+        <div class="stub"><span class="ic">🧮</span>Calculators</div>
+      </div>
+      <div class="barcode"></div>
+    </div>
+  </div></div>
+</section>
+
+<section class="opt">
+  <div class="opt__label"><span class="opt__num">Option 5</span><span class="opt__name">Control Panel</span>
+    <span class="opt__desc">// terminal honesty. window chrome, segmented toggle, command input.</span></div>
+  <div class="stage"><div class="v5">
+    <div class="bar"><span class="d d1"></span><span class="d d2"></span><span class="d d3"></span><span class="ttl">reptools // toolkit.exe</span></div>
+    <div class="body">
+      <h1>Your <em>All-In-One</em> Rep Toolkit</h1>
+      <div class="seg">
+        <span class="sb on"><span class="led"></span>Track</span>
+        <span class="sb"><span class="led"></span>QC</span>
+        <span class="sb"><span class="led"></span>Find</span>
+        <span class="sb"><span class="led"></span>Convert</span>
+        <span class="sb"><span class="led"></span>Calc</span>
+      </div>
+      <div class="term"><span class="pr">&gt;</span> enter tracking number<span class="cur">_</span></div>
+    </div>
+  </div></div>
+</section>
+
+<section class="opt">
+  <div class="opt__label"><span class="opt__num">Option 6</span><span class="opt__name">Bento Grid</span>
+    <span class="opt__desc">// scannable. tools as a tile grid, track is the big feature tile.</span></div>
+  <div class="stage"><div class="v6">
+    <h1>Your <em>All-In-One</em> Rep Toolkit</h1>
+    <div class="grid">
+      <div class="tile feat"><span class="ic">📍</span><span class="nm">Track</span><input class="field" placeholder="Enter tracking number"></div>
+      <div class="tile"><span class="ic">📸</span><span class="nm">QC Photos</span></div>
+      <div class="tile"><span class="ic">🔍</span><span class="nm">Find</span></div>
+      <div class="tile"><span class="ic">🔗</span><span class="nm">Convert</span></div>
+      <div class="tile"><span class="ic">🧮</span><span class="nm">Calc</span></div>
+    </div>
+  </div></div>
+</section>
+
+</body>
+</html>

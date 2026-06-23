@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: reptools
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 300 app:app
+    healthCheckPath: /
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DISCORD_WEBHOOK_URL
+        sync: false
+      - key: KAKOBUY_TOKEN
+        sync: false
+      - key: TRACKINGMORE_API_KEY
+        sync: false
+      - key: DHL_API_KEY
+        sync: false
+      - key: TM_WEBHOOK_TOKEN
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: EMAIL_PHYSICAL_ADDRESS
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+    # No persistent disk: data lives in Postgres (DATABASE_URL). Removing the disk
+    # is what lets Render do zero-downtime rolling deploys (a disk forces stop-start).

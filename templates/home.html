@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepTools — Your All-in-One Rep Toolkit</title>
+    <meta name="description" content="RepTools is the ultimate replica fashion toolkit. Track your packages, browse thousands of products, check QC photos, and find the best deals on reps.">
+    <meta name="keywords" content="rep tools, replica fashion, rep finder, QC photos, package tracker, rep sneakers, rep clothing, KakoBuy, buy reps, replica toolkit">
+    <link rel="canonical" href="https://rep.tools/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="RepTools — Your All-in-One Rep Toolkit">
+    <meta property="og:description" content="The ultimate replica fashion toolkit. Track packages, browse products, check QC photos, and find the best deals.">
+    <meta property="og:url" content="https://rep.tools/">
+    <meta property="og:image" content="https://rep.tools/static/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="RepTools">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RepTools — Your All-in-One Rep Toolkit">
+    <meta name="twitter:description" content="The ultimate replica fashion toolkit. Track packages, browse products, and find the best deals on reps.">
+    <meta name="twitter:image" content="https://rep.tools/static/og-image.png">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="apple-touch-icon" href="/static/logo.png">
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebSite","name":"RepTools","url":"https://rep.tools","description":"Your all-in-one replica fashion toolkit. Track packages, browse QC photos, find the best reps.","potentialAction":{"@type":"SearchAction","target":"https://rep.tools/products?q={search_term_string}","query-input":"required name=search_term_string"}}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Organization","name":"RepTools","url":"https://rep.tools","logo":"https://rep.tools/static/logo.png"}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="/static/css/brand.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Accessibility: a single, consistent keyboard focus ring */
+        a:focus-visible,
+        button:focus-visible,
+        .cc-btn:focus-visible,
+        .feature-card:focus-visible,
+        .category-card:focus-visible,
+        .live-counter:focus-visible,
+        .popup-cta:focus-visible {
+            outline: 3px solid var(--hazard);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Flat rotated hazard block behind the hero (no blur, cheap) */
+        .hazard-block {
+            position: fixed;
+            width: 70vw;
+            max-width: 900px;
+            height: 360px;
+            background: var(--hazard);
+            opacity: 0.10;
+            transform: rotate(-9deg);
+            top: 4rem;
+            right: -8vw;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ── Lite FX: static fallback for low-FPS / reduced-motion devices ── */
+        .lite-fx .hazard-block { display: none; }       /* drop the decorative hazard block */
+        .lite-fx .popup-overlay {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+
+        /* ── Scroll-reveal fade for sections ── */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header */
+        header {
+            padding: 1.25rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--ink-line);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--ink);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 700;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            transition: color 0.2s ease;
+            font-size: 0.85rem;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        nav a.active {
+            color: var(--accent-primary);
+        }
+
+        .nav-cta {
+            padding: 0.6rem 1.25rem;
+            background: var(--accent-primary);
+            color: var(--on-accent) !important;
+            border: 2px solid var(--ink);
+            box-shadow: 3px 3px 0 var(--ink);
+            font-weight: 800;
+        }
+
+        .nav-cta:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--ink);
+        }
+
+        /* Mobile nav (hamburger + disclosure menu) */
+        .nav-toggle {
+            display: none;
+            background: transparent;
+            border: 2px solid var(--ink-line);
+            color: var(--text-primary);
+            width: 44px;
+            height: 44px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .nav-toggle svg { width: 22px; height: 22px; }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            flex-direction: column;
+            padding: 5rem 1rem 1rem;
+            background: var(--ink);
+            border-bottom: 2px solid var(--ink-line);
+        }
+        .mobile-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 700;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-size: 1.05rem;
+            padding: 0.85rem 0.75rem;
+        }
+        .mobile-nav a:hover,
+        .mobile-nav a.active {
+            color: var(--accent-primary);
+            background: var(--ink-raised);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+            padding: 9rem 4rem 4rem;
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.4rem 0.7rem;
+            border: 1.5px solid var(--hazard);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--hazard);
+            margin-bottom: 1.75rem;
+        }
+
+        .hero-badge-sep {
+            width: 4px;
+            height: 4px;
+            background: var(--hazard);
+            opacity: 0.6;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: var(--step-hero);
+            font-weight: 400;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.005em;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .hero h1 .line {
+            display: block;
+        }
+
+        .hero h1 .gradient {
+            color: var(--hazard);
+        }
+
+        .hero-stamp {
+            position: absolute;
+            top: 8rem;
+            right: 4rem;
+            font-size: 1.4rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.55;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 0.6s ease 0.3s both;
+        }
+        
+        /* Live counter */
+        .live-counter {
+            margin-top: 1.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 0.85rem;
+            background: var(--ink-raised);
+            border: 2px solid var(--gl);
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s var(--ease), color 0.2s ease;
+            animation: liveFadeIn 0.8s ease 0.4s both;
+            position: relative;
+            overflow: hidden;
+        }
+        .live-counter:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--gl);
+            color: var(--text-primary);
+        }
+        .live-counter > * {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes liveFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .live-pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--gl);
+            flex-shrink: 0;
+            box-shadow: 0 0 0 0 rgba(47, 209, 103, 0.6);
+            animation: livePulse 2s ease infinite;
+        }
+        @keyframes livePulse {
+            0% { box-shadow: 0 0 0 0 rgba(47, 209, 103, 0.6); }
+            70% { box-shadow: 0 0 0 10px rgba(47, 209, 103, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(47, 209, 103, 0); }
+        }
+        .live-num {
+            color: var(--gl);
+            font-weight: 700;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            min-width: 28px;
+            text-align: right;
+            transition: color 0.3s ease;
+        }
+        .live-num.updating {
+            color: var(--accent-primary);
+        }
+        .live-counter:hover .live-num {
+            color: var(--accent-primary);
+        }
+        .live-arrow {
+            display: inline-block;
+            width: 16px;
+            margin-left: 0.25rem;
+            opacity: 0;
+            color: var(--accent-primary);
+            font-weight: 700;
+            transform: translateX(-6px);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+        }
+        .live-counter:hover .live-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .hero-scroll svg { width: 18px; height: 18px; opacity: 0.7; }
+
+        /* Inline arrow icons sit on the text baseline */
+        .ico-arrow { width: 16px; height: 16px; flex-shrink: 0; }
+        .feature-link svg { width: 16px; height: 16px; }
+        .live-arrow { display: inline-flex; }
+
+        /* Features */
+        .features {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: left;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--ink-line);
+        }
+
+        .section-kicker {
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            font-weight: 400;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.005em;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--ink-raised);
+            border: 2px solid var(--ink-line);
+            box-shadow: 6px 6px 0 rgba(0,0,0,.5);
+            padding: 2.25rem;
+            transition: transform 0.15s var(--ease), border-color 0.15s ease, box-shadow 0.15s var(--ease);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translate(-2px, -2px);
+            border-color: var(--hazard);
+            box-shadow: 8px 8px 0 var(--hazard);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--on-hazard);
+            background: var(--hazard);
+            border: 2px solid var(--ink);
+        }
+
+        .feature-icon svg { width: 22px; height: 22px; }
+
+        .feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.65rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            line-height: 0.95;
+            letter-spacing: 0.01em;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-link {
+            color: var(--accent-primary);
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-link svg {
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-link svg {
+            transform: translateX(4px);
+        }
+        
+        /* Products Preview */
+        .products-preview {
+            padding: 6rem 2rem;
+            background: var(--bg-secondary);
+            border-block: 2px solid var(--ink-line);
+        }
+        
+        .products-preview .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .categories-scroll {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            scrollbar-width: none;
+        }
+        
+        .categories-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .category-card {
+            flex-shrink: 0;
+            width: 200px;
+            height: 240px;
+            background: var(--ink-raised);
+            border: 2px solid var(--ink-line);
+            box-shadow: 6px 6px 0 rgba(0,0,0,.5);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.15s var(--ease), border-color 0.15s ease, box-shadow 0.15s var(--ease);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            transform: translate(-2px, -2px);
+            border-color: var(--hazard);
+            box-shadow: 8px 8px 0 var(--hazard);
+        }
+
+        .category-icon {
+            color: var(--hazard);
+            margin-bottom: 1rem;
+        }
+
+        .category-icon svg { width: 26px; height: 26px; }
+
+        .category-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            line-height: 0.95;
+            letter-spacing: 0.01em;
+        }
+
+        .category-card span {
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        
+        /* Stats */
+        .stats {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: var(--ink-raised);
+            border: 2px solid var(--ink-line);
+            box-shadow: 6px 6px 0 rgba(0,0,0,.5);
+            transition: transform 0.15s var(--ease), border-color 0.15s ease, box-shadow 0.15s var(--ease);
+            position: relative;
+        }
+
+        .stat-card:hover {
+            border-color: var(--hazard);
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0 var(--hazard);
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            font-weight: 400;
+            line-height: 0.9;
+            color: var(--hazard);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+        
+        .cta-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--ink-raised);
+            border: 2px solid var(--hazard);
+            box-shadow: 8px 8px 0 var(--hazard);
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 400;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .cta-box p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Header scroll state */
+        header.scrolled {
+            border-bottom-color: var(--hazard);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            border-top: 2px solid var(--ink-line);
+            text-align: center;
+            position: relative;
+        }
+
+        footer::before { display: none; }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-copy {
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.04em;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            
+            header > nav {
+                display: none;
+            }
+
+            .nav-toggle {
+                display: inline-flex;
+            }
+
+            .mobile-nav.open {
+                display: flex;
+            }
+
+            .hero {
+                padding: 7rem 1.25rem 4rem;
+            }
+
+            .hero-stamp {
+                top: 6rem;
+                right: 1.25rem;
+                font-size: 1rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-cta .cc-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .cta-box {
+                padding: 2rem;
+            }
+        }
+        
+        /* Popup Modal */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            animation: popupFadeIn 0.3s ease;
+        }
+        .popup-overlay.hidden { display: none; }
+        @keyframes popupFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .popup-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+        }
+        .popup-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .popup-close {
+            background: var(--ink-raised);
+            border: 2px solid var(--ink-line);
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .popup-close:hover { color: var(--text-primary); background: rgba(255,255,255,0.15); }
+        
+        .popup-content {
+            width: 100%;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        
+        .popup-card {
+            background: var(--ink-raised);
+            border: 2px solid var(--ink-line);
+            box-shadow: 6px 6px 0 rgba(0,0,0,.5);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .popup-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border: 1.5px solid var(--hazard);
+            padding: 0.3rem 0.6rem;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--hazard);
+            margin-bottom: 1.25rem;
+        }
+        .popup-badge-icon { font-size: 0.85rem; }
+
+        .popup-title {
+            font-family: var(--font-display);
+            font-size: 1.65rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            line-height: 0.95;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .popup-title strong {
+            color: var(--hazard);
+        }
+        
+        .popup-subtitle {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .popup-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem;
+            background: var(--hazard);
+            color: var(--on-hazard);
+            border: 2px solid var(--ink);
+            box-shadow: 4px 4px 0 var(--ink);
+            font-family: var(--font-body);
+            font-weight: 800;
+            font-size: 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
+            letter-spacing: 0.04em;
+        }
+        .popup-cta:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--ink);
+        }
+        
+        .popup-hint {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-top: 0.75rem;
+        }
+        
+        .popup-prefs {
+            background: var(--ink-raised);
+            border: 2px solid var(--ink-line);
+            box-shadow: 6px 6px 0 rgba(0,0,0,.5);
+            padding: 1.25rem 1.5rem;
+        }
+        .popup-prefs-title {
+            font-family: var(--font-display);
+            font-weight: 400;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .popup-prefs-sub {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .popup-prefs-label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+        .popup-tutorial-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: 2px solid var(--bone);
+            box-shadow: 3px 3px 0 var(--hazard);
+            color: var(--bone);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            text-decoration: none;
+            transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
+        }
+        .popup-tutorial-link:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--hazard);
+        }
+        
+        .popup-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+        }
+        
+        @media (max-width: 480px) {
+            .popup-header { padding: 1rem; }
+            .popup-brand { font-size: 1rem; }
+            .popup-card { padding: 1.5rem 1.25rem; }
+            .popup-title { font-size: 1.2rem; }
+            .popup-cta { padding: 0.85rem; font-size: 0.9rem; }
+        }
+    </style>
+    <!-- Google Analytics -->
+    {{ ga_snippet|safe }}
+</head>
+<body>
+    <!-- Kakobuy Signup Popup -->
+    <div class="popup-overlay hidden" id="signup-popup" role="dialog" aria-modal="true" aria-labelledby="popup-title" onclick="if(event.target===this)closePopup()">
+        <div class="popup-header">
+            <div class="popup-brand">
+                <span class="cc-wordmark"><span class="cc-rep">REP</span><span class="cc-tools">TOOLS</span></span>
+            </div>
+            <button class="popup-close" onclick="closePopup()" aria-label="Close">×</button>
+        </div>
+        
+        <div class="popup-content">
+            <div class="popup-card">
+                <div class="popup-badge">RepTools</div>
+                <h2 class="popup-title" id="popup-title">Sign up now to unlock up to <strong>$500 coupon</strong>.</h2>
+                <p class="popup-subtitle">Fast access • Works on all devices • Takes a few seconds</p>
+                <a href="https://www.kakobuy.com/register/?affcode=thelude" target="_blank" class="popup-cta" onclick="closePopup(); fetch('/api/click',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product_id:'signup',product_name:'KakoBuy Signup',category:'signup',agent:'kakobuy'})}).catch(()=>{})">
+                    Sign Up
+                </a>
+                <p style="font-size:0.68rem;color:rgba(255,255,255,0.5);margin:0.5rem 0 0;">Affiliate link — we may earn a commission from KakoBuy signups, at no extra cost to you.</p>
+                <p class="popup-hint">New to reps? Check the buying tutorial below.</p>
+            </div>
+            
+            <div class="popup-prefs">
+                <div class="popup-prefs-title">Buying Tutorial</div>
+                <p class="popup-prefs-sub">New to reps? Learn how to buy step by step.</p>
+                <a href="/tutorial" class="popup-tutorial-link">
+                    Read the Guide →
+                </a>
+            </div>
+        </div>
+        
+        <div class="popup-footer">
+            By continuing, you agree to our platform terms.
+        </div>
+    </div>
+
+    <!-- Static background depth -->
+    <div class="hazard-block" aria-hidden="true"></div>
+
+    <header>
+        <a href="/" class="cc-wordmark cc-wordmark--lg"><span class="cc-rep">REP</span><span class="cc-tools">TOOLS</span></a>
+        <nav>
+            <a href="/" class="active">Home</a>
+            <a href="/products">Products</a>
+            <a href="/tools">Tools</a>
+            <a href="/tutorial" class="nav-cta">Tutorial</a>
+        </nav>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-nav">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+    </header>
+
+    <nav class="mobile-nav" id="mobile-nav" hidden>
+        <a href="/" class="active">Home</a>
+        <a href="/products">Products</a>
+        <a href="/tools">Tools</a>
+        <a href="/tutorial">Tutorial</a>
+    </nav>
+
+    <!-- Tracking ticker -->
+    <div class="cc-ticker" aria-hidden="true">
+        <div class="cc-ticker__track">
+            <span>KAKOBUY</span> //&nbsp; <span>WEIDIAN</span> //&nbsp; <span>1688</span> //&nbsp; <span>YUPOO QC</span> //&nbsp; GL ✓ DELIVERED //&nbsp; RL ✗ HELD AT CUSTOMS //&nbsp; <span>BATCH DROP</span> //&nbsp; <span>CN → WORLDWIDE</span> //&nbsp;
+            <span>KAKOBUY</span> //&nbsp; <span>WEIDIAN</span> //&nbsp; <span>1688</span> //&nbsp; <span>YUPOO QC</span> //&nbsp; GL ✓ DELIVERED //&nbsp; RL ✗ HELD AT CUSTOMS //&nbsp; <span>BATCH DROP</span> //&nbsp; <span>CN → WORLDWIDE</span> //&nbsp;
+        </div>
+    </div>
+
+    <section class="hero">
+        <span class="cc-stamp hero-stamp" aria-hidden="true">QC<br>PASSED</span>
+
+        <div class="hero-badge">
+            <span>3,100+ carriers</span>
+            <span class="hero-badge-sep"></span>
+            <span>9 shopping agents</span>
+            <span class="hero-badge-sep"></span>
+            <span>Free</span>
+        </div>
+
+        <h1>
+            <span class="line">Your All-in-One</span>
+            <span class="line gradient">Rep Toolkit</span>
+        </h1>
+
+        <p>Track packages worldwide, browse top finds, scrape QC photos, and find the best batch for any shoe — all in one place.</p>
+
+        <div class="hero-cta">
+            <a href="/tools" class="cc-btn">
+                <span>Open Tools</span>
+                <svg class="ico-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a href="/products" class="cc-btn cc-btn--ghost">
+                <span>Browse Products</span>
+            </a>
+        </div>
+
+        <a href="/products" class="live-counter">
+            <span class="live-pulse" aria-hidden="true"></span>
+            <span class="live-num" id="live-num" role="status" aria-live="polite">—</span>
+            <span class="live-text">people browsing now</span>
+            <svg class="live-arrow ico-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+
+        <div class="hero-scroll">
+            <span>Scroll to explore</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+    </section>
+    
+    <div class="cc-barcode" aria-hidden="true"></div>
+
+    <section class="features reveal-section">
+        <div class="section-header">
+            <span class="cc-tag section-kicker">// THE KIT</span>
+            <h2>Powerful Tools, Zero Hassle</h2>
+            <p>Everything you need to navigate the rep world with confidence</p>
+        </div>
+        
+        <div class="features-grid">
+            <a href="/tools#track" class="feature-card">
+                <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div>
+                <h3>Package Tracker</h3>
+                <p>Track any package from any carrier worldwide with detailed status updates and delivery estimations.</p>
+                <span class="feature-link">Track Now <svg class="ico-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </a>
+
+            <a href="/tools#qc" class="feature-card">
+                <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></div>
+                <h3>QC Photo Scraper</h3>
+                <p>Extract quality check photos from any shopping agent — KakoBuy, Sugargoo, Pandabuy, and more.</p>
+                <span class="feature-link">Scrape Photos <svg class="ico-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </a>
+
+            <a href="/tools#find" class="feature-card">
+                <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
+                <h3>Best Batch Finder</h3>
+                <p>Find the highest-rated batches for popular items based on community reviews and comparisons.</p>
+                <span class="feature-link">Find Best Batch <svg class="ico-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            </a>
+        </div>
+    </section>
+    
+    <div class="cc-barcode" aria-hidden="true"></div>
+
+    <section class="products-preview reveal-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="cc-tag section-kicker">// THE DROP</span>
+                <h2>Browse by Category</h2>
+                <p>Discover top finds curated by the community</p>
+            </div>
+            
+            <div class="categories-scroll">
+                <a href="/products/hoodies" class="category-card">
+                    <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg></div>
+                    <div>
+                        <h4>Hoodies</h4>
+                        <span>Cozy essentials</span>
+                    </div>
+                </a>
+
+                <a href="/products/shirts" class="category-card">
+                    <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 2a4 4 0 0 1-8 0L3 5l2.5 4L8 7.5V22h8V7.5L18.5 9 21 5z"/></svg></div>
+                    <div>
+                        <h4>Shirts</h4>
+                        <span>Tees &amp; polos</span>
+                    </div>
+                </a>
+
+                <a href="/products/pants" class="category-card">
+                    <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="3.5" rx="0.5"/><path d="M7 6v15.5h3.5L12 11l1.5 10.5H17V6"/></svg></div>
+                    <div>
+                        <h4>Pants</h4>
+                        <span>Jeans &amp; joggers</span>
+                    </div>
+                </a>
+
+                <a href="/products/shoes" class="category-card">
+                    <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/><path d="M16 17h4"/><path d="M4 13h4"/></svg></div>
+                    <div>
+                        <h4>Shoes</h4>
+                        <span>Sneakers &amp; boots</span>
+                    </div>
+                </a>
+
+                <a href="/products/accessories" class="category-card">
+                    <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"/><polyline points="12 10 12 12 13 13"/><path d="m16.13 7.66-.81-4.05a2 2 0 0 0-2-1.61h-2.68a2 2 0 0 0-2 1.61l-.78 4.05"/><path d="m7.88 16.36.8 4a2 2 0 0 0 2 1.61h2.72a2 2 0 0 0 2-1.61l.81-4.05"/></svg></div>
+                    <div>
+                        <h4>Accessories</h4>
+                        <span>Bags &amp; jewelry</span>
+                    </div>
+                </a>
+
+                <a href="/products/misc" class="category-card">
+                    <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div>
+                    <div>
+                        <h4>Misc</h4>
+                        <span>Everything else</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <div class="cc-barcode" aria-hidden="true"></div>
+
+    <section class="stats reveal-section">
+        <div class="section-header">
+            <span class="cc-tag section-kicker">// MANIFEST</span>
+            <h2>By the Numbers</h2>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">3100+</div>
+                <div class="stat-label">Carriers Supported</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">9</div>
+                <div class="stat-label">Shopping Agents</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Marketplaces</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Possibilities</div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/products">Products</a>
+            <a href="/tools">Tools</a>
+            <a href="/contact">Contact</a>
+        </div>
+        <p class="footer-copy">Built for the rep community, by the rep community.</p>
+
+        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Official Domains</p>
+            <p style="font-size: 0.95rem;">
+                <a href="https://reptools.org" style="color: var(--accent-primary); text-decoration: none; font-weight: 500;">reptools.org</a>
+                <span style="margin: 0 0.5rem; color: var(--text-muted);">•</span>
+                <a href="https://reptools.net" style="color: var(--accent-primary); text-decoration: none; font-weight: 500;">reptools.net</a>
+                <span style="margin: 0 0.5rem; color: var(--text-muted);">•</span>
+                <a href="https://rep.tools" style="color: var(--accent-primary); text-decoration: none; font-weight: 500;">rep.tools</a>
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">All three domains lead to the same site - use whichever is easiest to remember!</p>
+        </div>
+    </footer>
+
+    <script>
+        var popupLastFocus = null;
+
+        function openPopup() {
+            var popup = document.getElementById('signup-popup');
+            popupLastFocus = document.activeElement;
+            popup.classList.remove('hidden');
+            var first = popup.querySelector('.popup-cta') || popup.querySelector('.popup-close');
+            if (first) first.focus();
+        }
+
+        function closePopup() {
+            document.getElementById('signup-popup').classList.add('hidden');
+            sessionStorage.setItem('popupClosed', 'true');
+            if (popupLastFocus && typeof popupLastFocus.focus === 'function') {
+                popupLastFocus.focus();
+                popupLastFocus = null;
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !document.getElementById('signup-popup').classList.contains('hidden')) {
+                closePopup();
+            }
+        });
+
+        (function() {
+            var isInternal = document.referrer && document.referrer.includes(window.location.hostname);
+            var popupClosed = sessionStorage.getItem('popupClosed') === 'true';
+
+            if (isInternal && popupClosed) return;
+
+            setTimeout(function() {
+                if (sessionStorage.getItem('popupClosed') !== 'true') {
+                    openPopup();
+                }
+            }, 2000);
+        })();
+
+        /* ── Mobile nav toggle ── */
+        (function() {
+            var toggle = document.getElementById('nav-toggle');
+            var menu = document.getElementById('mobile-nav');
+            if (!toggle || !menu) return;
+            toggle.addEventListener('click', function() {
+                var open = menu.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                if (open) { menu.removeAttribute('hidden'); }
+                else { menu.setAttribute('hidden', ''); }
+            });
+            menu.querySelectorAll('a').forEach(function(a) {
+                a.addEventListener('click', function() {
+                    menu.classList.remove('open');
+                    menu.setAttribute('hidden', '');
+                    toggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && menu.classList.contains('open')) {
+                    menu.classList.remove('open');
+                    menu.setAttribute('hidden', '');
+                    toggle.setAttribute('aria-expanded', 'false');
+                    toggle.focus();
+                }
+            });
+        })();
+
+        /* ── Live browsing counter (varies by time of day) ── */
+        (function() {
+            var el = document.getElementById('live-num');
+            if (!el) return;
+
+            // Base count by hour (local time) — peak 6pm-12am, low 2am-7am
+            // Estimates feel realistic for a site getting ~250 visits/day
+            var hourlyBase = [
+                95, 78, 62, 54, 48, 52, 65, 82,     // 12am - 8am
+                108, 134, 156, 172, 188, 204, 221, 238,  // 8am - 4pm
+                263, 285, 312, 338, 352, 341, 289, 172   // 4pm - 12am
+            ];
+
+            var lastNum = null;
+
+            function computeCount() {
+                var now = new Date();
+                var hour = now.getHours();
+                var minute = now.getMinutes();
+
+                var base = hourlyBase[hour];
+                var nextBase = hourlyBase[(hour + 1) % 24];
+
+                // Smooth transition between hours based on minute
+                var t = minute / 60;
+                var smooth = Math.round(base * (1 - t) + nextBase * t);
+
+                // Day-of-week factor: weekends busier
+                var day = now.getDay();
+                var dayFactor = (day === 0 || day === 6) ? 1.15 : (day === 5 ? 1.08 : 1.0);
+
+                // Add small drift that changes every ~30 sec (uses minute + half-minute)
+                var seed = Math.floor(now.getTime() / 30000);
+                var drift = ((Math.sin(seed) + Math.cos(seed * 1.7)) * 0.5 + 0.5) * 16 - 8;
+
+                var count = Math.round(smooth * dayFactor + drift);
+
+                // Clamp to sane range
+                if (count < 20) count = 20;
+                if (count > 500) count = 500;
+                return count;
+            }
+
+            function update() {
+                var newNum = computeCount();
+                if (lastNum !== null && newNum !== lastNum) {
+                    // Animate the change: ±1 per frame toward newNum
+                    el.classList.add('updating');
+                    var step = newNum > lastNum ? 1 : -1;
+                    var current = lastNum;
+                    var anim = setInterval(function() {
+                        current += step;
+                        el.textContent = current;
+                        if (current === newNum) {
+                            clearInterval(anim);
+                            el.classList.remove('updating');
+                            lastNum = newNum;
+                        }
+                    }, 50);
+                } else {
+                    el.textContent = newNum;
+                    lastNum = newNum;
+                }
+            }
+
+            // Initial value immediately
+            el.textContent = computeCount();
+            lastNum = computeCount();
+
+            // Update every 8-15 seconds for organic feel
+            function schedule() {
+                var delay = 8000 + Math.random() * 7000;
+                setTimeout(function() {
+                    update();
+                    schedule();
+                }, delay);
+            }
+            schedule();
+        })();
+
+        /* ── Header scroll effect ── */
+        (function() {
+            var header = document.querySelector('header');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            }, { passive: true });
+        })();
+
+        /* ── Scroll Reveal ── */
+        (function() {
+            var sections = document.querySelectorAll('.reveal-section');
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            sections.forEach(function(s) { observer.observe(s); });
+        })();
+
+        /* ── Staggered Reveal for Grid Children ── */
+        (function() {
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        var children = entry.target.querySelectorAll('.feature-card, .category-card, .stat-card');
+                        children.forEach(function(child, i) {
+                            child.style.opacity = '0';
+                            child.style.transform = 'translateY(30px)';
+                            child.style.transition = 'opacity 0.6s ease ' + (i * 0.12) + 's, transform 0.6s ease ' + (i * 0.12) + 's';
+                            setTimeout(function() {
+                                child.style.opacity = '1';
+                                child.style.transform = 'translateY(0)';
+                            }, 50);
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.features-grid, .categories-scroll, .stats-grid').forEach(function(el) {
+                observer.observe(el);
+            });
+        })();
+
+        /* ── Stat Number Count-Up Animation ── */
+        (function() {
+            var counted = false;
+            var observer = new IntersectionObserver(function(entries) {
+                if (entries[0].isIntersecting && !counted) {
+                    counted = true;
+                    document.querySelectorAll('.stat-number').forEach(function(el) {
+                        var text = el.textContent.trim();
+                        if (text === '∞') return;
+                        var num = parseInt(text.replace(/[^0-9]/g, ''));
+                        var suffix = text.replace(/[0-9]/g, '');
+                        var duration = 2000;
+                        var start = performance.now();
+                        function tick(now) {
+                            var progress = Math.min((now - start) / duration, 1);
+                            var eased = 1 - Math.pow(1 - progress, 3);
+                            el.textContent = Math.floor(num * eased).toLocaleString() + suffix;
+                            if (progress < 1) requestAnimationFrame(tick);
+                        }
+                        requestAnimationFrame(tick);
+                    });
+                }
+            }, { threshold: 0.3 });
+            var statsSection = document.querySelector('.stats');
+            if (statsSection) observer.observe(statsSection);
+        })();
+    </script>
+
+    <!-- Social Proof Toast -->
+    <div id="social-proof-toast" role="status" aria-live="polite" style="
+        position: fixed;
+        bottom: 1.5rem;
+        left: 1.5rem;
+        right: 1.5rem;
+        background: var(--ink-raised);
+        border: 2px solid var(--ink-line);
+        padding: 0.85rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        z-index: 999;
+        max-width: 340px;
+        box-shadow: 6px 6px 0 rgba(0,0,0,.5);
+        transform: translateY(120px);
+        opacity: 0;
+        transition: transform 0.4s ease, opacity 0.4s ease;
+        cursor: pointer;
+    ">
+        <div id="sp-image" style="width: 52px; height: 52px; overflow: hidden; flex-shrink: 0; background: var(--ink); border: 2px solid var(--ink-line);">
+            <img id="sp-img" style="width: 100%; height: 100%; object-fit: cover;" src="" alt="" loading="lazy" width="52" height="52">
+        </div>
+        <div style="flex: 1; min-width: 0;">
+            <div style="display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.2rem;">
+                <span style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; color: var(--gl); border: 1.5px solid var(--gl); padding: 0.1rem 0.4rem;">GL ✓ VERIFIED</span>
+                <span id="sp-action" style="font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.04em; color: var(--text-muted);"></span>
+            </div>
+            <div id="sp-name" style="font-size: 0.8rem; color: var(--text-primary); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.15rem;">
+                <span id="sp-price" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--hazard); font-weight: 700;"></span>
+                <span id="sp-time" style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted);"></span>
+            </div>
+        </div>
+        <button onclick="hideSocialProof()" aria-label="Close" style="position: absolute; top: 0.2rem; right: 0.2rem; background: none; border: none; color: var(--text-muted); font-size: 0.9rem; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">×</button>
+    </div>
+
+    <script>
+    (function() {
+        var toast = document.getElementById('social-proof-toast');
+        var hideTimeout, showTimeout;
+        var isHovering = false;
+        var products = [];
+
+        var cities = ['New York', 'Los Angeles', 'London', 'Toronto', 'Sydney', 'Berlin', 'Paris', 'Tokyo', 'Dubai', 'Amsterdam', 'Melbourne', 'Chicago', 'Houston', 'Miami', 'Vancouver', 'Auckland', 'Singapore', 'Stockholm', 'Seoul', 'Manila'];
+        var actions = ['Purchased', 'Just viewed', 'Added to cart'];
+        var timeAgo = ['just now', '1 min ago', '2 min ago', '3 min ago', '5 min ago', '8 min ago', '12 min ago', '15 min ago'];
+
+        fetch('/static/products.json')
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                for (var cat in data) {
+                    var items = data[cat].items || [];
+                    for (var i = 0; i < items.length; i++) {
+                        if (items[i].image && items[i].name) {
+                            products.push(items[i]);
+                        }
+                    }
+                }
+                if (products.length > 0) {
+                    showTimeout = setTimeout(showSocialProof, 8000);
+                }
+            })
+            .catch(function() {});
+
+        function showSocialProof() {
+            if (products.length === 0) return;
+            var p = products[Math.floor(Math.random() * products.length)];
+            var city = cities[Math.floor(Math.random() * cities.length)];
+            var action = actions[Math.floor(Math.random() * actions.length)];
+            var time = timeAgo[Math.floor(Math.random() * timeAgo.length)];
+
+            document.getElementById('sp-img').src = p.image;
+            document.getElementById('sp-img').alt = p.name;
+            document.getElementById('sp-img').onerror = function() { this.src = '/static/logo.png'; };
+            document.getElementById('sp-name').textContent = p.name;
+            document.getElementById('sp-price').textContent = p.price || '';
+            document.getElementById('sp-action').textContent = action + ' from ' + city;
+            document.getElementById('sp-time').textContent = time;
+            toast.dataset.url = p.url || '';
+
+            toast.style.transform = 'translateY(0)';
+            toast.style.opacity = '1';
+
+            scheduleHide();
+        }
+
+        function scheduleHide() {
+            clearTimeout(hideTimeout);
+            if (!isHovering) {
+                hideTimeout = setTimeout(hideSocialProof, 6000);
+            }
+        }
+
+        window.hideSocialProof = function() {
+            toast.style.transform = 'translateY(120px)';
+            toast.style.opacity = '0';
+            clearTimeout(hideTimeout);
+            showTimeout = setTimeout(showSocialProof, Math.floor(Math.random() * 20000) + 15000);
+        };
+
+        toast.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON') return;
+            var url = toast.dataset.url;
+            if (url) window.open(url, '_blank');
+        });
+
+        toast.addEventListener('mouseenter', function() {
+            isHovering = true;
+            clearTimeout(hideTimeout);
+        });
+        toast.addEventListener('mouseleave', function() {
+            isHovering = false;
+            scheduleHide();
+        });
+    })();
+    </script>
+    <script>
+    /* Adaptive performance: if the device can't hold a smooth frame rate with the
+       animated background (Opera GX's resource limiter, low-end GPUs, etc.), switch to
+       the static `lite-fx` look so the page stays snappy. Honour reduced-motion instantly;
+       otherwise probe real FPS once the page has settled to avoid load-jank false positives. */
+    (function () {
+        try {
+            var go = function () { document.body.classList.add('lite-fx'); };
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return go(); }
+            var run = function () {
+                var frames = 0, slow = 0, start = performance.now(), last = start;
+                (function tick(now) {
+                    frames++; if (now - last > 32) slow++; last = now;
+                    if (now - start < 1000) { requestAnimationFrame(tick); }
+                    else {
+                        var fps = frames * 1000 / (now - start);
+                        if (fps < 50 || slow >= 12) go();   // struggling -> go static
+                    }
+                })(performance.now());
+            };
+            // wait for load + a beat so initial parsing/image jank doesn't trip the probe
+            if (document.readyState === 'complete') { setTimeout(run, 800); }
+            else { window.addEventListener('load', function () { setTimeout(run, 800); }); }
+        } catch (e) {}
+    })();
+    </script>
+</body>
+</html>

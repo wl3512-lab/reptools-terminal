@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="4" fill="#0c0b0a"/>
+  <rect x="3" y="9" width="26" height="14" rx="1.5" fill="#ff4d00" transform="skewX(-6)" transform-origin="16 16"/>
+  <text x="16.5" y="22" text-anchor="middle" font-family="Arial Narrow, Arial, sans-serif" font-weight="900" font-size="15" fill="#0c0b0a" letter-spacing="-0.5">REP</text>
+</svg>

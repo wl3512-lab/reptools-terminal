@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Find Your Size (prototype) — RepTools</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/static/css/brand.css">
+    <style>
+        :root{--bg:var(--ink);--bg2:#1c1813;--card:var(--ink-raised);--bd:var(--ink-line);--tx:var(--bone);--mut:#9a9182;
+              --tight:#ef4444;--fitted:#f59e0b;--reg:#22c55e;--relax:#3b82f6;--over:#a855f7;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:var(--font-body);background:var(--bg);color:var(--tx);line-height:1.5;padding-bottom:4rem;}
+        a{color:var(--cy);}
+        .top{display:flex;align-items:center;gap:.6rem;padding:1rem 1.4rem;border-bottom:2px solid var(--ink-line);background:var(--ink);position:sticky;top:0;z-index:10;}
+        .top .tag{margin-left:auto;font-family:var(--font-mono);font-size:.65rem;color:var(--fitted);border:1.5px solid var(--fitted);padding:.2rem .5rem;text-transform:uppercase;letter-spacing:.1em;}
+        .wrap{max-width:720px;margin:0 auto;padding:1.75rem 1.1rem;}
+        h1{font-family:var(--font-display);font-size:clamp(2.4rem,8vw,3.4rem);font-weight:400;text-transform:uppercase;line-height:.9;letter-spacing:.01em;}
+        .sub{color:var(--mut);font-size:.9rem;margin:.25rem 0 1.5rem;}
+        .card{background:var(--ink-raised);border:2px solid var(--ink-line);box-shadow:6px 6px 0 rgba(0,0,0,.55);padding:1.25rem;margin-bottom:1.4rem;}
+        .stephead{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;}
+        .step{font-family:var(--font-mono);font-size:.7rem;font-weight:700;color:var(--cy);text-transform:uppercase;letter-spacing:.14em;}
+        .units{display:flex;border:2px solid var(--ink-line);overflow:hidden;}
+        .units button{background:var(--bg2);color:var(--mut);border:none;font-family:var(--font-mono);font-weight:700;font-size:.7rem;padding:.35rem .8rem;min-height:44px;cursor:pointer;text-transform:uppercase;letter-spacing:.06em;}
+        .units button.on{background:var(--cy);color:var(--on-accent);font-weight:700;}
+        label{font-size:.7rem;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;gap:.35rem;margin-bottom:.3rem;}
+        input,select{width:100%;padding:.7rem .8rem;background:var(--bg2);border:2px solid var(--bd);color:var(--tx);font-family:var(--font-mono);font-size:1rem;}
+        input:focus,select:focus{border-color:var(--cy);}
+        .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+        .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;}
+        .ftin{display:flex;gap:.4rem;align-items:center;}
+        .ftin input{width:100%;}.ftin span{color:var(--mut);font-size:.8rem;}
+        .row{margin-bottom:.85rem;}
+        .toggle{cursor:pointer;color:var(--cy);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;user-select:none;margin-top:.4rem;display:inline-block;background:none;border:none;font-family:var(--font-body);padding:.3rem 0;text-align:left;}
+        .hidden{display:none;}
+        .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+        .info{width:18px;height:18px;border:1.5px solid var(--cy);color:var(--cy);font-family:var(--font-mono);font-size:.62rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none;background:none;padding:0;position:relative;}
+        .info::after{content:"";position:absolute;top:50%;left:50%;width:44px;height:44px;transform:translate(-50%,-50%);}
+        .info:hover{background:var(--cy);color:var(--on-accent);}
+        .tabs{display:flex;gap:.5rem;margin-bottom:1rem;}
+        .tab{flex:1;padding:.7rem;background:var(--bg2);border:2px solid var(--bd);color:var(--mut);font-family:var(--font-body);font-weight:800;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;font-size:.88rem;}
+        .tab.active{color:var(--on-accent);border-color:var(--cy);background:var(--cy);}
+        .panel{display:none;}.panel.active{display:block;}
+        .btn{width:100%;margin-top:.8rem;padding:.85rem;background:var(--cy);color:var(--on-accent);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font-family:var(--font-body);font-weight:800;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;font-size:.95rem;transition:transform .15s,box-shadow .15s;}
+        .btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
+        .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink);}
+        .btn[disabled]{opacity:.5;cursor:not-allowed;box-shadow:4px 4px 0 var(--ink);transform:none;}
+        .drop{display:block;width:100%;background:none;font-family:var(--font-body);border:2px dashed var(--bd);padding:1.4rem;text-align:center;color:var(--mut);font-size:.88rem;cursor:pointer;}
+        .drop:hover{border-color:var(--cy);color:var(--tx);}
+        .hint{color:var(--mut);font-size:.78rem;margin-top:.5rem;}
+        .status{margin:1rem 0;font-size:.88rem;color:var(--mut);min-height:1.2em;}
+        .result{display:none;}.result.show{display:block;}
+        .pick{text-align:center;padding:1.3rem;background:var(--bg2);border:2px solid var(--cy);box-shadow:6px 6px 0 var(--cy);margin-bottom:1.4rem;}
+        .pick .lbl{font-family:var(--font-mono);font-size:.72rem;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.14em;}
+        .pick .sz{font-family:var(--font-display);font-size:3rem;font-weight:400;line-height:.9;text-transform:uppercase;color:var(--cy);}
+        .pick .why{color:var(--mut);font-size:.82rem;margin-top:.3rem;}
+        .fitrow{display:flex;align-items:center;gap:.7rem;padding:.6rem .75rem;border:2px solid var(--bd);margin-bottom:.5rem;}
+        .fitrow.rec{border-color:var(--cy);background:rgba(255,77,0,.07);}
+        .fitrow .nm{font-family:var(--font-display);font-weight:400;font-size:1.3rem;min-width:46px;}
+        .pillf{font-family:var(--font-mono);font-size:.72rem;font-weight:700;padding:.2rem .6rem;text-transform:uppercase;letter-spacing:.04em;}
+        .fitrow .meta{margin-left:auto;color:var(--mut);font-size:.74rem;text-align:right;font-family:var(--font-mono);}
+        .recflag{color:var(--cy);font-size:.72rem;font-weight:700;font-family:var(--font-mono);text-transform:uppercase;}
+        table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:.3rem;}
+        th,td{text-align:left;padding:.5rem .35rem;border-bottom:1px solid var(--bd);}
+        th{font-family:var(--font-mono);font-size:.7rem;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;}
+        .badges{display:flex;flex-wrap:wrap;gap:.45rem;margin:.8rem 0;}
+        .badge{font-family:var(--font-mono);font-size:.7rem;font-weight:700;padding:.22rem .55rem;border:1.5px solid var(--bd);text-transform:uppercase;letter-spacing:.06em;background:none;color:var(--mut);}
+        .notes{margin-top:.9rem;color:var(--mut);font-size:.82rem;font-style:italic;}
+        /* ── redesigned result: CARGO CULT hero ── */
+        .hero{text-align:center;padding:1.75rem 1.25rem;background:var(--ink);border:2px solid var(--cy);box-shadow:8px 8px 0 var(--cy);margin-bottom:1.4rem;}
+        .hero .lbl{display:inline-block;font-family:var(--font-mono);font-size:.68rem;font-weight:700;color:var(--cy);text-transform:uppercase;letter-spacing:.14em;border:1.5px solid var(--cy);padding:.3em .6em;margin-bottom:.6rem;}
+        .hero .sz{font-family:var(--font-display);font-size:clamp(4rem,18vw,7rem);font-weight:400;line-height:.9;text-transform:uppercase;margin:.1rem 0 .3rem;color:var(--cy);}
+        .hero .summary{color:var(--tx);font-size:.92rem;opacity:.92;}
+        .conf{display:flex;align-items:center;gap:.55rem;justify-content:center;margin-top:1rem;}
+        .conf-track{width:150px;max-width:48vw;height:10px;background:var(--ink-line);border:1.5px solid var(--ink-line);overflow:hidden;}
+        .conf-fill{height:100%;background:var(--cy);}
+        .conf-label{font-family:var(--font-mono);font-size:.68rem;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.06em;}
+        .why{background:var(--bg2);border:2px solid var(--bd);padding:1.05rem 1.1rem;margin-bottom:1.4rem;}
+        .why-h{font-family:var(--font-display);font-weight:400;font-size:1.2rem;text-transform:uppercase;letter-spacing:.01em;margin-bottom:.7rem;}
+        .why-item{display:flex;gap:.6rem;align-items:flex-start;font-size:.87rem;color:var(--tx);line-height:1.5;margin-bottom:.55rem;}
+        .why-item:last-child{margin-bottom:0;}
+        .why-item .ic{flex:none;font-size:1rem;line-height:1.4;}
+        .sizes-h{font-family:var(--font-mono);font-size:.68rem;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.14em;margin:.3rem 0 .55rem;}
+        .size-card{border:2px solid var(--bd);padding:.7rem .85rem;margin-bottom:.55rem;background:var(--card);}
+        .size-card.rec{border-color:var(--cy);background:rgba(255,77,0,.07);box-shadow:4px 4px 0 var(--cy);}
+        .size-top{display:flex;align-items:center;gap:.55rem;}
+        .size-nm{font-family:var(--font-display);font-weight:400;font-size:1.4rem;min-width:40px;}
+        .best{margin-left:auto;color:var(--cy);font-size:.68rem;font-weight:700;font-family:var(--font-mono);text-transform:uppercase;white-space:nowrap;}
+        .ships{color:var(--reg);font-size:.66rem;font-weight:700;font-family:var(--font-mono);text-transform:uppercase;background:rgba(34,197,94,.13);border:1px solid var(--reg);padding:.13rem .42rem;}
+        .ease-bar{position:relative;height:10px;background:var(--ink-line);border:1.5px solid var(--ink-line);margin:.6rem 0 .45rem;}
+        .ease-zone{position:absolute;top:0;height:100%;background:rgba(34,197,94,.30);}
+        .ease-dot{position:absolute;top:50%;width:13px;height:13px;transform:translate(-50%,-50%);border:2px solid var(--card);}
+        .size-card.rec .ease-dot{width:15px;height:15px;box-shadow:0 0 0 3px rgba(255,77,0,.25);}
+        .size-meta{font-size:.74rem;color:var(--mut);font-family:var(--font-mono);}
+        .legend{display:flex;flex-wrap:wrap;gap:.4rem .9rem;font-size:.7rem;color:var(--mut);margin:.3rem 0 .75rem;font-family:var(--font-mono);}
+        .legend span{display:inline-flex;align-items:center;gap:.32rem;}
+        .legend i{width:11px;height:11px;display:inline-block;}
+        .based{font-size:.78rem;color:var(--mut);background:var(--bg2);border:2px solid var(--bd);padding:.6rem .8rem;margin-bottom:.8rem;}
+        .based b{color:var(--tx);}
+        .disc{margin-top:1.4rem;padding:.85rem 1rem;background:rgba(245,158,11,.07);border:2px solid rgba(245,158,11,.3);color:var(--mut);font-size:.78rem;}
+        .photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:.4rem;margin:.8rem 0;}
+        .photos img{width:100%;aspect-ratio:1;object-fit:cover;border:2px solid var(--bd);}
+        .modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:50;padding:1rem;}
+        .modal.show{display:flex;}
+        .modal-box{background:var(--card);border:2px solid var(--cy);box-shadow:8px 8px 0 var(--ink);max-width:340px;width:100%;padding:1.25rem;text-align:center;position:relative;}
+        .modal-box h3{font-family:var(--font-display);font-weight:400;font-size:1.4rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.01em;}
+        .modal-box .mtext{color:var(--mut);font-size:.85rem;margin-top:.6rem;}
+        .modal-x{position:absolute;top:.3rem;right:.3rem;width:44px;height:44px;background:none;border:none;color:var(--mut);font-size:1.4rem;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;}
+        .modal-x:hover{color:var(--tx);}
+        .modal-box svg{width:150px;height:auto;}
+        .modal-box img{width:100%;max-width:300px;border:2px solid var(--bd);display:block;margin:0 auto;background:var(--bg);}
+        @media(max-width:520px){.grid3{grid-template-columns:1fr 1fr;}.pick .sz{font-size:2.4rem;}}
+    </style>
+</head>
+<body>
+    <div class="top">
+        <a href="/" class="cc-wordmark cc-wordmark--lg"><span class="cc-rep">REP</span><span class="cc-tools">TOOLS</span></a>
+        <span class="tag">INTERNAL PROTOTYPE</span>
+    </div>
+    <div class="wrap">
+        <h1>Find Your Size</h1>
+        <p class="sub">Tell us about you, drop in the seller's size chart (or QC photos), and we'll show how each size fits you.</p>
+
+        <!-- STEP 1: ABOUT YOU -->
+        <div class="card">
+            <div class="stephead">
+                <div class="step">1 · About you</div>
+                <div class="units"><button type="button" id="u-metric" class="on" aria-pressed="true">cm · kg</button><button type="button" id="u-imp" aria-pressed="false">ft · lb</button></div>
+            </div>
+            <div class="grid2">
+                <div>
+                    <div id="h-metric"><label for="p-height">Height (cm)</label><input type="number" id="p-height" placeholder="178" inputmode="numeric"></div>
+                    <div id="h-imp" class="hidden"><label for="p-hft">Height</label><div class="ftin"><input type="number" id="p-hft" placeholder="6" aria-label="Height feet"><span>ft</span><input type="number" id="p-hin" placeholder="1" aria-label="Height inches"><span>in</span></div></div>
+                </div>
+                <div><label for="p-weight">Weight (<span class="u-wt">kg</span>)</label><input type="number" id="p-weight" placeholder="74" inputmode="numeric"></div>
+            </div>
+            <div class="row" style="margin-top:.85rem;"><label for="p-usual">Usual size (optional)</label>
+                <select id="p-usual"><option value="">— pick —</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select></div>
+            <button type="button" class="toggle" id="adv-toggle" aria-expanded="false" aria-controls="adv">▸ Advanced measurements, more accurate</button>
+            <div class="hidden" id="adv" style="margin-top:.8rem;">
+                <div class="grid3">
+                    <div><label for="p-chest">Chest <span class="u-len">cm</span> <button type="button" class="info" data-m="chest" aria-label="How to measure chest">i</button></label><input type="number" id="p-chest"></div>
+                    <div><label for="p-waist">Waist <span class="u-len">cm</span> <button type="button" class="info" data-m="waist" aria-label="How to measure waist">i</button></label><input type="number" id="p-waist"></div>
+                    <div><label for="p-hip">Hip <span class="u-len">cm</span> <button type="button" class="info" data-m="hip" aria-label="How to measure hip">i</button></label><input type="number" id="p-hip"></div>
+                    <div><label for="p-shoulder">Shoulder <span class="u-len">cm</span> <button type="button" class="info" data-m="shoulder" aria-label="How to measure shoulder">i</button></label><input type="number" id="p-shoulder"></div>
+                    <div><label for="p-sleeve">Sleeve <span class="u-len">cm</span> <button type="button" class="info" data-m="sleeve" aria-label="How to measure sleeve">i</button></label><input type="number" id="p-sleeve"></div>
+                    <div><label for="p-foot">Foot <span class="u-len">cm</span> <button type="button" class="info" data-m="foot" aria-label="How to measure foot">i</button></label><input type="number" id="p-foot"></div>
+                </div>
+                <p class="hint">Tap the <b style="color:var(--cy)">i</b> next to a field to see how to measure it. Even 1–2 fields sharpens the result.</p>
+            </div>
+        </div>
+
+        <!-- STEP 2: THE ITEM -->
+        <div class="card">
+            <div class="step" style="margin-bottom:.9rem;">2 · The item</div>
+            <div class="tabs" role="tablist">
+                <button type="button" class="tab active" data-panel="chart" role="tab" aria-selected="true" aria-controls="panel-chart">📋 Size chart</button>
+                <button type="button" class="tab" data-panel="qc" role="tab" aria-selected="false" aria-controls="panel-qc">📸 QC photos</button>
+            </div>
+            <div class="panel active" id="panel-chart" role="tabpanel">
+                <label for="chart-link">Paste a Weidian link (auto-grabs its size chart)</label>
+                <input type="text" id="chart-link" placeholder="Weidian or agent link (Taobao/1688 → upload below)">
+                <button class="btn" id="chart-link-btn" style="background:var(--bg2);color:var(--tx);border:2px solid var(--bd);box-shadow:none;">⚡ Auto-fetch chart from link</button>
+                <div class="hint" style="text-align:center;margin:.5rem 0;">— or —</div>
+                <button type="button" class="drop" id="chart-drop">📋 Tap to upload the seller's size chart (尺码表)<br><span style="font-size:.75rem;">screenshot it from the listing — works for any marketplace</span></button>
+                <input type="file" id="chart-file" accept="image/*" class="vh" aria-label="Upload size chart image">
+                <div id="chart-name" class="hint"></div>
+                <button class="btn" id="chart-btn" disabled>Find my size</button>
+            </div>
+            <div class="panel" id="panel-qc" role="tabpanel">
+                <label for="qc-link">Paste a product link (pulls its QC photos)</label>
+                <input type="text" id="qc-link" placeholder="KakoBuy / Weidian / Taobao link">
+                <button class="btn" id="qc-fetch" style="background:var(--bg2);color:var(--tx);border:2px solid var(--bd);box-shadow:none;">Fetch QC photos</button>
+                <div class="photos" id="qc-photos"></div>
+                <button type="button" class="drop hidden" id="qc-drop" style="margin-top:.6rem;">📸 …or tap to upload QC photos directly</button>
+                <input type="file" id="qc-file" accept="image/*" multiple class="vh" aria-label="Upload QC photos">
+                <button class="btn" id="qc-btn" style="display:none;">Read measurements</button>
+            </div>
+        </div>
+
+        <div class="status" id="status" aria-live="polite"></div>
+        <div class="result card" id="result"></div>
+        <div class="disc">⚠️ Internal prototype, not linked publicly. Recommendations are AI estimates from the chart/photos + your inputs — sizing varies by brand and batch. Always sanity-check before ordering.</div>
+    </div>
+
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-t"><div class="modal-box"><button type="button" class="modal-x" id="modal-x" aria-label="Close">×</button><h3 id="modal-t"></h3><div id="modal-svg"></div><div class="mtext" id="modal-text"></div></div></div>
+
+<script>
+const $ = id => document.getElementById(id);
+let qcUrls = [], qcLink = '', unit = 'metric';
+
+// ---- measurement diagrams (clean SVG figure + highlighted line) ----
+const SVG_FIG='#52525b', SVG_HL='#ff4d00';
+function fig(hl){return `<svg viewBox="0 0 140 232" xmlns="http://www.w3.org/2000/svg">
+<g stroke="${SVG_FIG}" stroke-width="2.2" fill="none" stroke-linejoin="round" stroke-linecap="round">
+<circle cx="70" cy="26" r="15"/><path d="M64,42 h12 v9 h-12 z"/>
+<path d="M48,52 L92,52 L86,132 L54,132 Z"/><path d="M48,55 L29,120"/><path d="M92,55 L111,120"/>
+<path d="M61,132 L58,214"/><path d="M79,132 L82,214"/></g>${hl}</svg>`;}
+function band(y,x1,x2,label){return `<g stroke="${SVG_HL}" stroke-width="2.4" fill="none">
+<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke-dasharray="5 3"/>
+<path d="M${x1},${y} l6,-4 M${x1},${y} l6,4"/><path d="M${x2},${y} l-6,-4 M${x2},${y} l-6,4"/></g>
+<text x="70" y="${y-6}" fill="${SVG_HL}" font-size="9" font-family="monospace" text-anchor="middle">${label}</text>`;}
+const img = n => `<img src="/static/measure/${n}.jpg" alt="how to measure ${n}" loading="lazy">`;
+const DIAG = {
+  chest:{t:'Chest',s:img('chest'),x:'Around the fullest part of your chest, under the armpits. Keep the tape level and breathe normally.'},
+  waist:{t:'Waist',s:img('waist'),x:'Around your natural waist — roughly an inch above the belly button. Don’t suck in.'},
+  hip:{t:'Hip',s:img('hip'),x:'Around the fullest part of your seat/hips, feet together.'},
+  shoulder:{t:'Shoulder',s:img('shoulder'),x:'Across your back, from the bony point of one shoulder to the other.'},
+  sleeve:{t:'Sleeve',s:img('sleeve'),x:'From the shoulder seam point down the arm to where you want the cuff (usually the wrist bone).'},
+  foot:{t:'Foot length',s:`<svg viewBox="0 0 200 120"><g stroke="${SVG_FIG}" stroke-width="2.2" fill="none" stroke-linejoin="round"><path d="M30,82 q-6,-30 22,-32 q40,-3 96,4 q22,3 22,16 q0,12 -22,12 L52,82 q-14,0 -22,0 z"/></g><g stroke="${SVG_HL}" stroke-width="2.4"><line x1="30" y1="98" x2="170" y2="98" stroke-dasharray="5 3"/><path d="M30,98 l7,-4 M30,98 l7,4"/><path d="M170,98 l-7,-4 M170,98 l-7,4"/></g><text x="100" y="114" fill="${SVG_HL}" font-size="11" font-family="monospace" text-anchor="middle">heel → longest toe</text></svg>`,x:'Stand on paper, heel against a wall, mark your longest toe, then measure heel-to-mark.'},
+};
+let modalReturnFocus=null;
+function openModal(d){$('modal-t').textContent=d.t;$('modal-svg').innerHTML=d.s;$('modal-text').textContent=d.x;$('modal').classList.add('show');modalReturnFocus=document.activeElement;$('modal-x').focus();}
+function closeModal(){$('modal').classList.remove('show');if(modalReturnFocus&&modalReturnFocus.focus)modalReturnFocus.focus();modalReturnFocus=null;}
+document.querySelectorAll('.info').forEach(b=>b.onclick=()=>{const d=DIAG[b.dataset.m];if(!d)return;openModal(d);});
+$('modal-x').onclick=closeModal;
+$('modal').onclick=e=>{if(e.target===$('modal'))closeModal();};
+$('modal').addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeModal();return;}
+  if(e.key==='Tab'){const x=$('modal-x');e.preventDefault();x.focus();}
+});
+
+// ---- units ----
+function setUnit(u){
+  unit=u;
+  $('u-metric').classList.toggle('on',u==='metric'); $('u-imp').classList.toggle('on',u==='imperial');
+  $('u-metric').setAttribute('aria-pressed',u==='metric'); $('u-imp').setAttribute('aria-pressed',u==='imperial');
+  $('h-metric').classList.toggle('hidden',u==='imperial'); $('h-imp').classList.toggle('hidden',u==='metric');
+  document.querySelectorAll('.u-wt').forEach(e=>e.textContent=u==='imperial'?'lb':'kg');
+  document.querySelectorAll('.u-len').forEach(e=>e.textContent=u==='imperial'?'in':'cm');
+  $('p-weight').placeholder=u==='imperial'?'160':'74';
+  localStorage.setItem('rt_unit',u); saveProfile();
+}
+$('u-metric').onclick=()=>setUnit('metric'); $('u-imp').onclick=()=>setUnit('imperial');
+
+// ---- profile + persistence ----
+const RAW=['height','hft','hin','weight','usual','chest','waist','hip','shoulder','sleeve','foot'];
+function loadProfile(){
+  try{const p=JSON.parse(localStorage.getItem('rt_profile')||'{}');RAW.forEach(f=>{if(p[f]!=null&&$('p-'+f))$('p-'+f).value=p[f];});}catch(e){}
+  setUnit(localStorage.getItem('rt_unit')||'metric');
+}
+function saveProfile(){const p={};RAW.forEach(f=>{const el=$('p-'+f);if(el&&el.value)p[f]=el.value;});localStorage.setItem('rt_profile',JSON.stringify(p));}
+function n(v){const x=parseFloat(v);return isNaN(x)?null:x;}
+function profile(){
+  // always return METRIC (cm/kg) for the backend
+  const p={}, imp=unit==='imperial';
+  let h=null;
+  if(imp){const ft=n($('p-hft').value),inch=n($('p-hin').value);if(ft||inch)h=Math.round((ft||0)*30.48+(inch||0)*2.54);}
+  else h=n($('p-height').value);
+  if(h)p.height=h;
+  const w=n($('p-weight').value); if(w)p.weight=imp?Math.round(w*0.4536):w;
+  const u=$('p-usual').value; if(u)p.usual_size=u;
+  const cm=v=>{const x=n(v);return x==null?null:(imp?Math.round(x*2.54):x);};
+  [['chest','chest'],['waist','waist'],['hip','hip'],['shoulder','shoulder'],['sleeve','sleeve'],['foot','foot_length']].forEach(([f,k])=>{const v=cm($('p-'+f).value);if(v!=null)p[k]=v;});
+  return p;
+}
+RAW.forEach(f=>{const el=$('p-'+f);if(el)el.addEventListener('change',saveProfile);});
+loadProfile();
+
+// ---- toggles / tabs ----
+$('adv-toggle').onclick=()=>{const hidden=$('adv').classList.toggle('hidden');$('adv-toggle').setAttribute('aria-expanded',!hidden);$('adv-toggle').textContent=(hidden?'▸':'▾')+' Advanced measurements, more accurate';};
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false');});document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));t.classList.add('active');t.setAttribute('aria-selected','true');$('panel-'+t.dataset.panel).classList.add('active');});
+function setStatus(s){$('status').textContent=s;}
+function proxied(u){return location.origin+'/api/img-proxy?url='+encodeURIComponent(u);}
+const FITCOLOR={tight:'var(--tight)','too tight':'var(--tight)',fitted:'var(--fitted)',snug:'var(--fitted)',regular:'var(--reg)','true to size':'var(--reg)','your size':'var(--reg)',roomy:'var(--relax)',relaxed:'var(--relax)',loose:'var(--relax)',oversized:'var(--over)'};
+
+// ---- SIZE CHART ----
+$('chart-drop').onclick=()=>$('chart-file').click();
+$('chart-file').onchange=()=>{const f=$('chart-file').files[0];$('chart-name').textContent=f?('✓ '+f.name):'';$('chart-btn').disabled=!f;};
+$('chart-btn').onclick=async()=>{const f=$('chart-file').files[0];if(!f)return;saveProfile();setStatus('Reading the size chart (GPT-4o, ~10–25s)…');$('chart-btn').disabled=true;
+  try{const fd=new FormData();fd.append('chart',f);const p=profile();Object.keys(p).forEach(k=>fd.append(k,p[k]));const r=await fetch('/api/size-chart',{method:'POST',body:fd});renderChart(await r.json());}catch(e){setStatus('Error: '+e);}$('chart-btn').disabled=false;};
+$('chart-link-btn').onclick=async()=>{const link=$('chart-link').value.trim();if(!link)return;saveProfile();setStatus('Pulling the size chart from the listing (~10–25s)…');$('chart-link-btn').disabled=true;
+  try{const r=await fetch('/api/size-chart',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({link,profile:profile()})});renderChart(await r.json());}catch(e){setStatus('Error: '+e);}$('chart-link-btn').disabled=false;};
+
+// ---- QC ----
+$('qc-fetch').onclick=async()=>{const url=$('qc-link').value.trim();if(!url)return;qcLink=url;$('qc-photos').innerHTML='';$('qc-btn').style.display='none';$('qc-drop').classList.add('hidden');$('result').classList.remove('show');setStatus('Fetching QC photos…');
+  try{const r=await fetch('/api/qc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url})});const d=await r.json();
+    if(d.status==='empty'||!d.data||!d.data.length){setStatus('No QC photos for this listing yet — upload below, or use the Size chart tab.');$('qc-drop').classList.remove('hidden');return;}
+    qcUrls=d.data.map(p=>p.image_url).filter(Boolean);$('qc-photos').innerHTML=qcUrls.slice(0,18).map(u=>`<img src="${proxied(u)}" loading="lazy">`).join('');$('qc-btn').style.display='block';$('qc-drop').classList.remove('hidden');setStatus(qcUrls.length+' photos. Best when one is laid flat on the ruler mat.');
+  }catch(e){setStatus('Error: '+e);}};
+$('qc-drop').onclick=()=>$('qc-file').click();
+$('qc-file').onchange=()=>{if($('qc-file').files.length){$('qc-btn').style.display='block';setStatus($('qc-file').files.length+' photo(s) ready.');}};
+$('qc-btn').onclick=async()=>{saveProfile();$('qc-btn').disabled=true;
+  try{
+    if($('qc-file').files.length){
+      setStatus('Reading your photos (~10–25s)…');
+      const fd=new FormData();[...$('qc-file').files].slice(0,6).forEach((f,i)=>fd.append('img'+i,f));const p=profile();Object.keys(p).forEach(k=>fd.append(k,p[k]));
+      renderQc(await (await fetch('/api/measure',{method:'POST',body:fd})).json());
+    } else {
+      setStatus('Reading the full QC set + size tags (~15–30s)…');
+      const body={image_urls:qcUrls.slice(0,20).map(proxied),profile:profile(),link:qcLink};
+      renderQcSize(await (await fetch('/api/qc-size',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})).json());
+    }
+  }catch(e){setStatus('Error: '+e);}$('qc-btn').disabled=false;};
+
+function fitColor(f){return FITCOLOR[f]||'var(--mut)';}
+// Shared rich result: hero + "why this size" reasons + visual per-size fit comparison.
+function renderFit(fit, opts){
+  opts=opts||{};
+  const ps=fit.per_size||[], rec=fit.recommended_size, rp=ps.find(p=>p.recommended)||{};
+  const udn=fit.user_dim_name||'chest', ud=fit.user_dim, cpct=Math.round((fit.confidence||0)*100);
+  const summary=rp.fit?`a <b style="color:${fitColor(rp.fit)}">${rp.fit}</b> fit for your measurements`
+                      :(fit.body_used&&fit.body_used.source?`matched to your ${fit.body_used.source}`:'the closest match for you');
+  const hero=`<div class="hero"><div class="lbl">We recommend</div><div class="sz">${rec||'—'}</div>`+
+    `<div class="summary">${summary}</div>`+
+    `<div class="conf"><div class="conf-track"><div class="conf-fill" style="width:${cpct}%"></div></div><span class="conf-label">${cpct}% confident</span></div></div>`;
+  // ── why this size (built from the structured fit data) ──
+  const R=[];
+  if(rp.ease!=null && ud){const g=rp.garment_circ_cm||rp.chest||rp.waist, s=rp.ease>0?'+':'';
+    R.push(['📏',`The garment ${udn} is <b>${g}cm</b> — that's <b>${s}${rp.ease}cm</b> over your ${ud}cm ${udn}, which lands as a <b style="color:${fitColor(rp.fit)}">${rp.fit}</b> fit.`]);}
+  if(rp.height_match==='in'||rp.weight_match==='in'){const w=[rp.height_match==='in'?'height':'',rp.weight_match==='in'?'weight':''].filter(Boolean).join(' and ');
+    R.push(['✅',`You fall inside the seller's recommended <b>${w}</b> range for ${rec}.`]);}
+  if(fit.oversized_cut) R.push(['📦',`This is an <b>oversized cut</b> — the whole size run runs roomy, so this isn't a "size down" situation.`]);
+  if(opts.qcInfo) R.push(['🏷️',opts.qcInfo]);
+  if(!ud) R.push(['💡',`Add your <b>${udn}</b> measurement up top — it'll sharpen the pick a lot.`]);
+  if(R.length===0 && fit.why) fit.why.forEach(w=>R.push(['•',w]));
+  const why=R.length?`<div class="why"><div class="why-h">🎯 Why ${rec||'this'} is your size</div>`+
+    R.map(r=>`<div class="why-item"><span class="ic">${r[0]}</span><span>${r[1]}</span></div>`).join('')+`</div>`:'';
+  // ── visual per-size comparison (ease bar vs your ideal zone) ──
+  let sizesHtml='';
+  if(ps.length){
+    const eases=ps.map(p=>p.ease).filter(e=>e!=null);
+    const tg=fit.ease_target||[], hasZone=tg[0]!=null&&tg[1]!=null;
+    const lo=tg[0],hi=tg[1];
+    const mn=Math.min(...(hasZone?[lo-8]:[]),...eases,0), mx=Math.max(...(hasZone?[hi+12]:[]),...eases,(hasZone?hi+12:10));
+    const pos=e=>Math.max(4,Math.min(96,((e-mn)/((mx-mn)||1))*100));
+    const cards=ps.map(p=>{const col=fitColor(p.fit);
+      const zone=hasZone?`<div class="ease-zone" style="left:${pos(lo)}%;width:${Math.max(0,pos(hi)-pos(lo))}%"></div>`:'';
+      const bar=p.ease!=null?`<div class="ease-bar">${zone}<div class="ease-dot" style="left:${pos(p.ease)}%;background:${col}"></div></div>`:'';
+      const g=p.garment_circ_cm||p.chest||p.waist;
+      const meta=[g?`${udn} ${g}cm`:'',p.ease!=null?`${p.ease>0?'+':''}${p.ease}cm ease`:'',p.length?`length ${p.length}cm`:''].filter(Boolean).join('  ·  ');
+      const ships=p.qc_confirmed?'<span class="ships">✓ ships</span>':'';
+      return `<div class="size-card ${p.recommended?'rec':''}"><div class="size-top"><span class="size-nm">${p.size}</span><span class="pillf" style="color:${col};background:${col}22">${p.fit||'—'}</span>${ships}${p.recommended?'<span class="best">★ best for you</span>':''}</div>${bar}<div class="size-meta">${meta}</div></div>`;}).join('');
+    const legend=hasZone?`<div class="legend"><span><i style="background:rgba(34,197,94,.7)"></i>green = your ideal ${fit.fit_pref||'regular'} fit</span><span><i style="background:var(--tight)"></i>left = tighter</span><span><i style="background:var(--relax)"></i>right = roomier</span></div>`:'';
+    sizesHtml=`<div class="sizes-h">How every size fits you</div>${legend}${cards}`;
+  }
+  const bu=fit.body_used||{};
+  const bb=[bu.chest?`chest <b>${bu.chest}cm</b>`:'',bu.waist?`waist <b>${bu.waist}cm</b>`:''].filter(Boolean).join(', ');
+  const based=bb?`<div class="based">📐 Based on your ${bb} <span style="opacity:.6">(${bu.source||'inputs'}${bu.confidence?', '+bu.confidence+' confidence':''})</span></div>`:'';
+  const badges=(opts.badges&&opts.badges.length)?`<div class="badges">${opts.badges.join('')}</div>`:'';
+  const note=opts.note?`<p class="notes">${opts.note}</p>`:'';
+  $('result').innerHTML=hero+why+based+sizesHtml+badges+note;
+  $('result').classList.add('show');
+}
+function renderFused(d){setStatus('');
+  const f=d.chart_fit, qs=d.qc_sizes||[], rec=f.recommended_size;
+  const recInQc=!rec||!qs.length||qs.includes(String(rec).toUpperCase());
+  const qcInfo=qs.length?`Your QC photos confirm sizes <b>${qs.join(', ')}</b> actually ship for this item${recInQc?` — including ${rec} ✓`:''}.`:'';
+  let note="Fit is computed from the seller's size chart (real garment cm), not photo guesses.";
+  if(!recInQc&&qs.length) note=`⚠ Your best-fit size ${rec} wasn't in this QC batch — check the seller offers it. `+note;
+  renderFit(f,{qcInfo,note,badges:[`<span class="badge">⚡ chart + QC fused</span>`,`<span class="badge">${(d.chart&&d.chart.item_type)||'item'}</span>`,`<span class="badge">${d.photos_analyzed||0} QC photos</span>`]});}
+function renderQcSize(d){setStatus('');if(d.error){setStatus('⚠️ '+d.error);return;}
+  if(d.chart_fit&&d.chart_fit.per_size&&d.chart_fit.per_size.length){return renderFused(d);}
+  const items=d.items||[];if(!items.length){setStatus('Couldn’t read sizing from this QC set — try the Size chart tab.');return;}
+  const rec=d.recommendation;
+  const bottom=(rec&&rec.matched_on==='waist')||d.garment_kind==='bottom';
+  const dimN=bottom?'waist':'chest';
+  const bv=(rec&&rec.body_used)?(bottom?rec.body_used.waist:rec.body_used.chest):null;
+  const recHtml=(rec&&rec.recommended_size)?`<div class="pick"><div class="lbl">Your size</div><div class="sz">${rec.recommended_size}</div><div class="why">matched to your ${(rec.body_used&&rec.body_used.source)||'inputs'}${bv?(' ('+dimN+'≈'+bv+'cm)'):''}</div></div>`:'';
+  const sizes=(rec&&rec.sizes&&rec.sizes.length)?rec.sizes:items.map(it=>({size:it.size,fits_chest_cm:it.fits_chest_cm,fits_waist_cm:it.fits_waist_cm,fits_height_cm:it.fits_height_cm,chest_flat_cm:it.chest_flat_cm}));
+  const rows=sizes.map(s=>{const isRec=rec&&s.size===rec.recommended_size;
+    const dv=bottom?s.fits_waist_cm:s.fits_chest_cm;
+    const fits=[s.fits_height_cm?('≤'+s.fits_height_cm+'cm tall'):'',dv?(dv+'cm '+dimN):''].filter(Boolean).join(' · ');
+    return `<div class="fitrow ${isRec?'rec':''}"><div class="nm">${s.size||'?'}</div><div class="meta" style="margin-left:0;flex:1;text-align:left;">${fits||'tag unread'}</div>${isRec?'<span class="recflag">★ best</span>':''}</div>`;}).join('');
+  $('result').innerHTML=`${recHtml}<div style="font-size:.78rem;color:var(--mut);margin:.2rem 0 .6rem;">From the QC size tags — matched on ${dimN}:</div>${rows}<div class="badges"><span class="badge">${bottom?'bottoms 👖':'top 👕'}</span><span class="badge">${items.length} item(s)</span><span class="badge">${d.photos_analyzed||0} photos</span></div><p class="notes">Size + fit are read from the QC size tags (e.g. 170/88A = fits ~170cm tall, 88cm chest; pants tags give the waist).</p>`;
+  $('result').classList.add('show');}
+
+// ---- renderers ----
+function renderChart(d){setStatus('');if(d.error){setStatus('⚠️ '+d.error);return;}
+  if(!d.has_chart||!d.recommendation){setStatus(d.note||'Couldn’t read a size chart there. Make sure it’s the 尺码表 with sizes + numbers.');return;}
+  const badges=[];
+  if(d.source&&d.source.marketplace) badges.push(`<span class="badge">⚡ auto-fetched from ${d.source.marketplace}</span>`);
+  badges.push(`<span class="badge">${d.item_type||'item'}</span>`);
+  if(d.value_type) badges.push(`<span class="badge">${String(d.value_type).replace('_',' ')}</span>`);
+  badges.push(`<span class="badge">${(d.recommendation.per_size||[]).length} sizes</span>`);
+  renderFit(d.recommendation,{badges,note:d.notes?('“'+d.notes+'”'):''});}
+function renderQc(d){setStatus('');if(d.error){setStatus('⚠️ '+d.error);return;}
+  const ms=d.measurements||[],rec=d.recommendation;
+  const recHtml=rec?`<div class="pick"><div class="lbl">${d.size_label?('Tagged size '+d.size_label+' — fit'):'Fit on you'}</div><div class="sz" style="font-size:1.5rem;">${rec.verdict||''}</div><div class="why">→ ${rec.advice||''}${rec.detail?'<br>'+rec.detail:''}</div></div>`:'';
+  const rows=ms.map(m=>`<tr><td>${m.name||'?'}</td><td><b>${m.value_cm!=null?m.value_cm+' cm':'—'}</b></td><td style="color:var(--mut)">${Math.round((m.confidence||0)*100)}%</td></tr>`).join('');
+  $('result').innerHTML=`${recHtml}<div class="badges"><span class="badge">${d.item_type||'item'}</span><span class="badge">${d.measurable===false?'no clean flat shot':'measurable'}</span>${d.size_label?`<span class="badge">tag ${d.size_label}</span>`:''}</div>${ms.length?`<table><thead><tr><th>Measurement</th><th>Value</th><th>Conf</th></tr></thead><tbody>${rows}</tbody></table>`:'<p style="color:var(--mut)">No measurements read.</p>'}${d.notes?`<p class="notes">“${d.notes}”</p>`:''}<p class="hint">Tip: for a per-size S/M/L recommendation, use the Size chart tab.</p>`;
+  $('result').classList.add('show');}
+</script>
+</body>
+</html>

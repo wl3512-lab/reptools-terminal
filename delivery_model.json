@@ -1,0 +1,2083 @@
+{
+ "generated_at": "2026-06-18",
+ "sample_count": 2303,
+ "routes": {
+  "US": {
+   "n": 196,
+   "p10": 12,
+   "p50": 16,
+   "p75": 18,
+   "p85": 19,
+   "p90": 19,
+   "mean": 16,
+   "eta_lo": 12,
+   "eta_hi": 19,
+   "debias_note": "de-biased from legs: china p10-p85 2-9d + local last-mile p50 10d (raw route total truncated at carrier swap)",
+   "door_to_door": true
+  },
+  "CA": {
+   "n": 138,
+   "p10": 6,
+   "p50": 14.5,
+   "p75": 14,
+   "p85": 21,
+   "p90": 26,
+   "mean": 16.0,
+   "eta_lo": 10,
+   "eta_hi": 20,
+   "kako_n": 69,
+   "kako_p50": 14.5,
+   "src_note": "recalibrated to 69 first-party KakoBuy parcels (real door-to-door p10-p85 10.4-18.9d, p50 14.5d)"
+  },
+  "NO": {
+   "n": 20,
+   "p10": 10,
+   "p50": 12,
+   "p75": 22,
+   "p85": 33,
+   "p90": 33,
+   "mean": 12,
+   "eta_lo": 10,
+   "eta_hi": 33,
+   "debias_note": "de-biased from legs: china p10-p85 6-29d + local last-mile p50 4d (raw route total truncated at carrier swap)",
+   "door_to_door": true
+  },
+  "AU": {
+   "n": 39,
+   "p10": 11,
+   "p50": 15,
+   "p75": 17,
+   "p85": 19,
+   "p90": 19,
+   "mean": 15,
+   "eta_lo": 11,
+   "eta_hi": 19,
+   "door_to_door": true,
+   "debias_note": "de-biased: route as china-proxy (p10-p85 6-14d) + real local last-mile p50 5d (n=134)"
+  },
+  "GB": {
+   "n": 35,
+   "p10": 7,
+   "p50": 9,
+   "p75": 12,
+   "p85": 16,
+   "p90": 16,
+   "mean": 9,
+   "eta_lo": 7,
+   "eta_hi": 16,
+   "door_to_door": true,
+   "debias_note": "UK last-mile is genuinely short (local_leg p50=1); only the low edge was too fast -> floor raised to 7, ceiling kept"
+  },
+  "SE": {
+   "n": 14,
+   "p10": 11,
+   "p50": 15,
+   "p75": 22,
+   "p85": 23,
+   "p90": 25,
+   "mean": 17.1,
+   "eta_lo": 11,
+   "eta_hi": 27
+  },
+  "ZA": {
+   "n": 16,
+   "p10": 13,
+   "p50": 48,
+   "p75": 50,
+   "p85": 56,
+   "p90": 56,
+   "mean": 35.2,
+   "eta_lo": 13,
+   "eta_hi": 60
+  },
+  "NZ": {
+   "n": 11,
+   "p10": 6,
+   "p50": 8,
+   "p75": 11,
+   "p85": 11,
+   "p90": 13,
+   "mean": 8.9,
+   "eta_lo": 6,
+   "eta_hi": 14
+  },
+  "DE": {
+   "n": 264,
+   "eta_lo": 12,
+   "eta_hi": 24,
+   "p50": 16,
+   "door_to_door": true,
+   "debias_note": "DE has no clean china_leg; DHL local_leg (p50=12,p85=18,n=264) effectively spans the full journey (early label creation) -> door-to-door [12,24], consistent with EU region fallback",
+   "p10": 12,
+   "p75": 20,
+   "p85": 24,
+   "p90": 24,
+   "mean": 16
+  }
+ },
+ "china_leg": {
+  "CA": {
+   "n": 96,
+   "p10": 4,
+   "p50": 7,
+   "p75": 11,
+   "p85": 14,
+   "p90": 18,
+   "mean": 9.4
+  },
+  "NO": {
+   "n": 18,
+   "p10": 6,
+   "p50": 8,
+   "p75": 25,
+   "p85": 29,
+   "p90": 33,
+   "mean": 14.4
+  },
+  "US": {
+   "n": 16,
+   "p10": 2,
+   "p50": 6,
+   "p75": 7,
+   "p85": 9,
+   "p90": 9,
+   "mean": 5.7
+  }
+ },
+ "local_leg": {
+  "CA": {
+   "n": 309,
+   "p10": 2,
+   "p50": 6,
+   "p75": 8,
+   "p85": 10,
+   "p90": 11,
+   "mean": 6.8
+  },
+  "NO": {
+   "n": 23,
+   "p10": 1,
+   "p50": 4,
+   "p75": 6,
+   "p85": 9,
+   "p90": 9,
+   "mean": 4.9
+  },
+  "US": {
+   "n": 296,
+   "p10": 3,
+   "p50": 10,
+   "p75": 14,
+   "p85": 16,
+   "p90": 17,
+   "mean": 10.6
+  },
+  "CH": {
+   "n": 18,
+   "p10": 1,
+   "p50": 4,
+   "p75": 7,
+   "p85": 7,
+   "p90": 9,
+   "mean": 4.4
+  },
+  "SE": {
+   "n": 10,
+   "p10": 3,
+   "p50": 3,
+   "p75": 5,
+   "p85": 5,
+   "p90": 5,
+   "mean": 3.8
+  },
+  "GB": {
+   "n": 199,
+   "p10": 1,
+   "p50": 1,
+   "p75": 2,
+   "p85": 2,
+   "p90": 3,
+   "mean": 1.6
+  },
+  "AU": {
+   "n": 134,
+   "p10": 3,
+   "p50": 5,
+   "p75": 8,
+   "p85": 10,
+   "p90": 11,
+   "mean": 6.4
+  },
+  "DE": {
+   "n": 264,
+   "p10": 8,
+   "p50": 12,
+   "p75": 16,
+   "p85": 18,
+   "p90": 20,
+   "mean": 13.2
+  },
+  "HK": {
+   "n": 31,
+   "p10": 4,
+   "p50": 8,
+   "p75": 11,
+   "p85": 15,
+   "p90": 15,
+   "mean": 9.3
+  },
+  "SG": {
+   "n": 9,
+   "p10": 7,
+   "p50": 10,
+   "p75": 12,
+   "p85": 12,
+   "p90": 12,
+   "mean": 9.7
+  },
+  "IT": {
+   "n": 25,
+   "p10": 0,
+   "p50": 0,
+   "p75": 0,
+   "p85": 1,
+   "p90": 2,
+   "mean": 0.7
+  },
+  "NZ": {
+   "n": 8,
+   "p10": 6,
+   "p50": 12,
+   "p75": 12,
+   "p85": 20,
+   "p90": 20,
+   "mean": 12.5
+  }
+ },
+ "routes_by_line": {
+  "US|china-ems": {
+   "n": 85,
+   "p10": 5,
+   "p50": 8,
+   "p75": 10,
+   "p85": 12,
+   "p90": 15,
+   "mean": 8.7,
+   "eta_lo": 5,
+   "eta_hi": 14
+  },
+  "CA|china-ems": {
+   "n": 35,
+   "p10": 6,
+   "p50": 8,
+   "p75": 11,
+   "p85": 12,
+   "p90": 14,
+   "mean": 9.2,
+   "eta_lo": 6,
+   "eta_hi": 14
+  },
+  "AU|china-ems": {
+   "n": 20,
+   "p10": 6,
+   "p50": 9,
+   "p75": 10,
+   "p85": 11,
+   "p90": 14,
+   "mean": 9.2,
+   "eta_lo": 6,
+   "eta_hi": 13
+  },
+  "GB|china-ems": {
+   "n": 20,
+   "p10": 4,
+   "p50": 8,
+   "p75": 9,
+   "p85": 11,
+   "p90": 11,
+   "mean": 8.5,
+   "eta_lo": 4,
+   "eta_hi": 13
+  },
+  "CA|china-post": {
+   "n": 62,
+   "p10": 7,
+   "p50": 12,
+   "p75": 22,
+   "p85": 27,
+   "p90": 30,
+   "mean": 16.4,
+   "eta_lo": 7,
+   "eta_hi": 31
+  },
+  "AU|china-post": {
+   "n": 15,
+   "p10": 5,
+   "p50": 9,
+   "p75": 13,
+   "p85": 19,
+   "p90": 49,
+   "mean": 16.7,
+   "eta_lo": 5,
+   "eta_hi": 22
+  },
+  "US|china-post": {
+   "n": 65,
+   "p10": 7,
+   "p50": 10,
+   "p75": 13,
+   "p85": 17,
+   "p90": 19,
+   "mean": 11.7,
+   "eta_lo": 7,
+   "eta_hi": 20
+  },
+  "US|4px": {
+   "n": 25,
+   "p10": 7,
+   "p50": 9,
+   "p75": 14,
+   "p85": 15,
+   "p90": 15,
+   "mean": 10.3,
+   "eta_lo": 7,
+   "eta_hi": 17
+  },
+  "CA|4px": {
+   "n": 25,
+   "p10": 8,
+   "p50": 9,
+   "p75": 11,
+   "p85": 11,
+   "p90": 13,
+   "mean": 9.9,
+   "eta_lo": 8,
+   "eta_hi": 13
+  },
+  "US|wanbexpress": {
+   "n": 12,
+   "p10": 6,
+   "p50": 9,
+   "p75": 9,
+   "p85": 11,
+   "p90": 12,
+   "mean": 8.9,
+   "eta_lo": 6,
+   "eta_hi": 13
+  }
+ },
+ "external_routes": {
+  "US": {
+   "min": 7,
+   "max": 25,
+   "conf": "high"
+  },
+  "GB": {
+   "min": 6,
+   "max": 22,
+   "conf": "high"
+  },
+  "DE": {
+   "min": 12,
+   "max": 24,
+   "conf": "medium"
+  },
+  "FR": {
+   "min": 12,
+   "max": 24,
+   "conf": "medium"
+  },
+  "CA": {
+   "min": 8,
+   "max": 25,
+   "conf": "medium"
+  },
+  "AU": {
+   "min": 8,
+   "max": 25,
+   "conf": "medium"
+  },
+  "NL": {
+   "min": 9,
+   "max": 18,
+   "conf": "medium",
+   "src": "research"
+  },
+  "ES": {
+   "min": 12,
+   "max": 26,
+   "conf": "medium",
+   "src": "research"
+  },
+  "IT": {
+   "min": 13,
+   "max": 28,
+   "conf": "medium",
+   "src": "research"
+  },
+  "PT": {
+   "min": 11,
+   "max": 22,
+   "conf": "medium",
+   "src": "research"
+  },
+  "BE": {
+   "min": 9,
+   "max": 19,
+   "conf": "medium",
+   "src": "research"
+  },
+  "AT": {
+   "min": 11,
+   "max": 21,
+   "conf": "medium",
+   "src": "research"
+  },
+  "IE": {
+   "min": 12,
+   "max": 23,
+   "conf": "medium",
+   "src": "research"
+  },
+  "PL": {
+   "min": 11,
+   "max": 23,
+   "conf": "medium",
+   "src": "research"
+  },
+  "CZ": {
+   "min": 12,
+   "max": 24,
+   "conf": "medium",
+   "src": "research"
+  },
+  "RO": {
+   "min": 14,
+   "max": 30,
+   "conf": "medium",
+   "src": "research"
+  },
+  "HU": {
+   "min": 12,
+   "max": 25,
+   "conf": "medium",
+   "src": "research"
+  },
+  "GR": {
+   "min": 14,
+   "max": 30,
+   "conf": "medium",
+   "src": "research"
+  },
+  "HR": {
+   "min": 13,
+   "max": 27,
+   "conf": "medium",
+   "src": "research"
+  },
+  "RS": {
+   "min": 14,
+   "max": 30,
+   "conf": "medium",
+   "src": "research"
+  },
+  "FI": {
+   "min": 12,
+   "max": 24,
+   "conf": "medium",
+   "src": "research"
+  },
+  "DK": {
+   "min": 11,
+   "max": 22,
+   "conf": "medium",
+   "src": "research"
+  },
+  "SK": {
+   "min": 12,
+   "max": 25,
+   "conf": "medium",
+   "src": "research"
+  },
+  "SI": {
+   "min": 13,
+   "max": 26,
+   "conf": "medium",
+   "src": "research"
+  },
+  "BG": {
+   "min": 14,
+   "max": 29,
+   "conf": "medium",
+   "src": "research"
+  },
+  "UA": {
+   "min": 16,
+   "max": 35,
+   "conf": "medium",
+   "src": "research"
+  },
+  "BR": {
+   "min": 30,
+   "max": 80,
+   "conf": "medium",
+   "src": "research"
+  },
+  "MX": {
+   "min": 22,
+   "max": 55,
+   "conf": "medium",
+   "src": "research"
+  },
+  "CL": {
+   "min": 20,
+   "max": 45,
+   "conf": "medium",
+   "src": "research"
+  },
+  "AR": {
+   "min": 30,
+   "max": 75,
+   "conf": "medium",
+   "src": "research"
+  },
+  "CO": {
+   "min": 22,
+   "max": 50,
+   "conf": "medium",
+   "src": "research"
+  },
+  "PE": {
+   "min": 22,
+   "max": 50,
+   "conf": "medium",
+   "src": "research"
+  },
+  "UY": {
+   "min": 20,
+   "max": 45,
+   "conf": "medium",
+   "src": "research"
+  },
+  "EC": {
+   "min": 22,
+   "max": 50,
+   "conf": "medium",
+   "src": "research"
+  },
+  "CR": {
+   "min": 18,
+   "max": 42,
+   "conf": "medium",
+   "src": "research"
+  },
+  "DO": {
+   "min": 20,
+   "max": 48,
+   "conf": "medium",
+   "src": "research"
+  },
+  "PA": {
+   "min": 16,
+   "max": 38,
+   "conf": "medium",
+   "src": "research"
+  },
+  "SA": {
+   "min": 11,
+   "max": 24,
+   "conf": "medium",
+   "src": "research"
+  },
+  "AE": {
+   "min": 9,
+   "max": 20,
+   "conf": "medium",
+   "src": "research"
+  },
+  "QA": {
+   "min": 10,
+   "max": 21,
+   "conf": "medium",
+   "src": "research"
+  },
+  "IL": {
+   "min": 14,
+   "max": 32,
+   "conf": "medium",
+   "src": "research"
+  },
+  "KW": {
+   "min": 11,
+   "max": 23,
+   "conf": "medium",
+   "src": "research"
+  },
+  "BH": {
+   "min": 11,
+   "max": 23,
+   "conf": "medium",
+   "src": "research"
+  },
+  "OM": {
+   "min": 12,
+   "max": 25,
+   "conf": "medium",
+   "src": "research"
+  },
+  "JO": {
+   "min": 14,
+   "max": 28,
+   "conf": "medium",
+   "src": "research"
+  },
+  "LB": {
+   "min": 16,
+   "max": 34,
+   "conf": "medium",
+   "src": "research"
+  },
+  "EG": {
+   "min": 16,
+   "max": 33,
+   "conf": "medium",
+   "src": "research"
+  },
+  "TR": {
+   "min": 14,
+   "max": 30,
+   "conf": "medium",
+   "src": "research"
+  },
+  "JP": {
+   "min": 6,
+   "max": 14,
+   "conf": "medium",
+   "src": "research"
+  },
+  "KR": {
+   "min": 6,
+   "max": 14,
+   "conf": "medium",
+   "src": "research"
+  },
+  "SG": {
+   "min": 4,
+   "max": 11,
+   "conf": "medium",
+   "src": "research"
+  },
+  "MY": {
+   "min": 5,
+   "max": 13,
+   "conf": "medium",
+   "src": "research"
+  },
+  "TH": {
+   "min": 6,
+   "max": 16,
+   "conf": "medium",
+   "src": "research"
+  },
+  "ID": {
+   "min": 9,
+   "max": 24,
+   "conf": "medium",
+   "src": "research"
+  },
+  "PH": {
+   "min": 9,
+   "max": 25,
+   "conf": "medium",
+   "src": "research"
+  },
+  "VN": {
+   "min": 6,
+   "max": 15,
+   "conf": "medium",
+   "src": "research"
+  },
+  "IN": {
+   "min": 12,
+   "max": 32,
+   "conf": "medium",
+   "src": "research"
+  },
+  "TW": {
+   "min": 5,
+   "max": 13,
+   "conf": "medium",
+   "src": "research"
+  },
+  "HK": {
+   "min": 3,
+   "max": 9,
+   "conf": "medium",
+   "src": "research"
+  },
+  "KH": {
+   "min": 9,
+   "max": 22,
+   "conf": "medium",
+   "src": "research"
+  },
+  "RU": {
+   "min": 18,
+   "max": 45,
+   "conf": "medium",
+   "src": "research"
+  },
+  "IS": {
+   "min": 12,
+   "max": 30,
+   "conf": "medium",
+   "src": "research"
+  },
+  "MA": {
+   "min": 12,
+   "max": 32,
+   "conf": "medium",
+   "src": "research"
+  },
+  "MD": {
+   "min": 9,
+   "max": 22,
+   "conf": "medium",
+   "src": "research"
+  }
+ },
+ "route_notes": {
+  "US": "US now requires formal customs entry on every parcel (since Aug 2025) — allow a few extra days; branded reps carry seizure risk.",
+  "GB": "UK usually clears customs in 1-2 days (the £135 low-value relief still applies).",
+  "DE": "EU's new €3-per-parcel duty starts Jul 1 2026 — expect some customs delay this summer.",
+  "FR": "EU's new €3-per-parcel duty starts Jul 1 2026 — expect some customs delay this summer.",
+  "CA": "FIFA World Cup (Jun 11-Jul 19 2026) may add ~5 days for Toronto/Vancouver right now.",
+  "AU": "Australian biosecurity checks (stink-bug season) can add 1-2 weeks if flagged.",
+  "NL": "Efficient hub customs; common EU entry point",
+  "ES": "Spanish customs slow to clear non-EU parcels",
+  "IT": "Notoriously slow strict customs; new parcel fee",
+  "PT": "Often the EU entry hub; moderate clearance",
+  "BE": "Efficient customs near major EU hubs",
+  "AT": "Inland transit; generally smooth clearance",
+  "IE": "Island transit adds days; moderate customs",
+  "PL": "Reliable but customs adds some delay",
+  "CZ": "Landlocked transit; moderate customs hold",
+  "RO": "Long transit and slow customs",
+  "HU": "Landlocked; customs adds moderate delay",
+  "GR": "Severe customs backlogs and staffing issues",
+  "HR": "Peripheral transit; slower customs handling",
+  "RS": "Non-EU; 20% VAT and extra border clearance",
+  "FI": "Northern distance; otherwise efficient customs",
+  "DK": "Efficient Nordic customs; some transit distance",
+  "SK": "Landlocked transit; moderate customs delay",
+  "SI": "Small market; peripheral routing slows transit",
+  "BG": "Peripheral; long transit and slow customs",
+  "UA": "Non-EU; wartime logistics and border disruption",
+  "BR": "Receita Federal taxação can hold parcels 1-3 months",
+  "MX": "Customs holds common; high courier import rate",
+  "CL": "Customs hold 5-15 business days; IVA over ~$41",
+  "AR": "Correo door-to-door very slow; no courier de minimis",
+  "CO": "Andean customs moderate; DIAN inspections add delays",
+  "PE": "Customs clearance variable, often slow on postal lines",
+  "UY": "Orderly but long economy transit plus clearance",
+  "EC": "Customs inspections frequent; postal handling slow",
+  "CR": "Central America customs relatively efficient",
+  "DO": "Postal disruption pushes couriers; Caribbean routing adds time",
+  "PA": "Logistics hub; faster clearance than most LATAM",
+  "SA": "Aramex/SPL clear OK; volume causes occasional holds",
+  "AE": "Fast Aramex/Emirates Post; light customs",
+  "QA": "Aramex/Qatar Post clear China parcels fairly fast",
+  "IL": "Stringent customs plus regional disruption; variable",
+  "KW": "Aramex coverage good; moderate customs",
+  "BH": "Small market via Aramex; generally smooth clearance",
+  "OM": "Aramex OK but longer final-mile to outlying areas",
+  "JO": "Moderate customs; slower final-mile than Gulf",
+  "LB": "Slow/unstable customs; some lines suspended",
+  "EG": "Strict ACI customs; slow clearance and final-mile",
+  "TR": "Low-value exemption scrapped; full customs adds delay",
+  "JP": "Fast lines quick; postal/economy can lag",
+  "KR": "Efficient customs; special lines fast",
+  "SG": "Very fast hub, smooth customs",
+  "MY": "Fast nearby line; minor customs",
+  "TH": "Decent line; customs adds a few days",
+  "ID": "Variable; tougher customs and congestion",
+  "PH": "Slow variable customs, port congestion",
+  "VN": "Land-border lines fast; customs variable",
+  "IN": "Slow customs clearance, frequent holds",
+  "TW": "Close, fast lines, smooth clearance",
+  "HK": "Adjacent to China, near-domestic speed",
+  "KH": "Land routes plus customs dwell",
+  "RU": "Special-line slow, long customs dwell",
+  "IS": "Remote, limited lines, slow customs",
+  "MA": "Slow variable customs clearance",
+  "MD": "Moderate line; customs adds time"
+ },
+ "external_summary": "Reconciled China-to-country rep-haul benchmarks (door-to-door, June 2026), weighting community reports + agent-advertised lines + carrier data and discounting slow economy tails and one-off outliers. Realistic TYPICAL full-haul bands by destination: US 7-25 days, UK/GB 6-22, Germany 7-20, France 7-20, Canada 8-25, Australia 8-25. Most standard-line hauls cluster around 12-18 days; express (DHL/Fed",
+ "country_region": {
+  "NL": "EU",
+  "ES": "EU",
+  "IT": "EU",
+  "PT": "EU",
+  "BE": "EU",
+  "AT": "EU",
+  "IE": "EU",
+  "PL": "EU",
+  "CZ": "EU",
+  "RO": "EU",
+  "HU": "EU",
+  "GR": "EU",
+  "HR": "EU",
+  "RS": "EU",
+  "FI": "EU",
+  "DK": "EU",
+  "SK": "EU",
+  "SI": "EU",
+  "BG": "EU",
+  "UA": "EU",
+  "BR": "LATAM",
+  "MX": "LATAM",
+  "CL": "LATAM",
+  "AR": "LATAM",
+  "CO": "LATAM",
+  "PE": "LATAM",
+  "UY": "LATAM",
+  "EC": "LATAM",
+  "CR": "LATAM",
+  "DO": "LATAM",
+  "PA": "LATAM",
+  "SA": "MEA",
+  "AE": "MEA",
+  "QA": "MEA",
+  "IL": "MEA",
+  "KW": "MEA",
+  "BH": "MEA",
+  "OM": "MEA",
+  "JO": "MEA",
+  "LB": "MEA",
+  "EG": "MEA",
+  "TR": "MEA",
+  "JP": "APAC",
+  "KR": "APAC",
+  "SG": "APAC",
+  "MY": "APAC",
+  "TH": "APAC",
+  "ID": "APAC",
+  "PH": "APAC",
+  "VN": "APAC",
+  "IN": "APAC",
+  "TW": "APAC",
+  "HK": "APAC",
+  "KH": "APAC",
+  "RU": "APAC",
+  "IS": "APAC",
+  "MA": "APAC",
+  "MD": "APAC",
+  "US": "AM",
+  "CA": "AM",
+  "GB": "EU",
+  "DE": "EU",
+  "FR": "EU",
+  "AU": "OC",
+  "NZ": "OC",
+  "NO": "EU",
+  "SE": "EU",
+  "ZA": "AF",
+  "CH": "EU"
+ },
+ "region_fallback": {
+  "EU": {
+   "min": 12,
+   "max": 24,
+   "note": "Typical EU economy forwarder window"
+  },
+  "LATAM": {
+   "min": 22,
+   "max": 55,
+   "note": "LATAM economy line with slow customs"
+  },
+  "MEA": {
+   "min": 13,
+   "max": 27,
+   "note": "Middle East economy line, moderate customs"
+  },
+  "APAC": {
+   "min": 10,
+   "max": 24,
+   "note": "Asia-Pacific economy line"
+  },
+  "DEFAULT": {
+   "min": 12,
+   "max": 30,
+   "note": "Generic international economy estimate"
+  },
+  "AM": {
+   "min": 10,
+   "max": 28,
+   "note": "North America economy line"
+  },
+  "OC": {
+   "min": 8,
+   "max": 22,
+   "note": "Oceania economy line"
+  },
+  "AF": {
+   "min": 18,
+   "max": 45,
+   "note": "Africa economy line, slow customs"
+  }
+ },
+ "ground_truth_kakobuy": {
+  "note": "First-party delivered parcels from the owner KakoBuy account (full door-to-door incl. local last-mile). Mostly Canada via consolidated lines.",
+  "n_delivered": 72,
+  "by_dest": {
+   "CA": {
+    "ship_to_deliver": {
+     "n": 69,
+     "p10": 10.4,
+     "p50": 14.5,
+     "p85": 18.9,
+     "p90": 19.7,
+     "mean": 16.0,
+     "min": 7.1,
+     "max": 73.5
+    },
+    "china_leg": {
+     "n": 36,
+     "p10": 6.1,
+     "p50": 8.3,
+     "p85": 10.3,
+     "p90": 11.1,
+     "mean": 8.5,
+     "min": 4.6,
+     "max": 15.0
+    },
+    "local_leg": {
+     "n": 36,
+     "p10": 1.5,
+     "p50": 6.2,
+     "p85": 8.0,
+     "p90": 8.2,
+     "mean": 5.5,
+     "min": 0.9,
+     "max": 9.4
+    }
+   },
+   "AU": {
+    "ship_to_deliver": {
+     "n": 2,
+     "p10": 6.3,
+     "p50": 6.3,
+     "p85": 6.3,
+     "p90": 6.3,
+     "mean": 6.3,
+     "min": 6.3,
+     "max": 6.3
+    },
+    "china_leg": null,
+    "local_leg": null
+   },
+   "CN": {
+    "ship_to_deliver": {
+     "n": 1,
+     "p10": 19.4,
+     "p50": 19.4,
+     "p85": 19.4,
+     "p90": 19.4,
+     "mean": 19.4,
+     "min": 19.4,
+     "max": 19.4
+    },
+    "china_leg": {
+     "n": 1,
+     "p10": 0.0,
+     "p50": 0.0,
+     "p85": 0.0,
+     "p90": 0.0,
+     "mean": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    },
+    "local_leg": {
+     "n": 1,
+     "p10": 19.4,
+     "p50": 19.4,
+     "p85": 19.4,
+     "p90": 19.4,
+     "mean": 19.4,
+     "min": 19.4,
+     "max": 19.4
+    }
+   }
+  },
+  "submit_to_ship": {
+   "n": 69,
+   "p10": 0.2,
+   "p50": 1.0,
+   "p85": 4.0,
+   "p90": 5.2,
+   "mean": 2.5,
+   "min": 0.1,
+   "max": 26.2
+  },
+  "submit_to_deliver": {
+   "n": 69,
+   "p10": 10.9,
+   "p50": 15.8,
+   "p85": 22.3,
+   "p90": 23.7,
+   "mean": 18.0,
+   "min": 7.2,
+   "max": 73.7
+  },
+  "by_line": {
+   "Canada HD Line": {
+    "n": 27,
+    "p10": 11.5,
+    "p50": 14.7,
+    "p85": 18.9,
+    "p90": 18.9,
+    "mean": 15.0,
+    "min": 6.3,
+    "max": 19.7
+   },
+   "GD-EMS": {
+    "n": 2,
+    "p10": 9.6,
+    "p50": 9.6,
+    "p85": 12.7,
+    "p90": 12.7,
+    "mean": 11.1,
+    "min": 9.6,
+    "max": 12.7
+   },
+   "GD-EMS>5kg": {
+    "n": 6,
+    "p10": 8.8,
+    "p50": 10.7,
+    "p85": 12.4,
+    "p90": 12.4,
+    "mean": 11.1,
+    "min": 8.8,
+    "max": 14.5
+   }
+  },
+  "parcels": [
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2026-05-27 23:28:23",
+    "first_scan": "2026-05-28",
+    "last_event": "2026-06-11",
+    "delivered": true,
+    "ship_to_deliver": 13.4,
+    "submit_to_deliver": 14.2,
+    "submit_to_ship": 0.8,
+    "china_leg": 10.2,
+    "local_leg": 3.1
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2026-05-23 02:33:54",
+    "first_scan": "2026-05-23",
+    "last_event": "2026-06-08",
+    "delivered": true,
+    "ship_to_deliver": 15.4,
+    "submit_to_deliver": 16.1,
+    "submit_to_ship": 0.7,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2026-05-23 02:33:33",
+    "first_scan": "2026-05-23",
+    "last_event": "2026-06-08",
+    "delivered": true,
+    "ship_to_deliver": 15.4,
+    "submit_to_deliver": 16.1,
+    "submit_to_ship": 0.7,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2026-05-23 02:33:04",
+    "first_scan": "2026-05-23",
+    "last_event": "2026-06-08",
+    "delivered": true,
+    "ship_to_deliver": 15.4,
+    "submit_to_deliver": 16.1,
+    "submit_to_ship": 0.7,
+    "china_leg": 8.8,
+    "local_leg": 6.5
+   },
+   {
+    "dest": "CN",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2026-05-23 02:32:31",
+    "first_scan": "2026-05-23",
+    "last_event": "2026-06-12",
+    "delivered": true,
+    "ship_to_deliver": 19.4,
+    "submit_to_deliver": 20.1,
+    "submit_to_ship": 0.7,
+    "china_leg": 0.0,
+    "local_leg": 19.4
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2026-02-27 19:05:37",
+    "first_scan": "2026-03-25",
+    "last_event": "2026-04-16",
+    "delivered": true,
+    "ship_to_deliver": 15.2,
+    "submit_to_deliver": 41.4,
+    "submit_to_ship": 26.2,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-08-04 20:49:26",
+    "first_scan": "2025-08-05",
+    "last_event": "2025-08-18",
+    "delivered": true,
+    "ship_to_deliver": 13.6,
+    "submit_to_deliver": 13.8,
+    "submit_to_ship": 0.1,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "AU",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2025-06-10 22:59:26",
+    "first_scan": "2025-06-11",
+    "last_event": "2025-06-18",
+    "delivered": true,
+    "ship_to_deliver": 6.3,
+    "submit_to_deliver": 7.2,
+    "submit_to_ship": 0.9,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "AU",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-05-27 23:46:11",
+    "first_scan": "2025-06-11",
+    "last_event": "2025-06-18",
+    "delivered": true,
+    "ship_to_deliver": 6.3,
+    "submit_to_deliver": 21.2,
+    "submit_to_ship": 14.8,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-05-07 00:53:24",
+    "first_scan": "2025-05-07",
+    "last_event": "2025-05-26",
+    "delivered": true,
+    "ship_to_deliver": 18.9,
+    "submit_to_deliver": 19.6,
+    "submit_to_ship": 0.8,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-04-24 00:18:41",
+    "first_scan": "2025-05-07",
+    "last_event": "2025-05-26",
+    "delivered": true,
+    "ship_to_deliver": 18.9,
+    "submit_to_deliver": 32.7,
+    "submit_to_ship": 13.8,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-04-24 00:18:01",
+    "first_scan": "2025-04-24",
+    "last_event": "2025-05-08",
+    "delivered": true,
+    "ship_to_deliver": 13.8,
+    "submit_to_deliver": 14.6,
+    "submit_to_ship": 0.9,
+    "china_leg": 8.3,
+    "local_leg": 5.5
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-04-16 22:48:12",
+    "first_scan": "2025-04-17",
+    "last_event": "2025-05-05",
+    "delivered": true,
+    "ship_to_deliver": 18.5,
+    "submit_to_deliver": 18.6,
+    "submit_to_ship": 0.1,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-04-14 01:29:41",
+    "first_scan": "2025-04-17",
+    "last_event": "2025-05-05",
+    "delivered": true,
+    "ship_to_deliver": 18.5,
+    "submit_to_deliver": 21.5,
+    "submit_to_ship": 3.0,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-04-09 21:15:52",
+    "first_scan": "2025-04-10",
+    "last_event": "2025-04-24",
+    "delivered": true,
+    "ship_to_deliver": 14.5,
+    "submit_to_deliver": 14.7,
+    "submit_to_ship": 0.2,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-04-07 22:05:34",
+    "first_scan": "2025-04-10",
+    "last_event": "2025-04-24",
+    "delivered": true,
+    "ship_to_deliver": 14.5,
+    "submit_to_deliver": 16.7,
+    "submit_to_ship": 2.2,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-04-07 00:05:27",
+    "first_scan": "2025-04-08",
+    "last_event": "2025-04-22",
+    "delivered": true,
+    "ship_to_deliver": 14.4,
+    "submit_to_deliver": 15.5,
+    "submit_to_ship": 1.0,
+    "china_leg": 6.2,
+    "local_leg": 8.2
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-04-01 23:02:21",
+    "first_scan": "2025-04-07",
+    "last_event": "2025-04-22",
+    "delivered": true,
+    "ship_to_deliver": 15.3,
+    "submit_to_deliver": 20.5,
+    "submit_to_ship": 5.2,
+    "china_leg": 7.1,
+    "local_leg": 8.2
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-04-01 23:01:28",
+    "first_scan": "2025-04-02",
+    "last_event": "2025-04-22",
+    "delivered": true,
+    "ship_to_deliver": 19.7,
+    "submit_to_deliver": 20.5,
+    "submit_to_ship": 0.8,
+    "china_leg": 10.3,
+    "local_leg": 9.4
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-03-27 01:36:22",
+    "first_scan": "2025-04-02",
+    "last_event": "2025-04-22",
+    "delivered": true,
+    "ship_to_deliver": 19.7,
+    "submit_to_deliver": 26.4,
+    "submit_to_ship": 6.7,
+    "china_leg": 10.3,
+    "local_leg": 9.4
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-03-23 19:07:40",
+    "first_scan": "2025-03-28",
+    "last_event": "2025-04-08",
+    "delivered": true,
+    "ship_to_deliver": 11.5,
+    "submit_to_deliver": 15.7,
+    "submit_to_ship": 4.2,
+    "china_leg": 5.3,
+    "local_leg": 6.2
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-03-16 22:26:18",
+    "first_scan": "2025-03-24",
+    "last_event": "2025-04-08",
+    "delivered": true,
+    "ship_to_deliver": 14.7,
+    "submit_to_deliver": 22.6,
+    "submit_to_ship": 7.8,
+    "china_leg": 5.9,
+    "local_leg": 8.9
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-03-09 20:38:10",
+    "first_scan": "2025-03-17",
+    "last_event": "2025-03-31",
+    "delivered": true,
+    "ship_to_deliver": 13.9,
+    "submit_to_deliver": 21.8,
+    "submit_to_ship": 7.9,
+    "china_leg": 6.5,
+    "local_leg": 7.4
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-03-09 20:37:17",
+    "first_scan": "2025-03-11",
+    "last_event": "2025-03-21",
+    "delivered": true,
+    "ship_to_deliver": 10.4,
+    "submit_to_deliver": 11.7,
+    "submit_to_ship": 1.3,
+    "china_leg": 6.1,
+    "local_leg": 4.4
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-03-06 22:03:23",
+    "first_scan": "2025-03-11",
+    "last_event": "2025-03-21",
+    "delivered": true,
+    "ship_to_deliver": 10.4,
+    "submit_to_deliver": 14.7,
+    "submit_to_ship": 4.2,
+    "china_leg": 6.1,
+    "local_leg": 4.4
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-03-05 20:12:01",
+    "first_scan": "2025-03-07",
+    "last_event": "2025-03-21",
+    "delivered": true,
+    "ship_to_deliver": 13.6,
+    "submit_to_deliver": 15.7,
+    "submit_to_ship": 2.2,
+    "china_leg": 9.2,
+    "local_leg": 4.4
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2025-03-05 20:09:51",
+    "first_scan": "2025-03-07",
+    "last_event": "2025-03-21",
+    "delivered": true,
+    "ship_to_deliver": 14.6,
+    "submit_to_deliver": 15.8,
+    "submit_to_ship": 1.2,
+    "china_leg": 10.2,
+    "local_leg": 4.4
+   },
+   {
+    "dest": "CA",
+    "line": "GD-EMS>5kg",
+    "status": "Shipped",
+    "submit": "2025-02-23 18:46:18",
+    "first_scan": "2025-02-25",
+    "last_event": "2025-03-06",
+    "delivered": true,
+    "ship_to_deliver": 8.8,
+    "submit_to_deliver": 10.9,
+    "submit_to_ship": 2.1,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2025-02-23 18:45:14",
+    "first_scan": "2025-02-25",
+    "last_event": "2025-03-06",
+    "delivered": true,
+    "ship_to_deliver": 8.8,
+    "submit_to_deliver": 10.9,
+    "submit_to_ship": 2.1,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2025-02-23 18:43:22",
+    "first_scan": "2025-02-25",
+    "last_event": "2025-03-10",
+    "delivered": true,
+    "ship_to_deliver": 12.6,
+    "submit_to_deliver": 14.8,
+    "submit_to_ship": 2.2,
+    "china_leg": 4.6,
+    "local_leg": 8.0
+   },
+   {
+    "dest": "CA",
+    "line": "GD-EMS>5kg",
+    "status": "Shipped",
+    "submit": "2025-02-16 01:18:11",
+    "first_scan": "2025-02-16",
+    "last_event": "2025-02-27",
+    "delivered": true,
+    "ship_to_deliver": 10.8,
+    "submit_to_deliver": 11.7,
+    "submit_to_ship": 0.9,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2025-02-15 18:38:01",
+    "first_scan": "2025-02-16",
+    "last_event": "2025-04-30",
+    "delivered": true,
+    "ship_to_deliver": 73.5,
+    "submit_to_deliver": 73.7,
+    "submit_to_ship": 0.2,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2025-02-10 17:39:36",
+    "first_scan": "2025-02-10",
+    "last_event": "2025-02-24",
+    "delivered": true,
+    "ship_to_deliver": 13.7,
+    "submit_to_deliver": 13.9,
+    "submit_to_ship": 0.2,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2025-02-05 01:55:50",
+    "first_scan": "2025-02-05",
+    "last_event": "2025-02-17",
+    "delivered": true,
+    "ship_to_deliver": 11.9,
+    "submit_to_deliver": 12.6,
+    "submit_to_ship": 0.7,
+    "china_leg": 8.0,
+    "local_leg": 3.9
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2025-01-16 22:27:48",
+    "first_scan": "2025-01-20",
+    "last_event": "2025-02-03",
+    "delivered": true,
+    "ship_to_deliver": 14.4,
+    "submit_to_deliver": 17.7,
+    "submit_to_ship": 3.3,
+    "china_leg": 8.1,
+    "local_leg": 6.3
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2025-01-16 22:26:39",
+    "first_scan": "2025-01-20",
+    "last_event": "2025-02-03",
+    "delivered": true,
+    "ship_to_deliver": 14.4,
+    "submit_to_deliver": 17.7,
+    "submit_to_ship": 3.3,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "GD-EMS>5kg",
+    "status": "Shipped",
+    "submit": "2025-01-09 21:35:53",
+    "first_scan": "2025-01-12",
+    "last_event": "2025-01-21",
+    "delivered": true,
+    "ship_to_deliver": 9.6,
+    "submit_to_deliver": 11.7,
+    "submit_to_ship": 2.2,
+    "china_leg": 8.1,
+    "local_leg": 1.5
+   },
+   {
+    "dest": "CA",
+    "line": "GD-EMS",
+    "status": "Shipped",
+    "submit": "2025-01-09 21:34:26",
+    "first_scan": "2025-01-12",
+    "last_event": "2025-01-21",
+    "delivered": true,
+    "ship_to_deliver": 9.6,
+    "submit_to_deliver": 11.7,
+    "submit_to_ship": 2.1,
+    "china_leg": 8.3,
+    "local_leg": 1.3
+   },
+   {
+    "dest": "CA",
+    "line": "GD-EMS>5kg",
+    "status": "Shipped",
+    "submit": "2025-01-03 17:48:50",
+    "first_scan": "2025-01-03",
+    "last_event": "2025-01-14",
+    "delivered": true,
+    "ship_to_deliver": 10.7,
+    "submit_to_deliver": 10.9,
+    "submit_to_ship": 0.2,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2024-12-30 22:26:42",
+    "first_scan": "2025-01-03",
+    "last_event": "2025-01-14",
+    "delivered": true,
+    "ship_to_deliver": 10.7,
+    "submit_to_deliver": 14.7,
+    "submit_to_ship": 4.0,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "GD-EMS",
+    "status": "Shipped",
+    "submit": "2024-12-30 22:26:05",
+    "first_scan": "2025-01-01",
+    "last_event": "2025-01-14",
+    "delivered": true,
+    "ship_to_deliver": 12.7,
+    "submit_to_deliver": 14.7,
+    "submit_to_ship": 2.0,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": "GD-EMS>5kg",
+    "status": "Receipted",
+    "submit": "2024-02-24 21:38:10",
+    "first_scan": "2024-02-26",
+    "last_event": "2024-03-11",
+    "delivered": true,
+    "ship_to_deliver": 14.5,
+    "submit_to_deliver": 15.7,
+    "submit_to_ship": 1.2,
+    "china_leg": 6.5,
+    "local_leg": 8.0
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2024-02-05 00:21:21",
+    "first_scan": "2024-02-06",
+    "last_event": "2024-02-15",
+    "delivered": true,
+    "ship_to_deliver": 9.3,
+    "submit_to_deliver": 10.5,
+    "submit_to_ship": 1.2,
+    "china_leg": 8.4,
+    "local_leg": 0.9
+   },
+   {
+    "dest": "CA",
+    "line": "GD-EMS>5kg",
+    "status": "Shipped",
+    "submit": "2024-02-02 19:13:10",
+    "first_scan": "2024-02-04",
+    "last_event": "2024-02-16",
+    "delivered": true,
+    "ship_to_deliver": 12.4,
+    "submit_to_deliver": 13.7,
+    "submit_to_ship": 1.3,
+    "china_leg": 10.6,
+    "local_leg": 1.8
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2024-01-27 01:49:36",
+    "first_scan": "2024-01-28",
+    "last_event": "2024-02-12",
+    "delivered": true,
+    "ship_to_deliver": 15.5,
+    "submit_to_deliver": 16.5,
+    "submit_to_ship": 1.0,
+    "china_leg": 9.2,
+    "local_leg": 6.3
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2024-01-24 17:35:09",
+    "first_scan": "2024-01-26",
+    "last_event": "2024-02-12",
+    "delivered": true,
+    "ship_to_deliver": 17.3,
+    "submit_to_deliver": 18.8,
+    "submit_to_ship": 1.5,
+    "china_leg": 10.3,
+    "local_leg": 7.0
+   },
+   {
+    "dest": "CA",
+    "line": "Canada HD Line",
+    "status": "Shipped",
+    "submit": "2024-01-14 21:36:28",
+    "first_scan": "2024-01-15",
+    "last_event": "2024-01-30",
+    "delivered": true,
+    "ship_to_deliver": 15.5,
+    "submit_to_deliver": 15.8,
+    "submit_to_ship": 0.3,
+    "china_leg": 9.1,
+    "local_leg": 6.3
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2024-01-08 21:06:50",
+    "first_scan": "2024-01-09",
+    "last_event": "2024-01-22",
+    "delivered": true,
+    "ship_to_deliver": 13.2,
+    "submit_to_deliver": 13.7,
+    "submit_to_ship": 0.5,
+    "china_leg": 9.4,
+    "local_leg": 3.8
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-12-24 12:08:36",
+    "first_scan": "2023-12-25",
+    "last_event": "2024-01-08",
+    "delivered": true,
+    "ship_to_deliver": 14.2,
+    "submit_to_deliver": 15.1,
+    "submit_to_ship": 0.9,
+    "china_leg": 8.3,
+    "local_leg": 5.9
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-12-17 21:41:38",
+    "first_scan": "2023-12-21",
+    "last_event": "2024-01-03",
+    "delivered": true,
+    "ship_to_deliver": 13.2,
+    "submit_to_deliver": 16.6,
+    "submit_to_ship": 3.4,
+    "china_leg": 8.2,
+    "local_leg": 5.0
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-12-13 20:23:28",
+    "first_scan": "2023-12-15",
+    "last_event": "2024-01-02",
+    "delivered": true,
+    "ship_to_deliver": 18.4,
+    "submit_to_deliver": 19.7,
+    "submit_to_ship": 1.2,
+    "china_leg": 13.2,
+    "local_leg": 5.2
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-12-09 18:54:47",
+    "first_scan": "2023-12-12",
+    "last_event": "2024-01-03",
+    "delivered": true,
+    "ship_to_deliver": 22.1,
+    "submit_to_deliver": 24.7,
+    "submit_to_ship": 2.6,
+    "china_leg": 15.0,
+    "local_leg": 7.1
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-11-22 22:56:17",
+    "first_scan": "2023-11-23",
+    "last_event": "2023-11-30",
+    "delivered": true,
+    "ship_to_deliver": 7.1,
+    "submit_to_deliver": 7.5,
+    "submit_to_ship": 0.5,
+    "china_leg": 6.2,
+    "local_leg": 0.9
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-11-21 16:46:58",
+    "first_scan": "2023-11-22",
+    "last_event": "2023-11-30",
+    "delivered": true,
+    "ship_to_deliver": 8.4,
+    "submit_to_deliver": 8.8,
+    "submit_to_ship": 0.4,
+    "china_leg": 7.4,
+    "local_leg": 0.9
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-11-16 22:06:13",
+    "first_scan": "2023-11-17",
+    "last_event": "2023-12-04",
+    "delivered": true,
+    "ship_to_deliver": 17.1,
+    "submit_to_deliver": 17.6,
+    "submit_to_ship": 0.5,
+    "china_leg": 11.1,
+    "local_leg": 6.0
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-10-30 16:18:49",
+    "first_scan": "2023-10-31",
+    "last_event": "2023-11-14",
+    "delivered": true,
+    "ship_to_deliver": 14.2,
+    "submit_to_deliver": 14.8,
+    "submit_to_ship": 0.7,
+    "china_leg": 7.4,
+    "local_leg": 6.8
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Receipted",
+    "submit": "2023-10-22 13:55:47",
+    "first_scan": "2023-10-24",
+    "last_event": "2023-11-13",
+    "delivered": true,
+    "ship_to_deliver": 20.1,
+    "submit_to_deliver": 22.3,
+    "submit_to_ship": 2.2,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-10-17 19:28:18",
+    "first_scan": "2023-10-26",
+    "last_event": "2023-11-14",
+    "delivered": true,
+    "ship_to_deliver": 19.4,
+    "submit_to_deliver": 27.7,
+    "submit_to_ship": 8.3,
+    "china_leg": 11.4,
+    "local_leg": 8.0
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-10-03 01:33:01",
+    "first_scan": "2023-10-03",
+    "last_event": "2023-10-19",
+    "delivered": true,
+    "ship_to_deliver": 15.8,
+    "submit_to_deliver": 16.5,
+    "submit_to_ship": 0.8,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-09-25 21:41:08",
+    "first_scan": "2023-09-26",
+    "last_event": "2023-10-19",
+    "delivered": true,
+    "ship_to_deliver": 22.7,
+    "submit_to_deliver": 23.7,
+    "submit_to_ship": 0.9,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-09-21 16:02:49",
+    "first_scan": "2023-09-21",
+    "last_event": "2023-10-10",
+    "delivered": true,
+    "ship_to_deliver": 18.7,
+    "submit_to_deliver": 18.9,
+    "submit_to_ship": 0.2,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-09-16 02:34:29",
+    "first_scan": "2023-09-17",
+    "last_event": "2023-10-04",
+    "delivered": true,
+    "ship_to_deliver": 17.2,
+    "submit_to_deliver": 18.4,
+    "submit_to_ship": 1.2,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-08-30 18:27:22",
+    "first_scan": "2023-08-31",
+    "last_event": "2023-09-12",
+    "delivered": true,
+    "ship_to_deliver": 12.2,
+    "submit_to_deliver": 12.8,
+    "submit_to_ship": 0.6,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-08-26 10:19:27",
+    "first_scan": "2023-08-27",
+    "last_event": "2023-09-11",
+    "delivered": true,
+    "ship_to_deliver": 15.3,
+    "submit_to_deliver": 16.1,
+    "submit_to_ship": 0.8,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Receipted",
+    "submit": "2023-08-17 04:46:23",
+    "first_scan": "2023-08-17",
+    "last_event": "2023-09-08",
+    "delivered": true,
+    "ship_to_deliver": 21.6,
+    "submit_to_deliver": 22.4,
+    "submit_to_ship": 0.8,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Receipted",
+    "submit": "2023-08-06 14:25:13",
+    "first_scan": "2023-08-06",
+    "last_event": "2023-08-21",
+    "delivered": true,
+    "ship_to_deliver": 14.5,
+    "submit_to_deliver": 14.9,
+    "submit_to_ship": 0.4,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Receipted",
+    "submit": "2023-08-03 05:02:51",
+    "first_scan": "2023-08-04",
+    "last_event": "2023-09-11",
+    "delivered": true,
+    "ship_to_deliver": 38.0,
+    "submit_to_deliver": 39.3,
+    "submit_to_ship": 1.3,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-07-30 20:29:58",
+    "first_scan": "2023-07-31",
+    "last_event": "2023-08-15",
+    "delivered": true,
+    "ship_to_deliver": 15.5,
+    "submit_to_deliver": 15.7,
+    "submit_to_ship": 0.2,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": "Shipped",
+    "submit": "2023-07-16 15:09:34",
+    "first_scan": "2023-07-16",
+    "last_event": "2023-07-27",
+    "delivered": true,
+    "ship_to_deliver": 10.6,
+    "submit_to_deliver": 10.9,
+    "submit_to_ship": 0.3,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": null,
+    "submit": null,
+    "first_scan": "2024-02-26",
+    "last_event": "2024-03-11",
+    "delivered": true,
+    "ship_to_deliver": 14.5,
+    "submit_to_deliver": null,
+    "submit_to_ship": null,
+    "china_leg": 6.5,
+    "local_leg": 8.0
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": null,
+    "submit": null,
+    "first_scan": "2023-08-06",
+    "last_event": "2023-08-21",
+    "delivered": true,
+    "ship_to_deliver": 14.5,
+    "submit_to_deliver": null,
+    "submit_to_ship": null,
+    "china_leg": null,
+    "local_leg": null
+   },
+   {
+    "dest": "CA",
+    "line": null,
+    "status": null,
+    "submit": null,
+    "first_scan": "2023-08-04",
+    "last_event": "2023-09-11",
+    "delivered": true,
+    "ship_to_deliver": 38.0,
+    "submit_to_deliver": null,
+    "submit_to_ship": null,
+    "china_leg": null,
+    "local_leg": null
+   }
+  ]
+ },
+ "ground_truth_routes": {
+  "CA": {
+   "lo": 10,
+   "hi": 20,
+   "p50": 14.5,
+   "n": 69
+  }
+ }
+}

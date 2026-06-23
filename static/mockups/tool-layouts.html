@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RepTools — Tool Layout Options (scalable)</title>
+<link rel="stylesheet" href="/static/css/brand.css">
+<style>
+  body{background:var(--ink);color:var(--bone);font-family:var(--font-body);margin:0}
+  .opt{border-bottom:1px dashed var(--ink-line)}
+  .opt__label{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem 1rem;
+    padding:.7rem 1.5rem;background:var(--ink-raised);border-bottom:2px solid var(--ink-line);
+    position:sticky;top:0;z-index:5}
+  .opt__num{font-family:var(--font-display);text-transform:uppercase;color:var(--hazard);font-size:1.1rem;letter-spacing:.02em}
+  .opt__name{font-family:var(--font-display);text-transform:uppercase;font-size:1.1rem}
+  .opt__desc{font-family:var(--font-mono);font-size:.7rem;color:var(--bone-dim);letter-spacing:.08em;text-transform:uppercase}
+  .stage{padding:3.2rem 2rem}
+
+  .intro{padding:2.4rem 2rem;border-bottom:2px solid var(--ink-line);background:var(--ink-raised)}
+  .intro h1{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(2rem,5vw,3.4rem);line-height:.9;margin:0 0 .6rem}
+  .intro h1 em{color:var(--hazard);font-style:normal}
+  .intro p{font-family:var(--font-mono);color:var(--bone-dim);font-size:.82rem;max-width:62ch;line-height:1.6;margin:0}
+
+  /* shared atoms ----------------------------------------------------- */
+  .ico{width:1.4em;height:1.4em;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .chip{font-family:var(--font-mono);font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    padding:.18em .5em;border:1.5px solid currentColor;line-height:1}
+  .chip--new{color:var(--hazard)} .chip--beta{color:var(--acid)} .chip--soon{color:var(--bone-dim)}
+
+  /* ============ A · COMMAND LAUNCHER (search-first) ============ */
+  .a{max-width:760px;margin:0 auto}
+  .a h1{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(2rem,5vw,3.2rem);line-height:.9;margin:0 0 1.2rem;text-align:center}
+  .a h1 em{color:var(--hazard);font-style:normal}
+  .a .omni{display:flex;align-items:center;gap:.8rem;border:2px solid var(--hazard);background:var(--ink-raised);
+    box-shadow:6px 6px 0 var(--hazard);padding:1rem 1.2rem}
+  .a .omni input{flex:1;background:none;border:0;color:var(--bone);font-family:var(--font-mono);font-size:1rem;outline:none}
+  .a .omni .key{font-family:var(--font-mono);font-size:.62rem;color:var(--bone-dim);border:1px solid var(--ink-line);padding:.2em .45em}
+  .a .grp{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim);margin:1.6rem 0 .5rem}
+  .a .res{display:flex;align-items:center;gap:.9rem;padding:.85rem 1rem;border:2px solid transparent;cursor:pointer}
+  .a .res:hover,.a .res.on{border-color:var(--ink-line);background:var(--ink-raised)}
+  .a .res.on{border-color:var(--hazard)}
+  .a .res .nm{font-weight:800;text-transform:uppercase;letter-spacing:.02em;font-size:.92rem}
+  .a .res .ds{font-family:var(--font-mono);font-size:.7rem;color:var(--bone-dim);margin-left:auto;text-align:right}
+  .a .res .ico{color:var(--hazard)}
+
+  /* ============ B · WORKBENCH (sidebar rail + canvas) ============ */
+  .b{max-width:1180px;margin:0 auto;border:2px solid var(--ink-line);background:var(--ink-raised);
+    box-shadow:8px 8px 0 rgba(0,0,0,.5);display:grid;grid-template-columns:260px 1fr}
+  .b .rail{border-right:2px solid var(--ink-line)}
+  .b .rail .hd{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim);padding:1rem 1.1rem .5rem}
+  .b .nav{display:flex;align-items:center;gap:.8rem;padding:.85rem 1.1rem;border-left:3px solid transparent;cursor:pointer;
+    font-weight:800;text-transform:uppercase;letter-spacing:.02em;font-size:.84rem}
+  .b .nav .n{font-family:var(--font-mono);font-size:.66rem;color:var(--bone-dim)}
+  .b .nav:hover{background:var(--ink)}
+  .b .nav.on{background:var(--ink);border-left-color:var(--hazard);color:var(--hazard)}
+  .b .nav.on .n{color:var(--hazard)}
+  .b .nav .ico{width:1.2em;height:1.2em}
+  .b .add{display:flex;align-items:center;gap:.8rem;padding:.85rem 1.1rem;color:var(--bone-dim);font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;border-top:1px dashed var(--ink-line);margin-top:.4rem}
+  .b .canvas{padding:2.4rem}
+  .b .canvas .crumb{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--bone-dim);margin-bottom:.8rem}
+  .b .canvas h2{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(2rem,4vw,3rem);margin:0 0 .4rem;line-height:.9}
+  .b .canvas .sub{font-family:var(--font-mono);font-size:.78rem;color:var(--bone-dim);margin:0 0 1.6rem}
+  .b .field{display:flex;gap:.7rem}
+  .b .field input{flex:1;border:2px solid var(--ink-line);background:var(--ink);color:var(--bone);font-family:var(--font-mono);padding:.85rem 1rem;font-size:.85rem}
+
+  /* ============ C · CATEGORIZED BENTO (groups scale) ============ */
+  .c{max-width:1180px;margin:0 auto}
+  .c h1{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(2rem,5vw,3.4rem);line-height:.9;margin:0 0 1.6rem}
+  .c h1 em{color:var(--hazard);font-style:normal}
+  .c .cat{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--hazard);margin:1.8rem 0 .7rem;display:flex;align-items:center;gap:.8rem}
+  .c .cat::after{content:"";flex:1;height:1px;background:var(--ink-line)}
+  .c .row{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+  .c .tile{border:2px solid var(--ink-line);background:var(--ink-raised);padding:1.1rem;display:flex;flex-direction:column;gap:.6rem;cursor:pointer;min-height:120px}
+  .c .tile:hover{border-color:var(--hazard);transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);transition:.12s}
+  .c .tile .ico{color:var(--hazard);width:1.7em;height:1.7em}
+  .c .tile .nm{font-family:var(--font-display);text-transform:uppercase;font-size:1.15rem;margin-top:auto}
+  .c .tile .ds{font-family:var(--font-mono);font-size:.66rem;color:var(--bone-dim);line-height:1.4}
+  .c .tile.feat{grid-column:span 2;border-color:var(--hazard);box-shadow:6px 6px 0 var(--hazard)}
+  .c .tile.feat .nm{font-size:2rem}
+  .c .tile .top{display:flex;justify-content:space-between;align-items:flex-start}
+
+  /* ============ D · DIRECTORY GRID (auto-fill catalog) ============ */
+  .d{max-width:1240px;margin:0 auto}
+  .d .head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.4rem}
+  .d h1{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(2rem,4.5vw,3rem);line-height:.9;margin:0}
+  .d h1 em{color:var(--hazard);font-style:normal}
+  .d .filters{display:flex;gap:.5rem;flex-wrap:wrap}
+  .d .f{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--ink-line);
+    background:var(--ink-raised);color:var(--bone-dim);padding:.45rem .8rem;cursor:pointer}
+  .d .f.on{background:var(--hazard);color:var(--on-hazard);border-color:var(--ink)}
+  .d .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.9rem}
+  .d .card{border:2px solid var(--ink-line);background:var(--ink-raised);padding:1.2rem;display:flex;flex-direction:column;gap:.7rem;cursor:pointer}
+  .d .card:hover{border-color:var(--hazard);transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);transition:.12s}
+  .d .card .top{display:flex;justify-content:space-between;align-items:flex-start}
+  .d .card .ico{color:var(--hazard);width:1.9em;height:1.9em}
+  .d .card .nm{font-family:var(--font-display);text-transform:uppercase;font-size:1.25rem;line-height:.95}
+  .d .card .ds{font-family:var(--font-mono);font-size:.68rem;color:var(--bone-dim);line-height:1.45}
+  .d .card .go{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--hazard);margin-top:auto}
+
+  /* ============ E · MANIFEST LEDGER (dense list scales) ============ */
+  .e{max-width:1100px;margin:0 auto;border:2px solid var(--ink-line);background:var(--ink-raised);box-shadow:8px 8px 0 rgba(0,0,0,.5)}
+  .e .top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;font-family:var(--font-mono);font-size:.66rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--bone-dim);padding:.8rem 1.3rem;border-bottom:1px dashed var(--ink-line)}
+  .e .top b{color:var(--hazard)}
+  .e .colhd{display:grid;grid-template-columns:3rem 1.3fr 2fr 6rem;gap:1rem;padding:.6rem 1.3rem;font-family:var(--font-mono);
+    font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-dim);border-bottom:2px solid var(--ink-line)}
+  .e .ln{display:grid;grid-template-columns:3rem 1.3fr 2fr 6rem;gap:1rem;align-items:center;padding:.95rem 1.3rem;
+    border-bottom:1px solid var(--ink-line);cursor:pointer}
+  .e .ln:hover{background:var(--ink)}
+  .e .ln:last-child{border-bottom:0}
+  .e .ln .num{font-family:var(--font-mono);font-size:.74rem;color:var(--hazard)}
+  .e .ln .nm{display:flex;align-items:center;gap:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.02em;font-size:.9rem}
+  .e .ln .nm .ico{width:1.2em;height:1.2em;color:var(--hazard)}
+  .e .ln .ds{font-family:var(--font-mono);font-size:.7rem;color:var(--bone-dim)}
+  .e .ln .st{font-family:var(--font-mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:.45rem;justify-content:flex-end}
+  .e .led{width:7px;height:7px;border-radius:50%;background:var(--gl)}
+  .e .led.soon{background:var(--pending)} .e .led.beta{background:var(--acid)}
+
+  /* ============ F · DOCK + CANVAS (horizontal dock scales) ============ */
+  .f{max-width:1100px;margin:0 auto}
+  .f .canvas{border:2px solid var(--ink-line);background:var(--ink-raised);box-shadow:8px 8px 0 rgba(0,0,0,.5);padding:2.6rem;text-align:center;min-height:230px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1rem}
+  .f .canvas h2{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(2.2rem,5vw,3.6rem);margin:0;line-height:.9}
+  .f .canvas h2 em{color:var(--hazard);font-style:normal}
+  .f .canvas .sub{font-family:var(--font-mono);font-size:.78rem;color:var(--bone-dim);margin:0}
+  .f .canvas input{border:2px solid var(--ink-line);background:var(--ink);color:var(--bone);font-family:var(--font-mono);padding:.85rem 1rem;font-size:.85rem;width:min(420px,90%)}
+  .f .dock{display:flex;gap:.6rem;justify-content:center;flex-wrap:nowrap;overflow-x:auto;padding:1.2rem .4rem .2rem}
+  .f .slot{flex:none;width:78px;height:78px;border:2px solid var(--ink-line);background:var(--ink-raised);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:.35rem;cursor:pointer;transition:transform .15s var(--ease)}
+  .f .slot:hover{transform:translateY(-8px) scale(1.08);border-color:var(--hazard)}
+  .f .slot.on{background:var(--hazard);color:var(--on-hazard);border-color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+  .f .slot .ico{width:1.5em;height:1.5em;color:var(--hazard)}
+  .f .slot.on .ico{color:var(--on-hazard)}
+  .f .slot .lb{font-family:var(--font-mono);font-size:.54rem;text-transform:uppercase;letter-spacing:.04em}
+
+  @media (max-width:860px){
+    .b{grid-template-columns:1fr}
+    .b .rail{border-right:0;border-bottom:2px solid var(--ink-line)}
+    .c .row{grid-template-columns:1fr}
+    .c .tile.feat{grid-column:span 1}
+    .e .colhd,.e .ln{grid-template-columns:2.2rem 1fr 5rem}
+    .e .ds{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>Tool Layouts — built to <em>scale</em></h1>
+  <p>// six directory/launcher patterns. these stay clean as the toolkit grows from 5 to 15+ mini-tools — new tools slot into a list, grid cell, category, or dock with zero redesign. all on brand.css, no emojis (clean svg icons).</p>
+</div>
+
+<!-- icon sprite ---------------------------------------------------- -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-track" viewBox="0 0 24 24"><path d="M12 21s-7-6.4-7-11a7 7 0 0 1 14 0c0 4.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-qc" viewBox="0 0 24 24"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7H7l1.2-1.8A1 1 0 0 1 9 5h6a1 1 0 0 1 .8.4L17 7h2.5A1.5 1.5 0 0 1 21 8.5v9A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z"/><circle cx="12" cy="13" r="3.2"/></symbol>
+  <symbol id="i-find" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m20 20-3.6-3.6"/></symbol>
+  <symbol id="i-convert" viewBox="0 0 24 24"><path d="M9 13a4 4 0 0 0 5.7.4l2.6-2.6a4 4 0 0 0-5.6-5.7l-1.1 1"/><path d="M15 11a4 4 0 0 0-5.7-.4L6.7 13.2a4 4 0 0 0 5.6 5.7l1-1"/></symbol>
+  <symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M8 7h8M8 11h2M12 11h.01M16 11h.01M8 15h2M12 15h.01M16 15h.01M8 18h2"/></symbol>
+  <symbol id="i-sheet" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M4 9h16M4 14h16M9 4v16M14 4v16"/></symbol>
+  <symbol id="i-fx" viewBox="0 0 24 24"><circle cx="9" cy="9" r="5"/><path d="M15 19a5 5 0 1 0-4.6-7"/></symbol>
+  <symbol id="i-weight" viewBox="0 0 24 24"><path d="M7 8h10l2.5 11a1 1 0 0 1-1 1.2H5.5a1 1 0 0 1-1-1.2z"/><circle cx="12" cy="6" r="2"/></symbol>
+  <symbol id="i-seller" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.3 3 7.6 7 9 4-1.4 7-4.7 7-9V6z"/><path d="m9.5 12 2 2 3.5-4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M18 9a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 15 18 9z"/><path d="M10.5 20a2 2 0 0 0 3 0"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></symbol>
+</svg>
+
+
+<!-- ============ A · COMMAND LAUNCHER ============ -->
+<section class="opt">
+  <div class="opt__label"><span class="opt__num">Option A</span><span class="opt__name">Command Launcher</span>
+    <span class="opt__desc">// search-first. type to filter. infinitely scalable, keyboard-native.</span></div>
+  <div class="stage"><div class="a">
+    <h1>What do you <em>need</em>?</h1>
+    <div class="omni">
+      <svg class="ico" style="color:var(--hazard)"><use href="#i-search"/></svg>
+      <input placeholder="track a package, find QC, convert a link…">
+      <span class="key">⌘K</span>
+    </div>
+    <div class="grp">Most used</div>
+    <div class="res on"><svg class="ico"><use href="#i-track"/></svg><span class="nm">Track</span><span class="ds">paste a tracking number</span></div>
+    <div class="res"><svg class="ico"><use href="#i-qc"/></svg><span class="nm">QC Photos</span><span class="ds">scrape QC from any agent</span></div>
+    <div class="res"><svg class="ico"><use href="#i-convert"/></svg><span class="nm">Convert</span><span class="ds">agent link → kakobuy</span></div>
+    <div class="grp">Sourcing &amp; money</div>
+    <div class="res"><svg class="ico"><use href="#i-find"/></svg><span class="nm">Find</span><span class="ds">search the batch index</span></div>
+    <div class="res"><svg class="ico"><use href="#i-calc"/></svg><span class="nm">Calculators</span><span class="ds">EU fees · size</span></div>
+    <div class="res"><svg class="ico"><use href="#i-fx"/></svg><span class="nm">Currency</span><span class="ds">CNY → your money <span class="chip chip--soon">soon</span></span></div>
+  </div></div>
+</section>
+
+
+<!-- ============ B · WORKBENCH ============ -->
+<section class="opt">
+  <div class="opt__label"><span class="opt__num">Option B</span><span class="opt__name">Workbench</span>
+    <span class="opt__desc">// app-shell. tool rail on the left, live workspace on the right. add tools = add rows.</span></div>
+  <div class="stage"><div class="b">
+    <div class="rail">
+      <div class="hd">Toolkit</div>
+      <div class="nav on"><span class="n">01</span><svg class="ico"><use href="#i-track"/></svg>Track</div>
+      <div class="nav"><span class="n">02</span><svg class="ico"><use href="#i-qc"/></svg>QC Photos</div>
+      <div class="nav"><span class="n">03</span><svg class="ico"><use href="#i-find"/></svg>Find</div>
+      <div class="nav"><span class="n">04</span><svg class="ico"><use href="#i-convert"/></svg>Convert</div>
+      <div class="nav"><span class="n">05</span><svg class="ico"><use href="#i-calc"/></svg>Calculators</div>
+      <div class="nav"><span class="n">06</span><svg class="ico"><use href="#i-seller"/></svg>Seller Check</div>
+      <div class="add"><svg class="ico" style="width:1em;height:1em"><use href="#i-plus"/></svg>more dropping soon</div>
+    </div>
+    <div class="canvas">
+      <div class="crumb">Toolkit / Track</div>
+      <h2>Package Tracker</h2>
+      <p class="sub">// every courier, one box. CN leg + last-mile.</p>
+      <div class="field"><input placeholder="Enter tracking number"><button class="cc-btn">Track →</button></div>
+    </div>
+  </div></div>
+</section>
+
+
+<!-- ============ C · CATEGORIZED BENTO ============ -->
+<section class="opt">
+  <div class="opt__label"><span class="opt__num">Option C</span><span class="opt__name">Categorized Bento</span>
+    <span class="opt__desc">// grouped by job. new tools drop into a category, not a flat wall.</span></div>
+  <div class="stage"><div class="c">
+    <h1>The <em>Toolkit</em></h1>
+
+    <div class="cat">Tracking</div>
+    <div class="row">
+      <div class="tile feat">
+        <div class="top"><svg class="ico"><use href="#i-track"/></svg><span class="chip chip--new">live</span></div>
+        <span class="nm">Track</span><span class="ds">every courier in one box — CN leg + last-mile.</span>
+      </div>
+      <div class="tile"><div class="top"><svg class="ico"><use href="#i-alert"/></svg><span class="chip chip--soon">soon</span></div><span class="nm">Alerts</span><span class="ds">discord ping on status change</span></div>
+    </div>
+
+    <div class="cat">Sourcing</div>
+    <div class="row">
+      <div class="tile"><svg class="ico"><use href="#i-qc"/></svg><span class="nm">QC Photos</span><span class="ds">scrape QC from any agent</span></div>
+      <div class="tile"><svg class="ico"><use href="#i-find"/></svg><span class="nm">Find</span><span class="ds">search the batch index</span></div>
+      <div class="tile"><svg class="ico"><use href="#i-convert"/></svg><span class="nm">Convert</span><span class="ds">agent link → kakobuy</span></div>
+    </div>
+
+    <div class="cat">Money</div>
+    <div class="row">
+      <div class="tile"><svg class="ico"><use href="#i-calc"/></svg><span class="nm">Fees</span><span class="ds">EU import calculator</span></div>
+      <div class="tile"><div class="top"><svg class="ico"><use href="#i-fx"/></svg><span class="chip chip--soon">soon</span></div><span class="nm">Currency</span><span class="ds">CNY → your money</span></div>
+      <div class="tile"><div class="top"><svg class="ico"><use href="#i-weight"/></svg><span class="chip chip--soon">soon</span></div><span class="nm">Ship Est.</span><span class="ds">weight → shipping cost</span></div>
+    </div>
+  </div></div>
+</section>
+
+
+<!-- ============ D · DIRECTORY GRID ============ -->
+<section class="opt">
+  <div class="opt__label"><span class="opt__num">Option D</span><span class="opt__name">Directory Grid</span>
+    <span class="opt__desc">// auto-fill catalog + filter chips. the most scalable — just add a card.</span></div>
+  <div class="stage"><div class="d">
+    <div class="head">
+      <h1>All <em>Tools</em></h1>
+      <div class="filters">
+        <span class="f on">All</span><span class="f">Tracking</span><span class="f">Sourcing</span><span class="f">Money</span><span class="f">New</span>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="top"><svg class="ico"><use href="#i-track"/></svg><span class="chip chip--new">live</span></div><span class="nm">Track</span><span class="ds">paste a number, see every courier leg.</span><span class="go">Open →</span></div>
+      <div class="card"><div class="top"><svg class="ico"><use href="#i-qc"/></svg></div><span class="nm">QC Photos</span><span class="ds">scrape QC from any agent link.</span><span class="go">Open →</span></div>
+      <div class="card"><div class="top"><svg class="ico"><use href="#i-find"/></svg></div><span class="nm">Find</span><span class="ds">search the batch index by name.</span><span class="go">Open →</span></div>
+      <div class="card"><div class="top"><svg class="ico"><use href="#i-convert"/></svg></div><span class="nm">Convert</span><span class="ds">any agent link → kakobuy.</span><span class="go">Open →</span></div>
+      <div class="card"><div class="top"><svg class="ico"><use href="#i-calc"/></svg></div><span class="nm">Fees</span><span class="ds">EU import fee calculator.</span><span class="go">Open →</span></div>
+      <div class="card"><div class="top"><svg class="ico"><use href="#i-fx"/></svg><span class="chip chip--soon">soon</span></div><span class="nm">Currency</span><span class="ds">CNY → your local money.</span><span class="go">Open →</span></div>
+      <div class="card"><div class="top"><svg class="ico"><use href="#i-weight"/></svg><span class="chip chip--soon">soon</span></div><span class="nm">Ship Est.</span><span class="ds">weight → shipping cost.</span><span class="go">Open →</span></div>
+      <div class="card"><div class="top"><svg class="ico"><use href="#i-seller"/></svg><span class="chip chip--beta">beta</span></div><span class="nm">Seller Check</span><span class="ds">vet a store before you buy.</span><span class="go">Open →</span></div>
+    </div>
+  </div></div>
+</section>
+
+
+<!-- ============ E · MANIFEST LEDGER ============ -->
+<section class="opt">
+  <div class="opt__label"><span class="opt__num">Option E</span><span class="opt__name">Manifest Ledger</span>
+    <span class="opt__desc">// dense mono list w/ status lights. scales as rows — feels like a control sheet.</span></div>
+  <div class="stage"><div class="e">
+    <div class="top"><span>RT TOOLKIT <b>MANIFEST</b></span><span>UNITS <b>08</b></span><span>STATUS <b>OPERATIONAL</b></span></div>
+    <div class="colhd"><span>No.</span><span>Tool</span><span>Function</span><span style="text-align:right">Status</span></div>
+    <div class="ln"><span class="num">01</span><span class="nm"><svg class="ico"><use href="#i-track"/></svg>Track</span><span class="ds">courier tracking, CN + last-mile</span><span class="st"><span class="led"></span>live</span></div>
+    <div class="ln"><span class="num">02</span><span class="nm"><svg class="ico"><use href="#i-qc"/></svg>QC Photos</span><span class="ds">scrape QC from any agent</span><span class="st"><span class="led"></span>live</span></div>
+    <div class="ln"><span class="num">03</span><span class="nm"><svg class="ico"><use href="#i-find"/></svg>Find</span><span class="ds">search the batch index</span><span class="st"><span class="led"></span>live</span></div>
+    <div class="ln"><span class="num">04</span><span class="nm"><svg class="ico"><use href="#i-convert"/></svg>Convert</span><span class="ds">agent link → kakobuy</span><span class="st"><span class="led"></span>live</span></div>
+    <div class="ln"><span class="num">05</span><span class="nm"><svg class="ico"><use href="#i-calc"/></svg>Fees</span><span class="ds">EU import calculator</span><span class="st"><span class="led"></span>live</span></div>
+    <div class="ln"><span class="num">06</span><span class="nm"><svg class="ico"><use href="#i-seller"/></svg>Seller Check</span><span class="ds">vet a store before buying</span><span class="st"><span class="led beta"></span>beta</span></div>
+    <div class="ln"><span class="num">07</span><span class="nm"><svg class="ico"><use href="#i-fx"/></svg>Currency</span><span class="ds">CNY → local money</span><span class="st"><span class="led soon"></span>soon</span></div>
+    <div class="ln"><span class="num">08</span><span class="nm"><svg class="ico"><use href="#i-weight"/></svg>Ship Est.</span><span class="ds">weight → shipping cost</span><span class="st"><span class="led soon"></span>soon</span></div>
+  </div></div>
+</section>
+
+
+<!-- ============ F · DOCK + CANVAS ============ -->
+<section class="opt">
+  <div class="opt__label"><span class="opt__num">Option F</span><span class="opt__name">Dock + Canvas</span>
+    <span class="opt__desc">// macOS dock. icons magnify on hover, scroll horizontally as tools grow.</span></div>
+  <div class="stage"><div class="f">
+    <div class="canvas">
+      <h2>Track a <em>package</em></h2>
+      <p class="sub">// pick a tool from the dock below</p>
+      <input placeholder="Enter tracking number">
+    </div>
+    <div class="dock">
+      <div class="slot on"><svg class="ico"><use href="#i-track"/></svg><span class="lb">Track</span></div>
+      <div class="slot"><svg class="ico"><use href="#i-qc"/></svg><span class="lb">QC</span></div>
+      <div class="slot"><svg class="ico"><use href="#i-find"/></svg><span class="lb">Find</span></div>
+      <div class="slot"><svg class="ico"><use href="#i-convert"/></svg><span class="lb">Convert</span></div>
+      <div class="slot"><svg class="ico"><use href="#i-calc"/></svg><span class="lb">Calc</span></div>
+      <div class="slot"><svg class="ico"><use href="#i-fx"/></svg><span class="lb">FX</span></div>
+      <div class="slot"><svg class="ico"><use href="#i-weight"/></svg><span class="lb">Ship</span></div>
+      <div class="slot"><svg class="ico"><use href="#i-seller"/></svg><span class="lb">Seller</span></div>
+    </div>
+  </div></div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepTools — Track • QC • Find</title>
+    <meta name="description" content="RepTools is your all-in-one replica fashion toolkit. Track packages, browse QC photos, find the best reps, and compare prices — all in one place.">
+    <meta name="keywords" content="rep tools, replica fashion, QC photos, package tracking, rep finds, KakoBuy, replica sneakers, rep clothing, where to buy reps, rep tracker">
+    <link rel="canonical" href="https://rep.tools/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="RepTools — Track • QC • Find">
+    <meta property="og:description" content="Your all-in-one replica fashion toolkit. Track packages, browse QC photos, find the best reps.">
+    <meta property="og:url" content="https://rep.tools/">
+    <meta property="og:image" content="https://rep.tools/static/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="RepTools">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RepTools — Track • QC • Find">
+    <meta name="twitter:description" content="Your all-in-one replica fashion toolkit. Track packages, browse QC photos, find the best reps.">
+    <meta name="twitter:image" content="https://rep.tools/static/og-image.png">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="apple-touch-icon" href="/static/logo.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-card: #18181b;
+            --bg-elevated: #1f1f23;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-primary: #22d3ee;
+            --accent-secondary: #a855f7;
+            --accent-tertiary: #f97316;
+            --accent-success: #22c55e;
+            --accent-warning: #eab308;
+            --accent-error: #ef4444;
+            --border-color: #27272a;
+            --glow-cyan: rgba(34, 211, 238, 0.15);
+            --glow-purple: rgba(168, 85, 247, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Noise texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        /* Gradient orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(5deg); }
+            66% { transform: translate(-20px, 20px) rotate(-5deg); }
+        }
+        
+        /* Header */
+        header {
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 11, 0.8);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo span {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        
+        nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            box-shadow: 0 0 20px var(--glow-cyan);
+        }
+        
+        .nav-btn.active {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border-color: var(--accent-primary);
+        }
+        
+        /* Main content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        /* Hero section */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+        
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Tool sections */
+        .tool-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .tool-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .card-icon.cyan { background: var(--glow-cyan); }
+        .card-icon.purple { background: var(--glow-purple); }
+        .card-icon.orange { background: rgba(249, 115, 22, 0.15); }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .card-subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-family: 'Space Mono', monospace;
+        }
+        
+        /* Input groups */
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+        
+        input[type="text"],
+        input[type="url"] {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px var(--glow-cyan);
+        }
+        
+        input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 1rem 2rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), #06b6d4);
+            color: var(--bg-primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px var(--glow-cyan);
+        }
+        
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--accent-secondary);
+            box-shadow: 0 0 20px var(--glow-purple);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        /* Results */
+        .results {
+            margin-top: 2rem;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .results-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .results-count {
+            font-family: 'Space Mono', monospace;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* Tracking results */
+        .tracking-result {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tracking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tracking-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--accent-primary);
+        }
+        
+        .tracking-carrier {
+            background: var(--bg-elevated);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .tracking-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-indicator.transit { background: var(--accent-primary); }
+        .status-indicator.delivered { background: var(--accent-success); }
+        .status-indicator.warning { background: var(--accent-warning); }
+        .status-indicator.error { background: var(--accent-error); }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .status-text {
+            flex: 1;
+        }
+        
+        .status-main {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .status-explanation {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .tracking-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .tracking-timeline::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+        
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            border: 2px solid var(--accent-primary);
+        }
+        
+        .timeline-item:first-child::before {
+            background: var(--accent-primary);
+        }
+        
+        .timeline-date {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+        
+        .timeline-text {
+            color: var(--text-secondary);
+        }
+        
+        .timeline-location {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        
+        /* Estimation card */
+        .estimation-card {
+            background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .estimation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .estimation-title {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+        
+        .estimation-date {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+        
+        .estimation-confidence {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .confidence-high {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--accent-success);
+        }
+        
+        .confidence-medium {
+            background: rgba(234, 179, 8, 0.2);
+            color: var(--accent-warning);
+        }
+        
+        .confidence-low {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-error);
+        }
+        
+        .estimation-note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Progress bar */
+        .progress-container {
+            margin-top: 1rem;
+        }
+        
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-percent {
+            text-align: right;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-primary);
+            margin-top: 0.5rem;
+        }
+        
+        .estimation-details {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .estimation-detail {
+            flex: 1;
+        }
+        
+        .estimation-detail-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+        
+        .estimation-detail-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        /* QC Photos Grid */
+        .qc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .qc-photo {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .qc-photo:hover {
+            transform: scale(1.02);
+        }
+        
+        .qc-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .qc-photo-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+            color: white;
+            font-size: 0.85rem;
+        }
+        
+        .qc-photo:hover .qc-photo-overlay {
+            opacity: 1;
+        }
+        
+        .qc-product-info {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .qc-product-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .qc-product-price {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.25rem;
+            color: var(--accent-success);
+        }
+        
+        /* Search Results */
+        .search-results {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .product-card {
+            display: flex;
+            gap: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        
+        .product-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 30px var(--glow-cyan);
+        }
+        
+        .product-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .product-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .product-price {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--accent-success);
+        }
+        
+        .product-sales {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .product-platform {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .platform-taobao { background: #ff6b00; color: white; }
+        .platform-weidian { background: #00c853; color: white; }
+        .platform-1688 { background: #2196f3; color: white; }
+        
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+        
+        /* Image upload area */
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        
+        .upload-area:hover,
+        .upload-area.dragover {
+            border-color: var(--accent-primary);
+            background: var(--glow-cyan);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .upload-text {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-hint {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .image-preview {
+            display: none;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .image-preview.active {
+            display: block;
+        }
+        
+        .image-preview img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+        
+        /* Loading state */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 1rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: var(--bg-card);
+            border: none;
+            color: var(--text-primary);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-close:hover {
+            background: var(--accent-error);
+        }
+        
+        /* Demo banner */
+        .demo-banner {
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-tertiary));
+            color: white;
+            text-align: center;
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .nav-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+            }
+            
+            main {
+                padding: 2rem 1rem;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .product-card {
+                flex-direction: column;
+            }
+            
+            .product-image {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .qc-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+    <!-- Google Analytics -->
+    {{ ga_snippet|safe }}
+</head>
+<body>
+    <!-- Demo banner -->
+    <div class="demo-banner" style="display: none;">
+        ⚠️ Backend not connected — Showing demo data
+    </div>
+    
+    <!-- Background orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon"><img src="/static/logo.png" alt="RepTools"></div>
+            <span>RepTools</span>
+        </div>
+        <nav>
+            <button class="nav-btn active" data-section="track">📦 Track</button>
+            <button class="nav-btn" data-section="qc">📸 QC Photos</button>
+            <button class="nav-btn" data-section="find">🔍 Find</button>
+        </nav>
+    </header>
+    
+    <!-- Main content -->
+    <main>
+        <!-- Hero -->
+        <div class="hero">
+            <h1>Your <span class="gradient">All-in-One</span> Rep Toolkit</h1>
+            <p>Track packages worldwide, scrape QC photos from any agent, and find the best batch for any shoe.</p>
+        </div>
+        
+        <!-- Track Section -->
+        <section id="track" class="tool-section active">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon cyan">📦</div>
+                    <div>
+                        <div class="card-title">Package Tracker</div>
+                        <div class="card-subtitle">Multi-source tracking with explanations</div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <input type="text" id="tracking-input" placeholder="Enter tracking number (e.g., EX123456789CN)">
+                    </div>
+                    <button class="btn btn-primary" id="track-btn">
+                        <span>Track</span>
+                        <span>→</span>
+                    </button>
+                </div>
+                
+                <div id="tracking-results" class="results">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📦</div>
+                        <p>Enter a tracking number to see shipping updates</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- QC Section -->
+        <section id="qc" class="tool-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon purple">📸</div>
+                    <div>
+                        <div class="card-title">QC Photo Scraper</div>
+                        <div class="card-subtitle">Works with all major agents</div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <input type="url" id="qc-input" placeholder="Paste agent URL (KakoBuy, Sugargoo, CSSBuy, etc.)">
+                    </div>
+                    <button class="btn btn-primary" id="qc-btn">
+                        <span>Scrape</span>
+                        <span>→</span>
+                    </button>
+                </div>
+                
+                <div id="qc-results" class="results">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📸</div>
+                        <p>Paste a product URL to extract QC photos</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Find Section -->
+        <section id="find" class="tool-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon orange">🔍</div>
+                    <div>
+                        <div class="card-title">Reverse Image Search</div>
+                        <div class="card-subtitle">Find products on Taobao, Weidian, 1688</div>
+                    </div>
+                </div>
+                
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-icon">🖼️</div>
+                    <div class="upload-text">Drop an image here or click to upload</div>
+                    <div class="upload-hint">Or paste an image URL below</div>
+                </div>
+                <input type="file" id="file-input" accept="image/*" style="display: none;">
+                
+                <div class="image-preview" id="image-preview">
+                    <img id="preview-img" src="" alt="Preview">
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <input type="url" id="image-url-input" placeholder="Or paste image URL here">
+                    </div>
+                    <button class="btn btn-primary" id="search-btn">
+                        <span>Search</span>
+                        <span>→</span>
+                    </button>
+                </div>
+                
+                <div id="search-results" class="results">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <p>Upload or paste an image to find similar products</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Image Modal -->
+    <div class="modal" id="image-modal">
+        <button class="modal-close" id="modal-close">×</button>
+        <img id="modal-image" src="" alt="Full size">
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>Made with ❤️ for the rep community by the rep community</p>
+        
+        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p style="color: #606070; font-size: 0.9rem; margin-bottom: 0.5rem;">🌐 Official Domains</p>
+            <p style="font-size: 0.95rem;">
+                <a href="https://reptools.org" style="color: #00d4d4; text-decoration: none; font-weight: 500;">reptools.org</a>
+                <span style="margin: 0 0.5rem; color: #606070;">•</span>
+                <a href="https://reptools.net" style="color: #00d4d4; text-decoration: none; font-weight: 500;">reptools.net</a>
+                <span style="margin: 0 0.5rem; color: #606070;">•</span>
+                <a href="https://rep.tools" style="color: #00d4d4; text-decoration: none; font-weight: 500;">rep.tools</a>
+            </p>
+            <p style="color: #606070; font-size: 0.85rem; margin-top: 0.5rem;">All three domains lead to the same site - use whichever is easiest to remember!</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Demo data
+        const DEMO_TRACKING = {
+            tracking_number: "",
+            carrier: "EMS / China Post",
+            status: "Arrived at destination country",
+            explanation: "Your package has arrived in your country! It will now go through customs and then be handed to your local postal service for delivery.",
+            source: "Multiple Sources (Demo)",
+            estimation: {
+                status: "in_progress",
+                delivery_window: "Feb 2 - Feb 5",
+                remaining_days_min: 3,
+                remaining_days_max: 6,
+                progress_percent: 65,
+                confidence: "medium",
+                confidence_note: "On track for estimated delivery",
+                carrier_name: "EMS",
+                carrier_description: "Standard express mail",
+                message: "Estimated arrival: Feb 2 - Feb 5"
+            },
+            history: [
+                { date: "2024-01-15 14:32", status: "Arrived at destination country", location: "Local Distribution Center" },
+                { date: "2024-01-14 08:15", status: "Departed from transit hub", location: "Transit Hub" },
+                { date: "2024-01-12 22:45", status: "Customs cleared", location: "Origin Country" },
+                { date: "2024-01-12 10:30", status: "In customs", location: "Origin Country" },
+                { date: "2024-01-10 16:20", status: "Departed from origin", location: "China" },
+                { date: "2024-01-09 09:00", status: "Shipment information received", location: "China" },
+            ]
+        };
+        
+        // Generate placeholder SVG data URLs
+        function createPlaceholder(num, color) {
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+                <rect width="400" height="400" fill="${color}"/>
+                <text x="200" y="180" text-anchor="middle" fill="white" font-family="system-ui" font-size="48" font-weight="bold">QC Photo</text>
+                <text x="200" y="240" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="system-ui" font-size="24">#${num}</text>
+            </svg>`;
+            return 'data:image/svg+xml,' + encodeURIComponent(svg);
+        }
+        
+        const DEMO_QC = {
+            agent: "KakoBuy",
+            product_name: "Product Name From URL (Demo)",
+            price: "¥XXX",
+            photos: [
+                createPlaceholder(1, '#6366f1'),
+                createPlaceholder(2, '#8b5cf6'),
+                createPlaceholder(3, '#a855f7'),
+                createPlaceholder(4, '#d946ef'),
+                createPlaceholder(5, '#ec4899'),
+                createPlaceholder(6, '#f43f5e'),
+            ]
+        };
+        
+        function createProductPlaceholder(num, platform) {
+            const colors = { weidian: '#00c853', taobao: '#ff6b00', '1688': '#2196f3' };
+            const color = colors[platform] || '#666';
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+                <rect width="200" height="200" fill="${color}"/>
+                <text x="100" y="90" text-anchor="middle" fill="white" font-family="system-ui" font-size="24" font-weight="bold">Product</text>
+                <text x="100" y="120" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="system-ui" font-size="16">#${num}</text>
+            </svg>`;
+            return 'data:image/svg+xml,' + encodeURIComponent(svg);
+        }
+        
+        const DEMO_SEARCH = {
+            products: [
+                {
+                    title: "Example Product Result #1 (Demo)",
+                    price: "189",
+                    sales: "50000+",
+                    platform: "weidian",
+                    url: "#",
+                    image: createProductPlaceholder(1, 'weidian')
+                },
+                {
+                    title: "Example Product Result #2 (Demo)",
+                    price: "320",
+                    sales: "32000+",
+                    platform: "taobao",
+                    url: "#",
+                    image: createProductPlaceholder(2, 'taobao')
+                },
+                {
+                    title: "Example Product Result #3 (Demo)",
+                    price: "158",
+                    sales: "28500+",
+                    platform: "1688",
+                    url: "#",
+                    image: createProductPlaceholder(3, '1688')
+                },
+                {
+                    title: "Example Product Result #4 (Demo)",
+                    price: "450",
+                    sales: "15000+",
+                    platform: "weidian",
+                    url: "#",
+                    image: createProductPlaceholder(4, 'weidian')
+                },
+            ]
+        };
+        
+        // Navigation
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.tool-section');
+        
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const sectionId = btn.dataset.section;
+                
+                navBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                sections.forEach(s => s.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+        
+        // Tracking
+        const trackInput = document.getElementById('tracking-input');
+        const trackBtn = document.getElementById('track-btn');
+        const trackingResults = document.getElementById('tracking-results');
+        
+        trackBtn.addEventListener('click', trackPackage);
+        trackInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') trackPackage();
+        });
+        
+        async function trackPackage() {
+            const trackingNumber = trackInput.value.trim();
+            if (!trackingNumber) return;
+            
+            trackBtn.disabled = true;
+            trackingResults.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <span>Tracking package...</span>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('/api/track', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tracking_number: trackingNumber })
+                });
+                
+                const data = await response.json();
+                renderTrackingResults(data);
+            } catch (error) {
+                // Fallback to demo data if backend not available
+                console.warn('Backend not available, using demo data');
+                document.querySelector('.demo-banner').style.display = 'block';
+                const data = { ...DEMO_TRACKING, tracking_number: trackingNumber };
+                renderTrackingResults(data);
+            }
+            
+            trackBtn.disabled = false;
+        }
+        
+        function renderTrackingResults(data) {
+            const statusClass = data.status.toLowerCase().includes('delivered') ? 'delivered' :
+                               data.status.toLowerCase().includes('transit') ? 'transit' :
+                               data.status.toLowerCase().includes('exception') ? 'error' : 'transit';
+            
+            let timelineHTML = '';
+            if (data.history && data.history.length > 0) {
+                timelineHTML = data.history.map(event => `
+                    <div class="timeline-item">
+                        <div class="timeline-date">${event.date}</div>
+                        <div class="timeline-text">${event.status}</div>
+                        ${event.location ? `<div class="timeline-location">📍 ${event.location}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+            
+            // Build estimation HTML
+            let estimationHTML = '';
+            if (data.estimation && data.estimation.status !== 'delivered') {
+                const est = data.estimation;
+                estimationHTML = `
+                    <div class="estimation-card">
+                        <div class="estimation-header">
+                            <div>
+                                <div class="estimation-title">Estimated Delivery</div>
+                                <div class="estimation-date">📅 ${est.delivery_window}</div>
+                            </div>
+                            <span class="estimation-confidence confidence-${est.confidence}">${est.confidence} confidence</span>
+                        </div>
+                        <div class="estimation-note">${est.confidence_note}</div>
+                        
+                        <div class="progress-container">
+                            <div class="progress-labels">
+                                <span>Shipped</span>
+                                <span>In Transit</span>
+                                <span>Delivered</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${est.progress_percent}%"></div>
+                            </div>
+                            <div class="progress-percent">${est.progress_percent}% complete</div>
+                        </div>
+                        
+                        <div class="estimation-details">
+                            <div class="estimation-detail">
+                                <div class="estimation-detail-label">Remaining</div>
+                                <div class="estimation-detail-value">${est.remaining_days_min}-${est.remaining_days_max} days</div>
+                            </div>
+                            <div class="estimation-detail">
+                                <div class="estimation-detail-label">Shipping Method</div>
+                                <div class="estimation-detail-value">${est.carrier_name}</div>
+                            </div>
+                            <div class="estimation-detail">
+                                <div class="estimation-detail-label">Service Type</div>
+                                <div class="estimation-detail-value">${est.carrier_description}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (data.estimation && data.estimation.status === 'delivered') {
+                estimationHTML = `
+                    <div class="estimation-card" style="border-color: var(--accent-success);">
+                        <div class="estimation-header">
+                            <div>
+                                <div class="estimation-title">Delivery Status</div>
+                                <div class="estimation-date" style="color: var(--accent-success);">✅ Delivered!</div>
+                            </div>
+                            <span class="estimation-confidence confidence-high">Complete</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 100%; background: var(--accent-success);"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            trackingResults.innerHTML = `
+                <div class="results-header">
+                    <div class="results-title">Tracking Results</div>
+                    <div class="results-count">Source: ${data.source}</div>
+                </div>
+                
+                ${estimationHTML}
+                
+                <div class="tracking-result">
+                    <div class="tracking-header">
+                        <div class="tracking-number">${data.tracking_number}</div>
+                        <div class="tracking-carrier">${data.carrier}</div>
+                    </div>
+                    
+                    <div class="tracking-status">
+                        <div class="status-indicator ${statusClass}"></div>
+                        <div class="status-text">
+                            <div class="status-main">${data.status}</div>
+                            <div class="status-explanation">${data.explanation}</div>
+                        </div>
+                    </div>
+                    
+                    ${data.history && data.history.length > 0 ? `
+                        <div class="tracking-timeline">
+                            ${timelineHTML}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        // QC Scraper
+        const qcInput = document.getElementById('qc-input');
+        const qcBtn = document.getElementById('qc-btn');
+        const qcResults = document.getElementById('qc-results');
+        
+        qcBtn.addEventListener('click', scrapeQC);
+        qcInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') scrapeQC();
+        });
+        
+        async function scrapeQC() {
+            const url = qcInput.value.trim();
+            if (!url) return;
+            
+            qcBtn.disabled = true;
+            qcResults.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <span>Scraping QC photos...</span>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('/api/qc', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: url })
+                });
+                
+                const data = await response.json();
+                renderQCResults(data);
+            } catch (error) {
+                console.warn('Backend not available, using demo data');
+                document.querySelector('.demo-banner').style.display = 'block';
+                renderQCResults(DEMO_QC);
+            }
+            
+            qcBtn.disabled = false;
+        }
+        
+        function renderQCResults(data) {
+            if (data.error || !data.photos || data.photos.length === 0) {
+                qcResults.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📸</div>
+                        <p>No QC photos found for this product.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const photosHTML = data.photos.map(photo => `
+                <div class="qc-photo" onclick="openModal('${photo}')">
+                    <img src="${photo}" alt="QC Photo" loading="lazy">
+                    <div class="qc-photo-overlay">
+                        <span>Click to enlarge</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            qcResults.innerHTML = `
+                <div class="results-header">
+                    <div class="results-title">QC Photos</div>
+                    <div class="results-count">${data.photos.length} photos from ${data.agent}</div>
+                </div>
+                
+                ${data.product_name ? `
+                    <div class="qc-product-info">
+                        <div class="qc-product-name">${data.product_name}</div>
+                        ${data.price ? `<div class="qc-product-price">${data.price}</div>` : ''}
+                    </div>
+                ` : ''}
+                
+                <div class="qc-grid">
+                    ${photosHTML}
+                </div>
+            `;
+        }
+        
+        // Image Search
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const imageUrlInput = document.getElementById('image-url-input');
+        const searchBtn = document.getElementById('search-btn');
+        const searchResults = document.getElementById('search-results');
+        const imagePreview = document.getElementById('image-preview');
+        const previewImg = document.getElementById('preview-img');
+        
+        let uploadedImageUrl = null;
+        
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                handleImageUpload(file);
+            }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                handleImageUpload(file);
+            }
+        });
+        
+        function handleImageUpload(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                uploadedImageUrl = e.target.result;
+                previewImg.src = uploadedImageUrl;
+                imagePreview.classList.add('active');
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        searchBtn.addEventListener('click', searchImage);
+        imageUrlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchImage();
+        });
+        
+        async function searchImage() {
+            const imageUrl = imageUrlInput.value.trim() || uploadedImageUrl;
+            if (!imageUrl) {
+                alert('Please upload an image or paste a URL');
+                return;
+            }
+            
+            searchBtn.disabled = true;
+            searchResults.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <span>Searching for similar products...</span>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('/api/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image_url: imageUrl })
+                });
+                
+                const data = await response.json();
+                renderSearchResults(data);
+            } catch (error) {
+                console.warn('Backend not available, using demo data');
+                document.querySelector('.demo-banner').style.display = 'block';
+                renderSearchResults(DEMO_SEARCH);
+            }
+            
+            searchBtn.disabled = false;
+        }
+        
+        function renderSearchResults(data) {
+            if (!data.products || data.products.length === 0) {
+                searchResults.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <p>No similar products found.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const productsHTML = data.products.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.title}" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div>
+                            <div class="product-title">${product.title}</div>
+                            <div class="product-meta">
+                                <span class="product-price">¥${product.price}</span>
+                                <span class="product-sales">📊 ${product.sales} sold</span>
+                                <span class="product-platform platform-${product.platform}">${product.platform}</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <a href="${product.url}" target="_blank" class="btn btn-secondary btn-small">View Product</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            searchResults.innerHTML = `
+                <div class="results-header">
+                    <div class="results-title">Similar Products</div>
+                    <div class="results-count">${data.products.length} results • Sorted by sales</div>
+                </div>
+                <div class="search-results">
+                    ${productsHTML}
+                </div>
+            `;
+        }
+        
+        // Modal
+        const modal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalClose = document.getElementById('modal-close');
+        
+        function openModal(src) {
+            modalImage.src = src;
+            modal.classList.add('active');
+        }
+        
+        modalClose.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                modal.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

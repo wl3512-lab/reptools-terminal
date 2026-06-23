@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics — RepTools Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0b; --bg-card: #18181b; --bg-input: #1f1f23;
+            --text: #fafafa; --text-dim: #a1a1aa; --text-muted: #71717a;
+            --accent: #22d3ee; --accent-glow: rgba(34,211,238,0.15);
+            --border: #27272a; --success: #22c55e; --error: #ef4444; --purple: #a855f7;
+            --orange: #f97316; --warm: #c8956c;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Syne',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; padding:2rem; }
+        .container { max-width:1100px; margin:0 auto; }
+
+        /* Header */
+        .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; flex-wrap:wrap; gap:1rem; }
+        h1 { font-size:2rem; font-weight:800; }
+        h1 span { background:linear-gradient(135deg,var(--accent),var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .header-actions { display:flex; gap:0.75rem; }
+
+        /* Buttons */
+        .btn { padding:0.6rem 1.2rem; border:none; border-radius:10px; font-family:inherit; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:0.4rem; text-decoration:none; }
+        .btn-primary { background:linear-gradient(135deg,var(--accent),#06b6d4); color:#0a0a0b; }
+        .btn-primary:hover { transform:translateY(-1px); box-shadow:0 5px 20px var(--accent-glow); }
+        .btn-secondary { background:var(--bg-input); color:var(--text); border:1px solid var(--border); }
+        .btn-secondary:hover { border-color:var(--accent); }
+        .btn-purple { background:linear-gradient(135deg,var(--purple),#7c3aed); color:#fff; }
+
+        /* Period Tabs */
+        .period-tabs { display:flex; gap:0.5rem; margin-bottom:1.5rem; }
+        .period-tab { padding:0.5rem 1rem; border-radius:8px; background:var(--bg-input); border:1px solid var(--border); color:var(--text-muted); font-family:inherit; font-weight:600; font-size:0.8rem; cursor:pointer; transition:all 0.2s; }
+        .period-tab.active { background:var(--accent); color:#0a0a0b; border-color:var(--accent); }
+        .period-tab:hover:not(.active) { border-color:var(--text-muted); color:var(--text); }
+
+        /* Stat Cards */
+        .stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.5rem; }
+        .stat-card { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; }
+        .stat-label { font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted); margin-bottom:0.5rem; }
+        .stat-value { font-family:'Space Mono',monospace; font-size:1.8rem; font-weight:700; }
+        .stat-value.accent { color:var(--accent); }
+        .stat-value.purple { color:var(--purple); }
+        .stat-value.orange { color:var(--orange); }
+        .stat-value.success { color:var(--success); }
+        .stat-sub { font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem; }
+
+        /* Sections */
+        .section { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; }
+        .section-title { font-size:1.1rem; font-weight:700; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+        .section-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+
+        /* Tables */
+        .data-table { width:100%; border-collapse:collapse; }
+        .data-table th { text-align:left; font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); padding:0.6rem 0; border-bottom:1px solid var(--border); }
+        .data-table td { padding:0.75rem 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:0.9rem; }
+        .data-table tr:last-child td { border-bottom:none; }
+        .rank { color:var(--text-muted); font-family:'Space Mono',monospace; font-size:0.8rem; width:30px; }
+        .click-count { font-family:'Space Mono',monospace; font-weight:700; color:var(--accent); }
+        .category-tag { display:inline-block; padding:0.2rem 0.6rem; border-radius:6px; font-size:0.7rem; font-weight:600; background:rgba(34,211,238,0.1); color:var(--accent); }
+
+        /* Bar Chart (CSS only) */
+        .bar-chart { display:flex; flex-direction:column; gap:0.6rem; }
+        .bar-row { display:flex; align-items:center; gap:0.75rem; }
+        .bar-label { font-size:0.8rem; color:var(--text-dim); min-width:80px; text-align:right; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .bar-track { flex:1; height:28px; background:var(--bg-input); border-radius:6px; overflow:hidden; position:relative; }
+        .bar-fill { height:100%; border-radius:6px; transition:width 0.6s ease; display:flex; align-items:center; padding-left:8px; }
+        .bar-fill span { font-family:'Space Mono',monospace; font-size:0.75rem; font-weight:700; color:#fff; }
+        .bar-fill.c1 { background:linear-gradient(90deg,var(--accent),#06b6d4); }
+        .bar-fill.c2 { background:linear-gradient(90deg,var(--purple),#7c3aed); }
+        .bar-fill.c3 { background:linear-gradient(90deg,var(--orange),#ea580c); }
+        .bar-fill.c4 { background:linear-gradient(90deg,var(--success),#16a34a); }
+        .bar-fill.c5 { background:linear-gradient(90deg,var(--warm),#a47148); }
+
+        /* Daily Chart */
+        .daily-chart { display:flex; align-items:flex-end; gap:4px; height:140px; padding-top:10px; }
+        .daily-bar { flex:1; background:linear-gradient(to top,var(--accent),rgba(34,211,238,0.3)); border-radius:4px 4px 0 0; min-height:4px; position:relative; cursor:pointer; transition:opacity 0.2s; }
+        .daily-bar:hover { opacity:0.8; }
+        .daily-bar .tooltip { display:none; position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:0.4rem 0.6rem; font-size:0.7rem; white-space:nowrap; z-index:10; }
+        .daily-bar:hover .tooltip { display:block; }
+        .daily-labels { display:flex; gap:4px; margin-top:0.5rem; }
+        .daily-labels span { flex:1; text-align:center; font-size:0.55rem; color:var(--text-muted); }
+
+        /* Loading */
+        .loading { text-align:center; padding:3rem; color:var(--text-muted); }
+        .spinner { display:inline-block; width:20px; height:20px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; margin-right:0.5rem; vertical-align:middle; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+
+        /* Empty state */
+        .empty { text-align:center; padding:2rem; color:var(--text-muted); font-size:0.9rem; }
+
+        /* Responsive */
+        @media (max-width:768px) {
+            .stat-grid { grid-template-columns:repeat(2,1fr); }
+            .section-grid { grid-template-columns:1fr; }
+            .header { flex-direction:column; align-items:flex-start; }
+            body { padding:1rem; }
+        }
+        @media (max-width:480px) {
+            .stat-grid { grid-template-columns:1fr; }
+        }
+    </style>
+    {{ ga_snippet|safe }}
+</head>
+<body>
+{% include "_admin_chrome.html" %}
+<div class="rtadm-shift">
+
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>📊 <span>Analytics</span></h1>
+                <p style="color:var(--text-muted);font-size:0.9rem;">Track clicks, top products & affiliate performance</p>
+            </div>
+            <div class="header-actions">
+                <a href="/admin/add" class="btn btn-secondary">← Products</a>
+                <button class="btn btn-purple" onclick="sendDiscordReport()">Send Discord Report</button>
+                <button class="btn btn-primary" onclick="loadAnalytics()">↻ Refresh</button>
+            </div>
+        </div>
+
+        <!-- Period Tabs -->
+        <div class="period-tabs">
+            <button class="period-tab" data-days="1" onclick="setPeriod(1)">Today</button>
+            <button class="period-tab" data-days="7" onclick="setPeriod(7)">7 Days</button>
+            <button class="period-tab active" data-days="30" onclick="setPeriod(30)">30 Days</button>
+            <button class="period-tab" data-days="90" onclick="setPeriod(90)">90 Days</button>
+            <button class="period-tab" data-days="365" onclick="setPeriod(365)">All Time</button>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Clicks</div>
+                <div class="stat-value accent" id="statClicks">—</div>
+                <div class="stat-sub">affiliate link clicks</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Unique Visitors</div>
+                <div class="stat-value purple" id="statVisitors">—</div>
+                <div class="stat-sub">unique IPs tracked</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Top Category</div>
+                <div class="stat-value orange" id="statCategory" style="font-size:1.2rem;">—</div>
+                <div class="stat-sub">most clicked category</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Avg Clicks/Day</div>
+                <div class="stat-value success" id="statAvg">—</div>
+                <div class="stat-sub">daily average</div>
+            </div>
+        </div>
+
+        <!-- Daily Chart -->
+        <div class="section">
+            <div class="section-title">📈 Daily Clicks</div>
+            <div class="daily-chart" id="dailyChart">
+                <div class="loading" id="chartLoading"><span class="spinner"></span> Loading chart...</div>
+            </div>
+            <div class="daily-labels" id="dailyLabels"></div>
+        </div>
+
+        <!-- Top Products & Categories -->
+        <div class="section-grid">
+            <div class="section">
+                <div class="section-title">🏆 Top Products</div>
+                <div id="topProducts"><div class="loading"><span class="spinner"></span> Loading...</div></div>
+            </div>
+            <div class="section">
+                <div class="section-title">📁 Top Categories</div>
+                <div id="topCategories"><div class="loading"><span class="spinner"></span> Loading...</div></div>
+            </div>
+        </div>
+
+        <!-- Top Agents -->
+        <div class="section">
+            <div class="section-title">🛒 Clicks by Agent</div>
+            <div id="topAgents"><div class="loading"><span class="spinner"></span> Loading...</div></div>
+        </div>
+
+        <!-- Background Removal -->
+        <div class="section">
+            <div class="section-title">🖼️ Background Removal</div>
+            <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">Remove backgrounds from all product images for a cleaner look. This processes every image in products.json — may take a while.</p>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+                <button class="btn btn-primary" onclick="bulkRemoveBg()" id="bgBtn">Remove All Backgrounds</button>
+                <span id="bgStatus" style="color:var(--text-muted);font-size:0.85rem;"></span>
+            </div>
+        </div>
+
+        <!-- Database Info -->
+        <div class="section">
+            <div class="section-title">🗄️ Database</div>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                <button class="btn btn-secondary" onclick="importProducts('hardcoded')">Import Hardcoded Products</button>
+                <button class="btn btn-secondary" onclick="importProducts('json')">Import from products.json</button>
+                <span id="importStatus" style="color:var(--text-muted);font-size:0.85rem;align-self:center;"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDays = 30;
+
+        function setPeriod(days) {
+            currentDays = days;
+            document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[data-days="${days}"]`).classList.add('active');
+            loadAnalytics();
+        }
+
+        async function loadAnalytics() {
+            try {
+                const r = await fetch(`/api/analytics?days=${currentDays}`);
+                if (r.status === 401) {
+                    window.location.href = '/admin/login';
+                    return;
+                }
+                const data = await r.json();
+                renderStats(data);
+                renderDailyChart(data.daily_clicks || []);
+                renderTopProducts(data.top_products || []);
+                renderTopCategories(data.top_categories || []);
+                renderTopAgents(data.top_agents || []);
+            } catch (e) {
+                console.error('Failed to load analytics:', e);
+            }
+        }
+
+        function renderStats(data) {
+            document.getElementById('statClicks').textContent = (data.total_clicks || 0).toLocaleString();
+            document.getElementById('statVisitors').textContent = (data.unique_visitors || 0).toLocaleString();
+
+            const topCat = data.top_categories?.[0];
+            document.getElementById('statCategory').textContent = topCat ? topCat.category.charAt(0).toUpperCase() + topCat.category.slice(1) : 'N/A';
+
+            const avg = currentDays > 0 ? Math.round((data.total_clicks || 0) / currentDays) : 0;
+            document.getElementById('statAvg').textContent = avg.toLocaleString();
+        }
+
+        function renderDailyChart(daily) {
+            const chart = document.getElementById('dailyChart');
+            const labels = document.getElementById('dailyLabels');
+
+            if (!daily.length) {
+                chart.innerHTML = '<div class="empty">No click data yet. Clicks will appear here once users start clicking affiliate links.</div>';
+                labels.innerHTML = '';
+                return;
+            }
+
+            const max = Math.max(...daily.map(d => d.clicks), 1);
+            let barsHTML = '';
+            let labelsHTML = '';
+
+            // Show most recent first, reverse for left-to-right
+            const sorted = [...daily].reverse().slice(-30);
+
+            sorted.forEach(d => {
+                const pct = (d.clicks / max) * 100;
+                const date = new Date(d.date);
+                const label = `${date.getMonth() + 1}/${date.getDate()}`;
+                barsHTML += `<div class="daily-bar" style="height:${Math.max(pct, 3)}%"><div class="tooltip">${label}: <strong>${d.clicks}</strong> clicks</div></div>`;
+                labelsHTML += `<span>${label}</span>`;
+            });
+
+            chart.innerHTML = barsHTML;
+            labels.innerHTML = labelsHTML;
+        }
+
+        function renderTopProducts(products) {
+            const el = document.getElementById('topProducts');
+            if (!products.length) {
+                el.innerHTML = '<div class="empty">No product clicks yet</div>';
+                return;
+            }
+
+            let html = '<table class="data-table"><thead><tr><th>#</th><th>Product</th><th>Category</th><th>Clicks</th></tr></thead><tbody>';
+            products.forEach((p, i) => {
+                html += `<tr>
+                    <td class="rank">${i + 1}</td>
+                    <td>${p.product_name}</td>
+                    <td><span class="category-tag">${p.category || '—'}</span></td>
+                    <td class="click-count">${p.clicks}</td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            el.innerHTML = html;
+        }
+
+        function renderTopCategories(categories) {
+            const el = document.getElementById('topCategories');
+            if (!categories.length) {
+                el.innerHTML = '<div class="empty">No category data yet</div>';
+                return;
+            }
+
+            const max = Math.max(...categories.map(c => c.clicks), 1);
+            const colors = ['c1', 'c2', 'c3', 'c4', 'c5'];
+            let html = '<div class="bar-chart">';
+            categories.slice(0, 8).forEach((c, i) => {
+                const pct = (c.clicks / max) * 100;
+                const color = colors[i % colors.length];
+                html += `<div class="bar-row">
+                    <div class="bar-label">${c.category}</div>
+                    <div class="bar-track"><div class="bar-fill ${color}" style="width:${pct}%"><span>${c.clicks}</span></div></div>
+                </div>`;
+            });
+            html += '</div>';
+            el.innerHTML = html;
+        }
+
+        function renderTopAgents(agents) {
+            const el = document.getElementById('topAgents');
+            if (!agents.length) {
+                el.innerHTML = '<div class="empty">No agent data yet</div>';
+                return;
+            }
+
+            const max = Math.max(...agents.map(a => a.clicks), 1);
+            const colors = ['c1', 'c3', 'c2', 'c4', 'c5'];
+            let html = '<div class="bar-chart" style="max-width:600px;">';
+            agents.forEach((a, i) => {
+                const pct = (a.clicks / max) * 100;
+                const color = colors[i % colors.length];
+                const name = a.agent.charAt(0).toUpperCase() + a.agent.slice(1);
+                html += `<div class="bar-row">
+                    <div class="bar-label">${name}</div>
+                    <div class="bar-track"><div class="bar-fill ${color}" style="width:${pct}%"><span>${a.clicks}</span></div></div>
+                </div>`;
+            });
+            html += '</div>';
+            el.innerHTML = html;
+        }
+
+        async function sendDiscordReport() {
+            try {
+                const r = await fetch('/api/analytics/report', { method: 'POST' });
+                const data = await r.json();
+                alert(data.status === 'sent' ? 'Analytics report sent to Discord!' : 'Failed to send. Check webhook URL.');
+            } catch (e) {
+                alert('Error sending report');
+            }
+        }
+
+        async function importProducts(source) {
+            const status = document.getElementById('importStatus');
+            status.textContent = 'Importing...';
+            try {
+                const r = await fetch(`/api/db/import?source=${source}`, { method: 'POST' });
+                const data = await r.json();
+                status.textContent = data.error ? `Error: ${data.error}` : `Imported ${data.imported} products`;
+                status.style.color = data.error ? 'var(--error)' : 'var(--success)';
+            } catch (e) {
+                status.textContent = 'Import failed';
+                status.style.color = 'var(--error)';
+            }
+        }
+
+        async function bulkRemoveBg() {
+            const btn = document.getElementById('bgBtn');
+            const status = document.getElementById('bgStatus');
+
+            if (!confirm('This will process ALL product images. It may take several minutes. Continue?')) return;
+
+            btn.disabled = true;
+            status.style.color = 'var(--accent)';
+            let totalProcessed = 0;
+            let totalFailed = 0;
+            let running = true;
+
+            while (running) {
+                try {
+                    status.textContent = `Processing batch... (${totalProcessed} done so far)`;
+                    btn.textContent = `Processing... (${totalProcessed})`;
+
+                    const r = await fetch('/api/remove-bg/bulk', { method: 'POST' });
+                    const data = await r.json();
+
+                    if (data.error) {
+                        status.textContent = `Error: ${data.error}`;
+                        status.style.color = 'var(--error)';
+                        running = false;
+                        break;
+                    }
+
+                    totalProcessed += data.processed;
+                    totalFailed += data.failed;
+
+                    status.textContent = `${totalProcessed} of ${data.total} processed (${data.remaining} remaining, ${totalFailed} failed)`;
+
+                    if (data.status === 'done' || data.remaining <= 0) {
+                        status.textContent = `All done! ${data.already_done} of ${data.total} have clean backgrounds. ${totalFailed} failed.`;
+                        status.style.color = 'var(--success)';
+                        running = false;
+                    }
+                } catch (e) {
+                    status.textContent = `Network error after ${totalProcessed} processed. Click again to resume.`;
+                    status.style.color = 'var(--error)';
+                    running = false;
+                }
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Remove All Backgrounds';
+        }
+
+        // Load on page ready
+        loadAnalytics();
+    </script>
+</div>
+</body>
+</html>

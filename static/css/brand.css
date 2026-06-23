@@ -1,0 +1,114 @@
+/* ============================================================
+   RepTools brand layer — TERMINAL
+   Green-on-black CRT/hacker aesthetic. Everything monospace,
+   boxy, phosphor glow. Token names + .cc-* classes unchanged.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=VT323&display=swap');
+
+:root{
+  --ink:        #0a0e0a;   /* CRT black-green bg */
+  --ink-raised: #0f160f;   /* raised panels */
+  --ink-line:   #1f3a24;   /* borders */
+  --bone:       #b9ffce;   /* primary text — soft phosphor */
+  --bone-dim:   #5fae74;   /* muted text */
+
+  --hazard:     #00ff41;   /* PRIMARY — terminal green */
+  --hazard-deep:#00c233;   /* pressed / hover */
+  --acid:       #39ff14;   /* secondary green pop */
+  --stamp:      #00ff41;
+
+  --gl:         #00ff41;   /* delivered */
+  --rl:         #ff5555;   /* issue */
+  --pending:    #ffd866;   /* in transit */
+
+  --on-hazard:  #001a06;
+  --on-bone:    #0a0e0a;
+
+  --font-display: 'JetBrains Mono', ui-monospace, monospace;
+  --font-body:    'JetBrains Mono', ui-monospace, monospace;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+  --step-hero: clamp(2.5rem, 8vw, 6rem);
+
+  --ease: steps(1, end);
+
+  --bg-primary:var(--ink); --bg-secondary:var(--ink-raised); --bg-card:var(--ink-raised);
+  --bg-elevated:var(--ink-raised); --border-color:var(--ink-line);
+  --text-primary:var(--bone); --text-secondary:var(--bone-dim); --text-muted:#4a8a5c;
+  --accent-primary:var(--hazard); --accent-secondary:var(--acid);
+  --accent-success:var(--gl); --accent-tertiary:var(--pending);
+  --on-accent:var(--on-hazard); --cy:var(--hazard); --accent-gradient:var(--hazard);
+}
+
+.cc-wordmark{
+  display:inline-flex; align-items:center; gap:.2ch;
+  font-family:var(--font-display); font-weight:800; text-transform:uppercase;
+  letter-spacing:.04em; line-height:1; text-decoration:none; color:var(--bone);
+  text-shadow:0 0 6px rgba(0,255,65,.35);
+}
+.cc-wordmark .cc-rep{ background:var(--hazard); color:var(--on-hazard); padding:.06em .3em; border-radius:0; }
+.cc-wordmark .cc-tools{ color:var(--bone); }
+.cc-wordmark .cc-tools::after{ content:"_"; color:var(--hazard); animation:cc-blink 1.1s steps(1) infinite; }
+.cc-wordmark--lg{ font-size:clamp(1.4rem,3vw,2rem); }
+.cc-wordmark__sub{
+  display:block; font-family:var(--font-mono); font-size:.6rem;
+  letter-spacing:.2em; color:var(--hazard); margin-top:.4em; text-transform:uppercase;
+}
+@keyframes cc-blink{ 0%,49%{opacity:1} 50%,100%{opacity:0} }
+
+.cc-display{ font-family:var(--font-display); font-weight:800; text-transform:uppercase; line-height:1.02; letter-spacing:0; text-shadow:0 0 8px rgba(0,255,65,.25); }
+.cc-display--outline{ color:transparent; -webkit-text-stroke:1px var(--hazard); }
+
+.cc-btn{
+  display:inline-flex; align-items:center; gap:.6ch;
+  font-family:var(--font-body); font-weight:700; text-transform:uppercase;
+  letter-spacing:.06em; font-size:.9rem; line-height:1;
+  padding:.85em 1.3em; border:1px solid var(--hazard); border-radius:0;
+  background:transparent; color:var(--hazard); cursor:pointer;
+  box-shadow:0 0 0 0 var(--hazard); text-decoration:none;
+  transition:background .08s steps(1), color .08s steps(1);
+}
+.cc-btn::before{ content:"> "; }
+.cc-btn:hover{ background:var(--hazard); color:var(--on-hazard); box-shadow:0 0 16px rgba(0,255,65,.5); }
+.cc-btn:active{ background:var(--hazard-deep); }
+.cc-btn--ghost{ background:transparent; color:var(--bone); border-color:var(--ink-line); }
+.cc-btn--ghost:hover{ background:var(--ink-line); color:var(--bone); }
+
+.cc-box{ background:var(--ink-raised); border:1px solid var(--ink-line); border-radius:0; box-shadow:inset 0 0 0 1px rgba(0,255,65,.06); }
+.cc-box--hazard{ border-color:var(--hazard); box-shadow:0 0 18px rgba(0,255,65,.25); }
+
+.cc-tag{
+  display:inline-flex; align-items:center; gap:.5ch;
+  font-family:var(--font-mono); font-size:.66rem; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase;
+  padding:.26em .55em; border:1px solid currentColor; border-radius:0; color:var(--hazard);
+}
+.cc-tag::before{ content:"["; } .cc-tag::after{ content:"]"; }
+.cc-tag--gl{ color:var(--gl); } .cc-tag--rl{ color:var(--rl); } .cc-tag--pending{ color:var(--pending); }
+
+.cc-stamp{
+  display:inline-grid; place-items:center; text-align:center;
+  font-family:var(--font-display); font-weight:800; text-transform:uppercase;
+  color:var(--hazard); border:2px dashed var(--hazard); border-radius:0;
+  padding:.4em .7em; transform:none; letter-spacing:.05em; line-height:1.05;
+}
+
+.cc-ticker{ overflow:hidden; white-space:nowrap; border-block:1px solid var(--ink-line); background:var(--ink); padding-block:.5rem; }
+.cc-ticker__track{
+  display:inline-block; will-change:transform; animation:cc-marquee 30s linear infinite;
+  font-family:var(--font-mono); font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--bone-dim);
+}
+.cc-ticker__track span{ color:var(--hazard); }
+.cc-ticker:hover .cc-ticker__track{ animation-play-state:paused; }
+@keyframes cc-marquee{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+.cc-barcode{
+  height:22px; width:100%;
+  background:repeating-linear-gradient(90deg, var(--hazard) 0 2px, transparent 2px 4px, var(--hazard) 4px 5px, transparent 5px 9px);
+  opacity:.45;
+}
+
+:where(a,button,input,select,textarea,[tabindex],[role="button"]):focus-visible{
+  outline:2px solid var(--hazard); outline-offset:2px;
+}
+@media (prefers-reduced-motion: reduce){ .cc-ticker__track{ animation:none; } .cc-btn{ transition:none; } .cc-wordmark .cc-tools::after{ animation:none; } }

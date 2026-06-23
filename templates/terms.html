@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service — RepTools</title>
+    <meta name="description" content="The Terms of Service for RepTools (rep.tools). Read about the as-is nature of our tools, affiliate disclosure, acceptable use, and limitation of liability.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://rep.tools/terms">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Terms of Service — RepTools">
+    <meta property="og:description" content="Terms of Service for RepTools (rep.tools).">
+    <meta property="og:url" content="https://rep.tools/terms">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/static/css/brand.css">
+    <style>
+        :root {
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        a { color: var(--accent-primary); text-decoration: none; transition: color 0.2s ease; }
+        a:hover { color: var(--accent-secondary); }
+
+        /* Top nav */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(10, 10, 11, 0.85);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav .brand {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            line-height: .9;
+            font-size: 1.35rem;
+            letter-spacing: 0.01em;
+            color: var(--hazard);
+        }
+        nav .nav-links a {
+            margin-left: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        nav .nav-links a:hover { color: var(--accent-primary); }
+
+        /* Layout */
+        main {
+            flex: 1;
+            max-width: 880px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 4rem;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { color: var(--accent-primary); }
+
+        h1 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            font-size: clamp(2.4rem, 6vw, 3.6rem);
+            line-height: .9;
+            letter-spacing: 0.005em;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        h1 .accent {
+            color: var(--hazard);
+        }
+        .effective {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .effective strong { color: var(--text-secondary); }
+
+        .intro {
+            background: var(--bg-card);
+            border: 2px solid var(--hazard);
+            box-shadow: 6px 6px 0 var(--hazard);
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 3rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            font-size: 1.6rem;
+            color: var(--text-primary);
+            margin: 2.75rem 0 1rem;
+            letter-spacing: 0.005em;
+            line-height: .95;
+            scroll-margin-top: 5rem;
+        }
+        h2 .num {
+            color: var(--accent-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        h3 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            letter-spacing: 0.01em;
+            color: var(--text-primary);
+            margin: 1.75rem 0 0.6rem;
+        }
+        p { margin-bottom: 1rem; font-size: 0.95rem; }
+        ul, ol { margin: 0 0 1rem 1.25rem; padding-left: 0.75rem; }
+        li { margin-bottom: 0.55rem; font-size: 0.95rem; }
+        strong { color: var(--text-primary); font-weight: 700; }
+
+        /* Callout boxes */
+        .callout {
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.92rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            box-shadow: 6px 6px 0 rgba(0,0,0,.55);
+        }
+        .callout-title {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 0.01em;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+        .callout.warn {
+            border-color: var(--hazard-deep);
+        }
+        .callout.warn .callout-title { color: var(--hazard-deep); }
+        .callout.info {
+            border-color: var(--hazard);
+        }
+        .callout.info .callout-title { color: var(--accent-primary); }
+        .callout.legal {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+        }
+        .callout.legal .callout-title { color: var(--text-primary); }
+
+        .legal-text {
+            text-transform: uppercase;
+            font-size: 0.82rem;
+            letter-spacing: 0.02em;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .placeholder {
+            border: 1px dashed var(--accent-secondary);
+            padding: 0.05rem 0.4rem;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        .contact-box {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            box-shadow: 6px 6px 0 rgba(0,0,0,.55);
+            padding: 1.5rem 1.75rem;
+            margin-top: 1rem;
+        }
+        .contact-box a { font-weight: 700; }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: var(--bg-secondary);
+        }
+        footer .footer-links { margin-bottom: 1rem; }
+        footer .footer-links a { margin: 0 0.75rem; color: var(--text-secondary); }
+        footer .footer-links a:hover { color: var(--accent-primary); }
+        footer .domains { font-size: 0.8rem; margin-top: 0.75rem; }
+        footer .tagline { margin-top: 1rem; color: var(--text-muted); }
+
+        @media (max-width: 600px) {
+            nav { padding: 1rem 1.25rem; }
+            nav .nav-links a { margin-left: 1rem; font-size: 0.82rem; }
+            main { padding: 2.5rem 1.25rem 3rem; }
+        }
+        .site-header { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1.3rem 2rem; border-bottom:1px solid var(--border-color); background:rgba(10,10,11,0.82); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); position:sticky; top:0; z-index:100; }
+        .site-header .logo { display:inline-flex; align-items:center; gap:0.55rem; font-size:1.4rem; font-weight:800; letter-spacing:-0.02em; color:var(--text-primary); text-decoration:none; }
+        .site-header .logo:hover { text-decoration:none; }
+        .site-header .logo-icon { width:40px; height:40px; border-radius:10px; overflow:hidden; flex-shrink:0; }
+        .site-header .logo-icon img { width:100%; height:100%; object-fit:contain; display:block; }
+        .site-header .logo .accent { color:var(--hazard); }
+        .site-header .site-nav { display:flex; align-items:center; gap:1.6rem; }
+        .site-header .site-nav a { color:var(--text-secondary); text-decoration:none; font-weight:500; font-size:0.95rem; transition:color .2s ease; }
+        .site-header .site-nav a:hover { color:var(--accent-primary); }
+        .site-header .site-nav .nav-cta { padding:0.55rem 1.15rem; background:var(--hazard); color:var(--on-hazard); border:2px solid var(--ink); box-shadow:4px 4px 0 var(--ink); font-family:var(--font-body); font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
+        .site-header .site-nav .nav-cta:hover { color:var(--on-hazard); }
+        @media (max-width: 640px) {
+            .site-header { padding:0.9rem 1.1rem; }
+            .site-header .logo { font-size:1.2rem; }
+            .site-header .logo-icon { width:34px; height:34px; }
+            .site-header .site-nav { gap:0.9rem; }
+            .site-header .site-nav a:not(.nav-cta) { display:none; }
+            .site-header .site-nav .nav-cta { padding:0.5rem 1rem; font-size:0.88rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a href="/" class="cc-wordmark cc-wordmark--lg"><span class="cc-rep">REP</span><span class="cc-tools">TOOLS</span></a>
+        <div class="site-nav">
+            <a href="/">Home</a>
+            <a href="/products">Products</a>
+            <a href="/tools">Tools</a>
+            <a href="/tutorial" class="nav-cta">Tutorial</a>
+        </div>
+    </header>
+
+    <main>
+        <a href="/" class="back-link">&larr; Back to home</a>
+
+        <h1>Terms of <span class="accent">Service</span></h1>
+        <p class="effective">
+            <strong>Effective date:</strong> <span>15 June 2026</span>
+            &nbsp;&middot;&nbsp; Applies to rep.tools, reptools.org, and reptools.net
+        </p>
+
+        <div class="intro">
+            <p style="margin-bottom:0;">
+                Welcome to <strong>RepTools</strong> ("RepTools", "we", "us", or "our"). These Terms of Service
+                ("Terms") govern your access to and use of the RepTools website and the free tools we provide,
+                including our package tracker, QC (quality-control) photo lookup, link converter, product
+                listings, and batch / deal information (collectively, the "Service"). By accessing or using the
+                Service, you agree to be bound by these Terms. If you do not agree, please do not use the Service.
+            </p>
+        </div>
+
+        <h2><span class="num">1.</span>Who We Are &amp; What RepTools Is</h2>
+        <p>
+            RepTools is a free set of tools and information for people who shop online from overseas marketplaces
+            and third-party shopping agents. We provide convenience utilities such as: a package tracker, a
+            quality-control (QC) photo lookup, an agent-link converter, product listings, and optional email
+            notifications for package updates. RepTools is an information and utility service only.
+        </p>
+        <div class="callout warn">
+            <span class="callout-title">RepTools is an independent tool — we are not the seller, agent, or carrier.</span>
+            RepTools <strong>does not sell, manufacture, source, ship, or fulfill any products</strong>. We are an
+            independent project and are <strong>not affiliated with, endorsed by, sponsored by, or operated by</strong>
+            any shopping agent (such as KakoBuy, Sugargoo, CSSBuy, or others), any shipping carrier or postal
+            service, any tracking provider, or any brand, marketplace, or rights holder whose names may appear on
+            the Service. All third-party names, logos, and trademarks are the property of their respective owners
+            and are used only for identification and reference.
+        </div>
+
+        <h2><span class="num">2.</span>Eligibility &amp; Your Responsibility</h2>
+        <p>
+            You must be old enough to form a binding contract in your jurisdiction (and at least the age of
+            digital consent that applies to you) to use the Service. You are solely responsible for your own
+            purchasing decisions and for ensuring that anything you choose to buy, import, or possess is lawful
+            where you live. RepTools provides tools and information only — <strong>we do not give legal, customs,
+            financial, or professional advice</strong>, and nothing on the Service should be treated as such.
+        </p>
+
+        <h2><span class="num">3.</span>The Service Is Provided "As Is" — No Warranties</h2>
+        <p>
+            The Service, and all information, data, estimates, and content made available through it, are provided
+            on an <strong>"AS IS"</strong> and <strong>"AS AVAILABLE"</strong> basis, without warranties of any
+            kind, whether express, implied, or statutory. To the fullest extent permitted by law, we disclaim all
+            implied warranties, including merchantability, fitness for a particular purpose, accuracy, and
+            non-infringement. We do not warrant that the Service will be uninterrupted, secure, error-free, or
+            available at any particular time, or that any information will be accurate, complete, or current.
+        </p>
+
+        <div class="callout info">
+            <span class="callout-title">Tracking ETAs &amp; batch recommendations are estimates — not guarantees.</span>
+            <ul style="margin-bottom:0; margin-top:0.5rem;">
+                <li>
+                    <strong>Package tracking &amp; delivery estimates:</strong> Tracking statuses, "out for
+                    delivery" / "delivered" milestones, customs notes, and any estimated time of arrival ("ETA")
+                    are sourced from third-party carriers and tracking providers and are <strong>forwarded to you
+                    as-is</strong>. They can be delayed, incomplete, inaccurate, or wrong, and they may change at
+                    any time. They are <strong>predictions, not promises</strong>. RepTools does not control
+                    shipping, customs clearance, or delivery and cannot guarantee any delivery date or outcome.
+                </li>
+                <li>
+                    <strong>Batch recommendations, "best" picks, ratings, prices &amp; deals:</strong> Any batch
+                    rankings, seller suggestions, star ratings, prices, or "recommended" listings are
+                    <strong>opinions and rough guidance only</strong>, often crowd-sourced and frequently out of
+                    date. Prices, availability, and quality change constantly and are set by third parties, not by
+                    us. Always verify details (including current price, stock, and QC) with the actual
+                    seller/agent before purchasing.
+                </li>
+                <li>
+                    <strong>QC photos &amp; product info:</strong> QC images and product data are pulled from
+                    third-party sources, may not reflect the exact item you receive, and may be unavailable,
+                    cached, or removed by the source at any time.
+                </li>
+            </ul>
+        </div>
+        <p>
+            You acknowledge that you use any estimate, recommendation, or piece of information from the Service
+            <strong>at your own risk</strong>, and that RepTools is not responsible for decisions you make based on it.
+        </p>
+
+        <h2><span class="num">4.</span>Affiliate Disclosure</h2>
+        <div class="callout warn">
+            <span class="callout-title">RepTools may earn a commission from affiliate links.</span>
+            <p style="margin-bottom:0; margin-top:0.4rem;">
+                Some links on RepTools — including converted shopping links and the links in our tools — are
+                <strong>affiliate links</strong>. In particular, links to <strong>KakoBuy</strong> are tagged with
+                our affiliate code <strong>"thelude"</strong>. This means that if you sign up for, or make a
+                purchase through, an affiliate link or code, RepTools may receive a commission or referral benefit
+                <strong>at no extra cost to you</strong>. Affiliate revenue helps keep the Service free.
+            </p>
+        </div>
+        <p>
+            Being an affiliate does <strong>not</strong> mean we control, endorse, or are responsible for the
+            third party's website, pricing, products, shipping, or service. Any transaction you make on a
+            third-party site is solely between you and that third party and is governed by their terms and
+            policies, not ours. The presence or absence of an affiliate relationship does not change our
+            "as is" disclaimers or your responsibility for your own purchases.
+        </p>
+
+        <h2><span class="num">5.</span>Acceptable Use</h2>
+        <p>You agree that you will <strong>not</strong>:</p>
+        <ul>
+            <li>Use the Service for any unlawful purpose or in violation of any applicable law, regulation, customs rule, or third-party right;</li>
+            <li>Submit false, abusive, or fraudulent information (for example, subscribing email addresses you do not own to package notifications);</li>
+            <li>Attempt to gain unauthorized access to the Service, any account, server, database, or admin area, or interfere with or disrupt its operation or security;</li>
+            <li>Scrape, crawl, harvest, or bulk-extract data from the Service, or hammer our endpoints (including the tracker, QC lookup, or click endpoints) in an automated or excessive way;</li>
+            <li>Reverse engineer, copy, resell, sublicense, or commercially exploit the Service or its content without our written permission;</li>
+            <li>Introduce malware, attempt denial-of-service attacks, or otherwise undermine the integrity, performance, or availability of the Service;</li>
+            <li>Misuse third-party services we rely on (such as tracking providers, email delivery, or agent sites) through your use of RepTools;</li>
+            <li>Use the Service to infringe intellectual property rights or to facilitate any activity that is illegal where you are located.</li>
+        </ul>
+        <p>
+            We may, at our discretion and without notice, limit, suspend, or terminate your access to the Service
+            (in whole or in part) if we believe you have violated these Terms or are misusing the Service.
+        </p>
+
+        <h2><span class="num">6.</span>Email Notifications &amp; Communications</h2>
+        <p>
+            If you subscribe to package-update notifications, you provide your email address so we can email you
+            when your tracked package changes status. These are <strong>transactional</strong> messages tied to
+            the tracking number you submit. Separately, you may <strong>optionally opt in</strong> to receive
+            occasional marketing or update emails; this opt-in is not required to use the tracker, and you can
+            withdraw it at any time. Every email includes an unsubscribe option, and you can also reach out to us
+            to be removed. For details on how we handle your data, see our
+            <a href="/privacy">Privacy Policy</a>.
+        </p>
+
+        <h2><span class="num">7.</span>Intellectual Property</h2>
+        <p>
+            The RepTools name, logo, original text, layout, design, code, and the selection and arrangement of
+            content on the Service are owned by RepTools or its licensors and are protected by intellectual
+            property laws. Subject to these Terms, we grant you a limited, personal, non-exclusive,
+            non-transferable, revocable license to access and use the Service for your own personal,
+            non-commercial use.
+        </p>
+        <p>
+            Third-party content surfaced through the Service — including QC photos, product images, brand and
+            product names, agent and carrier names, and tracking data — remains the property of its respective
+            owners and is shown for identification, reference, and informational purposes only. If you are a
+            rights holder and believe content on the Service infringes your rights, please
+            <a href="/contact">contact us</a> and we will review and respond.
+        </p>
+
+        <h2><span class="num">8.</span>Third-Party Services &amp; Links</h2>
+        <p>
+            The Service depends on, links to, or passes data to independent third parties — for example, tracking
+            providers, shopping agents (including KakoBuy), email delivery services, and analytics providers. We
+            do not control these third parties and are not responsible for their content, availability, accuracy,
+            practices, pricing, products, or policies. Your use of any third-party site or service is at your own
+            risk and is governed by that third party's terms and privacy policy. See our
+            <a href="/privacy">Privacy Policy</a> for more on which third parties may receive data.
+        </p>
+
+        <h2><span class="num">9.</span>Limitation of Liability</h2>
+        <div class="callout legal">
+            <span class="callout-title">Limitation of Liability</span>
+            <p class="legal-text" style="margin-bottom:0.75rem;">
+                To the fullest extent permitted by applicable law, in no event will RepTools, its creator,
+                operators, contributors, or affiliates be liable for any indirect, incidental, special,
+                consequential, exemplary, or punitive damages, or for any loss of profits, revenue, data,
+                goodwill, packages, money spent with third parties, or other intangible losses, arising out of or
+                relating to your access to or use of (or inability to use) the Service, any reliance on tracking
+                estimates, ETAs, batch recommendations, QC photos, prices, or other information, any affiliate
+                purchase or third-party transaction, or any third-party conduct — whether based on warranty,
+                contract, tort (including negligence), statute, or any other legal theory, and whether or not we
+                have been advised of the possibility of such damages.
+            </p>
+            <p class="legal-text" style="margin-bottom:0;">
+                To the fullest extent permitted by applicable law, RepTools' total aggregate liability for all
+                claims relating to the Service will not exceed the greater of (a) the total amount you paid to
+                RepTools for the Service in the twelve months before the claim (which, for a free Service, is
+                <strong>zero</strong>), or (b) <strong>USD 100</strong>.
+            </p>
+        </div>
+        <p>
+            Some jurisdictions do not allow the exclusion or limitation of certain warranties or liabilities, so
+            some of the above limitations may not apply to you. Nothing in these Terms limits any liability that
+            cannot be limited under applicable law, or affects any statutory or consumer rights you may have that
+            cannot be waived.
+        </p>
+
+        <h2><span class="num">10.</span>Indemnification</h2>
+        <p>
+            You agree to indemnify and hold harmless RepTools and its creator and operators from and against any
+            claims, damages, losses, liabilities, costs, and expenses (including reasonable legal fees) arising
+            out of or related to your use of the Service, your violation of these Terms, your violation of any law
+            or third-party right, or any purchase or activity you carry out through a third party, to the extent
+            permitted by applicable law.
+        </p>
+
+        <h2><span class="num">11.</span>Changes to the Service &amp; to These Terms</h2>
+        <p>
+            We are constantly improving RepTools and may add, change, suspend, or discontinue any part of the
+            Service at any time, with or without notice. We may also update these Terms from time to time. When we
+            do, we will revise the "Effective date" at the top of this page and, where appropriate, provide
+            additional notice. Changes take effect when posted. Your continued use of the Service after changes
+            are posted means you accept the updated Terms. If you do not agree to the changes, please stop using
+            the Service.
+        </p>
+
+        <h2><span class="num">12.</span>Governing Law &amp; Disputes</h2>
+        <p>
+            These Terms and any dispute arising out of or relating to them or the Service are governed by the laws
+            applicable at the place where the RepTools operator is established, without regard to conflict-of-laws
+            rules, and subject to any mandatory consumer-protection rights you have in your country of residence.
+            Wherever possible we would prefer to resolve any concern informally &mdash; please contact us first and
+            we will make a genuine effort to sort it out.
+        </p>
+
+        <h2><span class="num">13.</span>Miscellaneous</h2>
+        <p>
+            If any provision of these Terms is found to be unenforceable, the remaining provisions will remain in
+            full force and effect. Our failure to enforce any right or provision is not a waiver of it. These
+            Terms, together with our <a href="/privacy">Privacy Policy</a>, make up the entire agreement between
+            you and RepTools regarding the Service. You may not assign these Terms; we may assign them in
+            connection with a transfer of the Service.
+        </p>
+
+        <h2><span class="num">14.</span>Intellectual Property &amp; Takedown Requests</h2>
+        <p>
+            The RepTools name, site design, original text, and compiled data (such as our batch listings) belong to
+            RepTools and are protected by intellectual-property laws. You may use the Service for personal,
+            non-commercial purposes, but you may not copy, scrape, resell, or republish substantial parts of it
+            without our permission.
+        </p>
+        <p>
+            QC ("quality-control") photos and certain product images shown through the Service are sourced from
+            shopping agents, sellers, and the community for reference only. We do not claim ownership of those
+            images and make no representation about their copyright status.
+        </p>
+        <p>
+            <strong>Copyright / trademark takedown:</strong> If you are a rights holder (or their authorised agent)
+            and believe content on RepTools infringes your copyright or trademark, email
+            <strong>lude@rep.tools</strong> (or message <strong>@lude5</strong> on Discord) with: (1) identification
+            of the protected work; (2) the URL or location of the material on RepTools; (3) your contact details;
+            (4) a statement that you have a good-faith belief the use is not authorised by the rights holder, its
+            agent, or the law; and (5) a statement, made under penalty of perjury, that your notice is accurate and
+            that you are authorised to act on the rights holder's behalf. We review valid notices and promptly
+            remove or disable access to the identified material.
+        </p>
+
+        <h2><span class="num">15.</span>Contact</h2>
+        <p>Questions about these Terms? We are happy to help.</p>
+        <div class="contact-box">
+            <p style="margin-bottom:0.4rem;"><strong>RepTools</strong> — independent online-shopping toolkit</p>
+            <p style="margin-bottom:0.4rem;">Discord: <a href="https://discord.com/users/lude5" target="_blank" rel="noopener">@lude5</a></p>
+            <p style="margin-bottom:0.4rem;">Contact form: <a href="/contact">rep.tools/contact</a></p>
+            <p style="margin-bottom:0;">Email: <a href="mailto:lude@rep.tools" style="color:inherit;">lude@rep.tools</a> (for formal notices &amp; data requests; Discord is faster for quick questions)</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/products">Products</a>
+            <a href="/tools">Tools</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+        </div>
+        <div class="domains">
+            Official domains:
+            <a href="https://reptools.org">reptools.org</a> &middot;
+            <a href="https://reptools.net">reptools.net</a> &middot;
+            <a href="https://rep.tools">rep.tools</a>
+        </div>
+        <p class="tagline">Made with care for the community, by the community.</p>
+        <p class="tagline" style="font-size:0.78rem;">&copy; <span>2026</span> RepTools. Independent tool — not affiliated with any agent, carrier, or brand.</p>
+    </footer>
+</body>
+</html>
