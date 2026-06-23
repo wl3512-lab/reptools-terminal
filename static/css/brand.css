@@ -1,29 +1,31 @@
 /* ============================================================
    RepTools brand layer — TERMINAL
-   Green-on-black CRT/hacker aesthetic. Everything monospace,
-   boxy, phosphor glow. Token names + .cc-* classes unchanged.
+   CRT/hacker aesthetic on a cyan phosphor: everything monospace,
+   boxy, phosphor glow, blinking cursor. SHARED black+cyan palette;
+   personality is mono type + zero-radius boxes + glow + cursor.
+   Token names + .cc-* classes unchanged.
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=VT323&display=swap');
 
 :root{
-  --ink:        #0a0e0a;   /* CRT black-green bg */
-  --ink-raised: #0f160f;   /* raised panels */
-  --ink-line:   #1f3a24;   /* borders */
-  --bone:       #b9ffce;   /* primary text — soft phosphor */
-  --bone-dim:   #5fae74;   /* muted text */
+  --ink:        #0a0a0b;   /* CRT black bg (shared) */
+  --ink-raised: #121316;   /* raised panels */
+  --ink-line:   #1f3a40;   /* cyan-tinted borders */
+  --bone:       #d4f7ff;   /* primary text — soft cyan phosphor */
+  --bone-dim:   #79b6c4;   /* muted text */
 
-  --hazard:     #00ff41;   /* PRIMARY — terminal green */
-  --hazard-deep:#00c233;   /* pressed / hover */
-  --acid:       #39ff14;   /* secondary green pop */
-  --stamp:      #00ff41;
+  --hazard:     #22d3ee;   /* PRIMARY — terminal cyan */
+  --hazard-deep:#06b6d4;   /* pressed / hover */
+  --acid:       #67e8f9;   /* secondary cyan pop */
+  --stamp:      #22d3ee;
 
-  --gl:         #00ff41;   /* delivered */
-  --rl:         #ff5555;   /* issue */
-  --pending:    #ffd866;   /* in transit */
+  --gl:         #22c55e;   /* delivered */
+  --rl:         #ef4444;   /* issue */
+  --pending:    #f59e0b;   /* in transit */
 
-  --on-hazard:  #001a06;
-  --on-bone:    #0a0e0a;
+  --on-hazard:  #06141c;
+  --on-bone:    #0a0a0b;
 
   --font-display: 'JetBrains Mono', ui-monospace, monospace;
   --font-body:    'JetBrains Mono', ui-monospace, monospace;
@@ -34,7 +36,7 @@
 
   --bg-primary:var(--ink); --bg-secondary:var(--ink-raised); --bg-card:var(--ink-raised);
   --bg-elevated:var(--ink-raised); --border-color:var(--ink-line);
-  --text-primary:var(--bone); --text-secondary:var(--bone-dim); --text-muted:#4a8a5c;
+  --text-primary:var(--bone); --text-secondary:var(--bone-dim); --text-muted:#5f93a0;
   --accent-primary:var(--hazard); --accent-secondary:var(--acid);
   --accent-success:var(--gl); --accent-tertiary:var(--pending);
   --on-accent:var(--on-hazard); --cy:var(--hazard); --accent-gradient:var(--hazard);
@@ -44,7 +46,7 @@
   display:inline-flex; align-items:center; gap:.2ch;
   font-family:var(--font-display); font-weight:800; text-transform:uppercase;
   letter-spacing:.04em; line-height:1; text-decoration:none; color:var(--bone);
-  text-shadow:0 0 6px rgba(0,255,65,.35);
+  text-shadow:0 0 6px rgba(34,211,238,.35);
 }
 .cc-wordmark .cc-rep{ background:var(--hazard); color:var(--on-hazard); padding:.06em .3em; border-radius:0; }
 .cc-wordmark .cc-tools{ color:var(--bone); }
@@ -56,7 +58,7 @@
 }
 @keyframes cc-blink{ 0%,49%{opacity:1} 50%,100%{opacity:0} }
 
-.cc-display{ font-family:var(--font-display); font-weight:800; text-transform:uppercase; line-height:1.02; letter-spacing:0; text-shadow:0 0 8px rgba(0,255,65,.25); }
+.cc-display{ font-family:var(--font-display); font-weight:800; text-transform:uppercase; line-height:1.02; letter-spacing:0; text-shadow:0 0 8px rgba(34,211,238,.25); }
 .cc-display--outline{ color:transparent; -webkit-text-stroke:1px var(--hazard); }
 
 .cc-btn{
@@ -69,13 +71,13 @@
   transition:background .08s steps(1), color .08s steps(1);
 }
 .cc-btn::before{ content:"> "; }
-.cc-btn:hover{ background:var(--hazard); color:var(--on-hazard); box-shadow:0 0 16px rgba(0,255,65,.5); }
+.cc-btn:hover{ background:var(--hazard); color:var(--on-hazard); box-shadow:0 0 16px rgba(34,211,238,.5); }
 .cc-btn:active{ background:var(--hazard-deep); }
 .cc-btn--ghost{ background:transparent; color:var(--bone); border-color:var(--ink-line); }
 .cc-btn--ghost:hover{ background:var(--ink-line); color:var(--bone); }
 
-.cc-box{ background:var(--ink-raised); border:1px solid var(--ink-line); border-radius:0; box-shadow:inset 0 0 0 1px rgba(0,255,65,.06); }
-.cc-box--hazard{ border-color:var(--hazard); box-shadow:0 0 18px rgba(0,255,65,.25); }
+.cc-box{ background:var(--ink-raised); border:1px solid var(--ink-line); border-radius:0; box-shadow:inset 0 0 0 1px rgba(34,211,238,.06); }
+.cc-box--hazard{ border-color:var(--hazard); box-shadow:0 0 18px rgba(34,211,238,.25); }
 
 .cc-tag{
   display:inline-flex; align-items:center; gap:.5ch;
